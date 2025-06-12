@@ -1,14 +1,12 @@
 import os
 import google.generativeai as genai
 from openai import OpenAI
-from dotenv import load_dotenv
 from typing import Optional
 import base64
 
 # --- Configuration and Initialization ---
-load_dotenv()
-GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 
 if GOOGLE_API_KEY:
     genai.configure(api_key=GOOGLE_API_KEY)

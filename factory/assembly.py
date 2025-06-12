@@ -6,9 +6,7 @@ from sync.common import Audio, GenerationOptions, Video
 from sync.core.api_error import ApiError
 
 # --- Configuration ---
-# Hardcoded Sync.so API key as per the provided snippet.
-# For better practice, consider moving this to an environment variable later.
-SYNC_API_KEY = "sk-P4hvkIKTTumo5DSsW0gC8Q.bo8G_kRb3X_oWlp4FeBoxfcO22IPM_Xq"
+SYNC_API_KEY = os.environ.get("SYNC_API_KEY")
 
 # Initialize the client
 if not SYNC_API_KEY or SYNC_API_KEY == "your_sync_so_api_key_here":

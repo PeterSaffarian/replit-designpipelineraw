@@ -2,10 +2,7 @@ import os
 from elevenlabs.client import ElevenLabs
 
 # --- Configuration and Initialization ---
-
-# Hardcoded ElevenLabs API key as requested.
-# For security, it's recommended to move this to an environment variable later.
-ELEVENLABS_API_KEY = "sk_676b6c9c3bbfc350a491c54b62fce3393971dd91d8973252" 
+ELEVENLABS_API_KEY = os.environ.get("ELEVENLABS_API_KEY") 
 
 # Initialize the client
 if not ELEVENLABS_API_KEY or ELEVENLABS_API_KEY == "your_elevenlabs_api_key_here":

@@ -7,13 +7,10 @@ import jwt
 import requests
 import os
 import base64
-from dotenv import load_dotenv
 
 # --- Configuration ---
-# Load environment variables. We'll keep the direct fallback for now.
-load_dotenv()
-ACCESS_KEY = os.getenv("KLING_ACCESS_KEY", "AEFK99PB3gPEbkaY9rPKERdfE9btHKkD").strip()
-SECRET_KEY = os.getenv("KLING_SECRET_KEY", "FTtPNnFRJEFMAeD8YgT9fJPAeaFLELdM").strip()
+ACCESS_KEY = os.environ.get("KLING_ACCESS_KEY", "").strip()
+SECRET_KEY = os.environ.get("KLING_SECRET_KEY", "").strip()
 
 API_ROOT = "https://api-singapore.klingai.com/v1"
 
