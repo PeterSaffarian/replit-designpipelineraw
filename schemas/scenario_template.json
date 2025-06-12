@@ -1,0 +1,17 @@
+{
+    "global_settings": {
+        "model_name": "kling-v1-6",
+        "aspect_ratio": "16:9",
+        "mode": "pro"
+    },
+    "opening_scene": {
+        "type": "image_to_video",
+        "duration": 10,
+        "prompt": "PLACEHOLDER: This prompt should describe the initial, static state of the artwork, creating a 'living photo' effect. simple description of the character starting to speak",
+        "image_source": "PLACEHOLDER_IMAGE_PATH"
+    },
+    "extensions": [
+        "PLACEHOLDER: This should be a simple description of the character continuing their dialogue with subtle body language movements.",
+        "PLACEHOLDER: This should be a simple description of the character continuing their dialogue with subtle body language movements."
+    ]
+}
