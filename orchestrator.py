@@ -56,9 +56,9 @@ def run_pipeline_for_idea(idea_text, idea_number, idea_name):
     Returns a dictionary summarizing the result for the final report.
     """
     # 1. Setup project folder and JSON tracker
-    date_time_str = datetime.now().strftime("%Y%m%d_%H%M%S")
+    date_str = datetime.now().strftime("%Y%m%d")
     sanitized_name = "".join(c for c in idea_name if c.isalnum() or c in " _-").rstrip()
-    project_folder_name = f"{idea_number}_{sanitized_name}_{date_time_str}"
+    project_folder_name = f"{idea_number}_{sanitized_name}_{date_str}"
     project_path = os.path.join(STORAGE_DIR, project_folder_name)
     os.makedirs(project_path, exist_ok=True)
 
@@ -68,7 +68,7 @@ def run_pipeline_for_idea(idea_text, idea_number, idea_name):
     status_report = {
         "idea_name": idea_name,
         "idea_text": idea_text,
-        "project_folder": project_path,  
+        "project_folder": project_path,
         "status": "IN_PROGRESS",
         "failed_at_step": None,
         "final_video_path": None,

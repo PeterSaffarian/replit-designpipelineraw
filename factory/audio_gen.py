@@ -1,17 +1,15 @@
 import os
-from typing import Optional
 from elevenlabs.client import ElevenLabs
-from dotenv import load_dotenv
 
 # --- Configuration and Initialization ---
-load_dotenv()
-ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
-DEFAULT_VOICE = "xZVrOjUURog02K298cjt"
-DEFAULT_MODEL = "eleven_multilingual_v2"
+
+# Hardcoded ElevenLabs API key as requested.
+# For security, it's recommended to move this to an environment variable later.
+ELEVENLABS_API_KEY = "sk_676b6c9c3bbfc350a491c54b62fce3393971dd91d8973252" 
 
 # Initialize the client
-if not ELEVENLABS_API_KEY:
-    print("AUDIO GEN: Warning - ELEVENLABS_API_KEY environment variable is not set. The script will not be able to generate audio.")
+if not ELEVENLABS_API_KEY or ELEVENLABS_API_KEY == "your_elevenlabs_api_key_here":
+    print("AUDIO GEN: Warning - ELEVENLABS_API_KEY is not set. The script will not be able to generate audio.")
     client = None
 else:
     client = ElevenLabs(api_key=ELEVENLABS_API_KEY)
@@ -21,8 +19,8 @@ else:
 def generate(
     text: str,
     output_path: str,
-    voice: Optional[str] = None,
-    model: Optional[str] = None
+    voice: str = "xZVrOjUURog02K298cjt", # A default voice ID
+    model: str = "eleven_multilingual_v2"
 ) -> str:
     """
     Generate TTS audio from text using the ElevenLabs API and save it as an MP3.
@@ -41,16 +39,12 @@ def generate(
         print("AUDIO GEN: Error - ElevenLabs client is not initialized. Please set your API key.")
         return ""
 
-    # Use default values from environment if not provided
-    actual_voice = voice if voice is not None else DEFAULT_VOICE
-    actual_model = model if model is not None else DEFAULT_MODEL
-
     try:
         # Generate the audio stream from the API
         audio = client.text_to_speech.convert(
             text=text,
-            voice_id=actual_voice,
-            model_id=actual_model
+            voice_id=voice,
+            model_id=model
         )
 
         # Ensure the output directory exists

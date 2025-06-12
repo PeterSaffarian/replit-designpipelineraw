@@ -7,13 +7,14 @@ import jwt
 import requests
 import os
 import base64
-from typing import Optional
 from dotenv import load_dotenv
 
 # --- Configuration ---
+# Load environment variables. We'll keep the direct fallback for now.
 load_dotenv()
-ACCESS_KEY = os.getenv("KLING_ACCESS_KEY")
-SECRET_KEY = os.getenv("KLING_SECRET_KEY")
+ACCESS_KEY = os.getenv("KLING_ACCESS_KEY", "AEFK99PB3gPEbkaY9rPKERdfE9btHKkD").strip()
+SECRET_KEY = os.getenv("KLING_SECRET_KEY", "FTtPNnFRJEFMAeD8YgT9fJPAeaFLELdM").strip()
+
 API_ROOT = "https://api-singapore.klingai.com/v1"
 
 # --- Private Helper Functions ---
@@ -31,7 +32,7 @@ def _generate_jwt_token():
     }
     return jwt.encode(payload, SECRET_KEY, algorithm="HS256", headers=headers)
 
-def _submit_task(endpoint: str, payload: dict) -> Optional[str]:
+def _submit_task(endpoint: str, payload: dict) -> str:
     """A generic function to submit a task to a given endpoint."""
     token = _generate_jwt_token()
     headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
@@ -53,14 +54,14 @@ def _submit_task(endpoint: str, payload: dict) -> Optional[str]:
         print(f"KLING: Network/Request Error submitting task: {e}")
         return None
 
-def _poll_for_result(task_endpoint_url: str) -> Optional[dict]:
+def _poll_for_result(task_endpoint_url: str) -> dict:
     """A generic function to poll a task until it's complete."""
     print(f"KLING: Polling for result...")
     while True:
         token = _generate_jwt_token()
         headers = {"Authorization": f"Bearer {token}"}
         try:
-            resp = requests.get(task_endpoint_url, headers=headers, timeout=60)
+            resp = requests.get(task_endpoint_url, headers=headers, timeout=30)
             resp.raise_for_status()
             data = resp.json().get("data", {})
             status = data.get("task_status")
@@ -74,25 +75,20 @@ def _poll_for_result(task_endpoint_url: str) -> Optional[dict]:
 
             print(f"KLING: Status is '{status}'. Waiting 10 seconds...")
             time.sleep(10)
-        except requests.exceptions.Timeout:
-            print(f"KLING: Request timeout - continuing to poll...")
-            time.sleep(10)
-            continue
         except requests.exceptions.RequestException as e:
             print(f"KLING: Network/Request Error during polling: {e}")
-            time.sleep(10)
-            continue
+            return None
 
 # --- Public API Functions ---
 
-def text_to_video(prompt: str, model_name: str = "kling-v1", duration: int = 5, aspect_ratio: str = "16:9", mode: str = "std") -> Optional[dict]:
+def text_to_video(prompt: str, model_name: str = "kling-v1", duration: int = 5, aspect_ratio: str = "16:9", mode: str = "std") -> dict:
     """Generates a video from a text prompt."""
     endpoint = f"{API_ROOT}/videos/text2video"
     payload = {"model_name": model_name, "prompt": prompt, "duration": str(duration), "aspect_ratio": aspect_ratio, "mode": mode}
     task_id = _submit_task(endpoint, payload)
     return _poll_for_result(f"{endpoint}/{task_id}") if task_id else None
 
-def image_to_video(image_path: str, prompt: str, model_name: str = "kling-v1", duration: int = 5) -> Optional[dict]:
+def image_to_video(image_path: str, prompt: str, model_name: str = "kling-v1", duration: int = 5) -> dict:
     """Animates a source image based on a prompt."""
     endpoint = f"{API_ROOT}/videos/image2video"
     with open(image_path, "rb") as image_file:
@@ -102,7 +98,7 @@ def image_to_video(image_path: str, prompt: str, model_name: str = "kling-v1", d
     task_id = _submit_task(endpoint, payload)
     return _poll_for_result(f"{endpoint}/{task_id}") if task_id else None
 
-def video_extension(source_video_id: str, prompt: str) -> Optional[dict]:
+def video_extension(source_video_id: str, prompt: str) -> dict:
     """Extends a previously generated video."""
     endpoint = f"{API_ROOT}/videos/video-extend"
     payload = {"video_id": source_video_id, "prompt": prompt}

@@ -43,7 +43,7 @@ def call_text_model(
                 content.insert(0, {"mime_type": "image/png", "data": image_bytes})
             response = model.generate_content(
                 content,
-                generation_config={"temperature": 0.7},
+                generation_config=genai.types.GenerationConfig(temperature=0.7),
                 system_instruction=system_prompt
             )
             return response.text
@@ -51,17 +51,13 @@ def call_text_model(
             if not openai_client:
                 raise ValueError("OPENAI_API_KEY is not set in the .env file.")
             messages = [{"role": "system", "content": system_prompt}]
+            user_content = [{"type": "text", "text": user_prompt}]
             if image_bytes:
                 base64_image = base64.b64encode(image_bytes).decode('utf-8')
-                user_content = [
-                    {"type": "text", "text": user_prompt},
-                    {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{base64_image}"}}
-                ]
-                messages.append({"role": "user", "content": user_content})
-            else:
-                messages.append({"role": "user", "content": user_prompt})
+                user_content.append({"type": "image_url", "image_url": {"url": f"data:image/png;base64,{base64_image}"}})
+            messages.append({"role": "user", "content": user_content})
             response = openai_client.chat.completions.create(model=model_name, messages=messages, temperature=0.7)
-            return response.choices[0].message.content or ""
+            return response.choices[0].message.content
         else:
             raise ValueError(f"Unsupported text model: {model_name}")
     except Exception as e:

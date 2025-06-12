@@ -4,16 +4,15 @@ import requests
 from sync import Sync
 from sync.common import Audio, GenerationOptions, Video
 from sync.core.api_error import ApiError
-from dotenv import load_dotenv
 
 # --- Configuration ---
-load_dotenv()
-SYNC_API_KEY = os.getenv("SYNC_API_KEY")
-UGUU_UPLOAD_URL = os.getenv("UGUU_UPLOAD_URL", "https://uguu.se/upload")
+# Hardcoded Sync.so API key as per the provided snippet.
+# For better practice, consider moving this to an environment variable later.
+SYNC_API_KEY = "sk-P4hvkIKTTumo5DSsW0gC8Q.bo8G_kRb3X_oWlp4FeBoxfcO22IPM_Xq"
 
 # Initialize the client
-if not SYNC_API_KEY:
-    print("ASSEMBLY: Warning - SYNC_API_KEY environment variable is not set. The script will not be able to run.")
+if not SYNC_API_KEY or SYNC_API_KEY == "your_sync_so_api_key_here":
+    print("ASSEMBLY: Warning - SYNC_API_KEY is not set. The script will not be able to run.")
     client = None
 else:
     client = Sync(api_key=SYNC_API_KEY).generations
@@ -37,7 +36,7 @@ def _upload_file_for_url(local_path: str) -> str:
     file_name = os.path.basename(local_path)
     print(f"ASSEMBLY: Uploading {file_name} to uguu.se for a public URL...")
 
-    upload_url = UGUU_UPLOAD_URL
+    upload_url = "https://uguu.se/upload"
 
     try:
         with open(local_path, 'rb') as f:
@@ -59,8 +58,8 @@ def _upload_file_for_url(local_path: str) -> str:
     except requests.exceptions.RequestException as e:
         print(f"ASSEMBLY: Error uploading file to uguu.se: {e}")
         return ""
-    except (KeyError, IndexError, ValueError) as e:
-        print(f"ASSEMBLY: Error parsing JSON response from uguu.se: {e}")
+    except (KeyError, IndexError, ValueError):
+        print(f"ASSEMBLY: Error parsing JSON response from uguu.se. Raw response: {response.text}")
         return ""
 
 # --- Main Function ---
@@ -112,7 +111,7 @@ def generate(raw_video_url: str, audio_path: str) -> str:
             if status == 'COMPLETED':
                 print(f'ASSEMBLY: Generation {job_id} completed successfully.')
                 # 4. Return the public URL of the final video
-                return getattr(generation, 'output_url', "") or ""
+                return generation.output_url
             elif status == 'FAILED':
                 print(f'ASSEMBLY: Generation {job_id} failed.')
                 return ""
