@@ -51,7 +51,7 @@ def generate(scenario_path: str, assets_base_path: str) -> Optional[Dict]:
     extension_prompts = scenario_data.get('extensions', [])
 
     # Determine provider from global settings
-    provider = global_config.get('provider', 'kling').lower()
+    provider = global_config.get('provider', 'runway').lower()
     print(f"VIDEO GEN: Using provider: {provider}")
 
     # Get image source for the opening scene

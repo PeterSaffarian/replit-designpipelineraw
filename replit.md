@@ -27,6 +27,7 @@ The architecture integrates multiple external AI services through dedicated modu
 ### Creative Studio (`creative_studio/`)
 - **Artwork Designer** - Analyzes ideas and reference images to create detailed prompts for image generation
 - **Artwork Builder** - Generates artwork using vision models with image generation capabilities
+- **Artwork Checker** - Quality control system using OpenAI GPT-4o to evaluate generated artwork and retry if needed
 - **Script Writer** - Creates short, spoken-word scripts based on ideas and generated artwork
 - **Producer** - Assembles scenario configurations that define video generation parameters
 - **Models** - Central abstraction layer for AI model interactions (Gemini/GPT)
@@ -112,5 +113,8 @@ Preferred communication style: Simple, everyday language.
 ✓ Created video concatenation utilities using FFmpeg
 ✓ Enhanced scenario configuration with provider selection
 ✓ Updated video generation pipeline to support both providers
+✓ Added artwork quality checker using OpenAI GPT-4o multimodal model
+✓ Implemented retry loop with configurable max attempts (default: 3)
+✓ Enhanced orchestrator with quality control workflow and detailed logging
 
-→ Testing and validation of Runway integration pending API keys
+→ System now validates artwork quality before proceeding to video generation

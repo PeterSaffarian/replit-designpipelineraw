@@ -1,0 +1,20 @@
+[
+    {
+        "idea_name": " drink wate",
+        "idea_text": " \"a video reminding you to drink enough water everyday\"",
+        "project_folder": "storage/5_ drink wate_20250707",
+        "status": "FAILED",
+        "failed_at_step": "Failed to assemble final video with Sync.so.",
+        "final_video_path": null,
+        "assets": {
+            "artwork_prompt": "Create an animated scene featuring the character standing in a bright, sunlit kitchen. The character is wearing a casual outfit, similar to the reference image, and is holding a clear glass of water with droplets on the outside, catching the sunlight. Her expression is cheerful and inviting, with a slight smile, as she raises the glass in a toast-like gesture. The kitchen is modern and tidy, with a large window letting in streams of sunlight that highlight the glass and create a warm, inviting atmosphere. On the counter, there's a pitcher of water with fresh lemon slices floating inside, adding a refreshing touch. The overall mood is vibrant and uplifting, emphasizing the importance of staying hydrated in a visually appealing way.",
+            "artwork_path": "storage/5_ drink wate_20250707/artwork.png",
+            "script": "\"Hey there! Remember to drink enough water every day\u2014it\u2019s key for keeping your energy up and your mind sharp. Grab a glass and let\u2019s stay hydrated together!\"",
+            "audio_path": "storage/5_ drink wate_20250707/audio.mp3",
+            "scenario_path": "storage/5_ drink wate_20250707/scenario.json",
+            "raw_video_url": "file://storage/5_ drink wate_20250707/final_runway_video_1751855082.mp4",
+            "video_provider": "runway",
+            "raw_video_local_path": "storage/5_ drink wate_20250707/final_runway_video_1751855082.mp4"
+        }
+    }
+]

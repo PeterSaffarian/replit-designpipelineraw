@@ -1,0 +1,15 @@
+[
+    {
+        "idea_name": " drink wate",
+        "idea_text": " \"a video reminding you to drink enough water everyday\"",
+        "project_folder": "storage/5_ drink wate_20250707",
+        "status": "FAILED",
+        "failed_at_step": "Failed to generate audio.",
+        "final_video_path": null,
+        "assets": {
+            "artwork_prompt": "Create a vibrant and engaging scene featuring the character in a cozy, sunlit kitchen. The character stands by a wooden counter, holding a glass of water with a warm, encouraging smile. Sunlight streams through a nearby window, casting gentle shadows and illuminating the room with a soft, golden glow. The kitchen is styled with potted plants and colorful fruit bowls, adding a fresh and healthy vibe. In the background, a kettle and a pitcher of water are visible, reinforcing the theme. The character's expression is friendly and inviting, conveying the importance of staying hydrated and encouraging viewers to take a sip of water themselves. The overall atmosphere is cheerful and motivating, perfect for an Instagram story reminder.",
+            "artwork_path": "storage/5_ drink wate_20250707/artwork.png",
+            "script": "\"Hey there! Remember to drink enough water every day to keep your body and mind in top shape. Staying hydrated helps you feel energized and focused. So, grab a glass and take a sip!\""
+        }
+    }
+]

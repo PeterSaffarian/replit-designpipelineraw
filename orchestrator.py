@@ -8,7 +8,7 @@ from datetime import datetime
 # --- Import all our project modules ---
 # It's good practice to wrap imports in a try-except block for clearer error messages
 try:
-    from creative_studio import artwork_designer, artwork_builder, script_writer, producer
+    from creative_studio import artwork_designer, artwork_builder, artwork_checker, script_writer, producer
     from factory import audio_gen, video_gen, assembly
 except ImportError as e:
     print(f"FATAL ERROR: A required module could not be imported: {e}")
@@ -21,7 +21,8 @@ STORAGE_DIR = "storage"
 SCHEMAS_DIR = "schemas"
 HERO_IMAGE_NAME = "hero.png"
 IDEAS_FILE_NAME = "ideas.csv"
-TEMPLATE_FILE_NAME = "scenario_template.json"
+TEMPLATE_FILE_NAME = "runway_scenario_template.json"
+MAX_ARTWORK_RETRIES = 3  # Maximum attempts to generate acceptable artwork
 
 
 # --- Helper Functions ---
@@ -96,15 +97,47 @@ def run_pipeline_for_idea(idea_text, idea_number, idea_name):
         status_report['assets']['artwork_prompt'] = artwork_prompt
         save_tracker()
 
-        # --- Step 3: Artwork Builder ---
+        # --- Step 3: Artwork Builder with Quality Check ---
         print("\n--- [Step 2/7] Creative Studio: Building Artwork ---")
         print("   Our artist is now creating your design...")
+        
         artwork_path = os.path.join(project_path, "artwork.png")
-        generated_artwork_path = artwork_builder.build_artwork(artwork_prompt, hero_image_path, artwork_path)
+        generated_artwork_path = None
+        artwork_retry_count = 0
+        
+        while artwork_retry_count < MAX_ARTWORK_RETRIES:
+            attempt_num = artwork_retry_count + 1
+            print(f"   📝 Artwork generation attempt {attempt_num}/{MAX_ARTWORK_RETRIES}...")
+            
+            # Generate artwork
+            generated_artwork_path = artwork_builder.build_artwork(artwork_prompt, hero_image_path, artwork_path)
+            if not generated_artwork_path:
+                print(f"   ❌ Artwork generation failed on attempt {attempt_num}")
+                artwork_retry_count += 1
+                continue
+            
+            print(f"   🎨 Artwork created! Now checking quality...")
+            
+            # Check artwork quality
+            quality_result = artwork_checker.check_artwork_quality(generated_artwork_path, artwork_prompt)
+            
+            if quality_result['status'] == 'Pass':
+                print(f"   ✅ Artwork passed quality check! {quality_result.get('feedback', '')}")
+                print(f"   📍 Final artwork saved: {generated_artwork_path}")
+                break
+            else:
+                print(f"   ❌ Artwork failed quality check: {quality_result.get('feedback', 'Quality issues detected')}")
+                artwork_retry_count += 1
+                if artwork_retry_count < MAX_ARTWORK_RETRIES:
+                    print(f"   🔄 Retrying artwork generation...")
+                else:
+                    print(f"   ⚠️  Maximum retries reached. Using last generated artwork.")
+        
         if not generated_artwork_path:
-            raise RuntimeError("Failed to build artwork.")
-        print(f"   ✅ Artwork created! You can view it here: {generated_artwork_path}")
+            raise RuntimeError("Failed to generate artwork after all retry attempts.")
+        
         status_report['assets']['artwork_path'] = generated_artwork_path
+        status_report['assets']['artwork_retry_count'] = artwork_retry_count
         save_tracker()
 
         # --- Step 4: Script Writer ---
