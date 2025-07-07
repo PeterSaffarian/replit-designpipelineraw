@@ -2,7 +2,10 @@ import os
 from elevenlabs.client import ElevenLabs
 
 # --- Configuration and Initialization ---
-ELEVENLABS_API_KEY = os.environ.get("ELEVENLABS_API_KEY") 
+
+# Hardcoded ElevenLabs API key as requested.
+# For security, it's recommended to move this to an environment variable later.
+ELEVENLABS_API_KEY = os.environ.get("ELEVENLABS_API_KEY", "").strip() 
 
 # Initialize the client
 if not ELEVENLABS_API_KEY or ELEVENLABS_API_KEY == "your_elevenlabs_api_key_here":
@@ -16,7 +19,7 @@ else:
 def generate(
     text: str,
     output_path: str,
-    voice: str = "xZVrOjUURog02K298cjt", # A default voice ID
+    voice: str = "zGjIP4SZlMnY9m93k97r", # A default voice ID
     model: str = "eleven_multilingual_v2"
 ) -> str:
     """

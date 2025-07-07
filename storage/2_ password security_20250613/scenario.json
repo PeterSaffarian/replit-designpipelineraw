@@ -1,0 +1,17 @@
+{
+    "global_settings": {
+        "model_name": "kling-v1-6",
+        "aspect_ratio": "16:9",
+        "mode": "pro"
+    },
+    "opening_scene": {
+        "type": "image_to_video",
+        "duration": 10,
+        "prompt": "A still shot of the character, with subtle ambient motion.",
+        "image_source": "artwork.png"
+    },
+    "extensions": [
+        "The character begins to speak, their expression animated, as they gently nod for emphasis.",
+        "The character continues talking, their hands making small gestures to underscore key points."
+    ]
+}

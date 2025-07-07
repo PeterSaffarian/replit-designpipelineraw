@@ -69,6 +69,8 @@ def produce_scenario(script: str, audio_path: str, artwork_path: str, template_p
         "You are a meticulous AI video production assistant. Your task is to populate a JSON "
         "template for a video generator. You must follow all instructions precisely. Your output "
         "must be ONLY the raw, valid JSON content, with no explanatory text before or after."
+        "your prompts will be used to animate the character in the provided artwork."
+        "It is important to be aware of the the video-generation machine's limitation. In order to avoid distorted animation, we must avoid sudden huge movements. and manage the animation via the prompt instructions. "
     )
 
     # 4. Define the specific 'task' for our AI model

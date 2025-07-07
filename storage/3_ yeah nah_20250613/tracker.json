@@ -1,0 +1,18 @@
+{
+    "idea_name": " yeah nah",
+    "idea_text": " \"a short and light video about what the slang 'yeah nah!' means (New Zealand)\"",
+    "project_folder": "storage/3_ yeah nah_20250613",
+    "status": "SUCCESS",
+    "failed_at_step": null,
+    "final_video_path": "storage/3_ yeah nah_20250613/final_video.mp4",
+    "assets": {
+        "artwork_prompt": "Create an animated scene featuring the character from the reference image, a young woman with long, wavy hair, wearing a rust-colored t-shirt and dark pants. She stands in a lively New Zealand caf\u00e9, surrounded by greenery and wooden decor, with large windows letting in soft, natural light. The camera angle is slightly tilted to add a playful touch. The character has a contemplative yet amused expression, as she gestures with one hand, embodying the phrase \"yeah nah!\" Her expression and body language convey the humor and subtlety of the slang. The caf\u00e9 buzzes with light chatter in the background, evoking a warm and friendly atmosphere that captures the essence of New Zealand's casual, laid-back culture.",
+        "artwork_path": "storage/3_ yeah nah_20250613/artwork.png",
+        "script": "\"Ever heard a Kiwi say 'yeah nah'? It\u2019s a classic way to politely decline or express indecision. It\u2019s like saying, \u2018I hear you, but no thanks!\u2019 Perfect for keeping things light and friendly in New Zealand!\"",
+        "audio_path": "storage/3_ yeah nah_20250613/audio.mp3",
+        "scenario_path": "storage/3_ yeah nah_20250613/scenario.json",
+        "raw_video_url": "https://v21-kling.klingai.com/bs2/upload-ylab-stunt-sgp/se/stream_lake_m2v_extend_video_v15_v16/59f238cb-4092-49e8-bc9e-0d184590b2b8_raw_video.mp4?x-kcdn-pid=112372",
+        "raw_video_local_path": "storage/3_ yeah nah_20250613/raw_video.mp4",
+        "final_video_url": "https://api.sync.so/v2/generations/31897b1c-4aef-40b4-8585-5dbad26a85f7/result?token=6517d34f-1e76-41fa-89af-fdf28fc94867"
+    }
+}

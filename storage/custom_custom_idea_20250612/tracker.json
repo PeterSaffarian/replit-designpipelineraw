@@ -1,11 +1,17 @@
 {
     "idea_name": "custom_idea",
-    "idea_text": "test",
+    "idea_text": "\"a short video about understanding your payslip (new Zealand)\"",
     "project_folder": "storage/custom_custom_idea_20250612",
-    "status": "IN_PROGRESS",
-    "failed_at_step": null,
+    "status": "FAILED",
+    "failed_at_step": "Failed to assemble final video with Sync.so.",
     "final_video_path": null,
     "assets": {
-        "artwork_prompt": "Create an animated scene featuring the character standing confidently in a bright, modern classroom filled with natural light streaming through large windows. The character, dressed in a smart casual outfit of a rust-colored shirt and dark pants, holds a pen and a notebook filled with scribbles and diagrams. Her expression is focused and determined, with a hint of a smile, suggesting she is ready to tackle the test in front of her. The classroom's whiteboard is filled with colorful equations and mind maps, reflecting an atmosphere of learning and challenge. The overall mood is one of anticipation and readiness, capturing the essence of preparing for a significant test. The scene is framed in a dynamic, slightly tilted angle to convey energy and engagement, perfect for an Instagram story."
+        "artwork_prompt": "Create an animated scene featuring a young woman in a cozy home office setting. She is seated at a modern desk with a laptop open, displaying a colorful and clear payslip from New Zealand on the screen. The room is softly lit with natural sunlight streaming through a nearby window, casting gentle shadows. The character, with curly black hair and wearing a casual rust-colored shirt, appears focused yet relaxed, her expression attentive as she points to various parts of the payslip with a stylus. Surrounding her are elements that emphasize learning and understanding, such as sticky notes and a small whiteboard with key financial terms. The overall mood is educational and empowering, highlighting her journey to grasp financial literacy in a relatable and engaging way.",
+        "artwork_path": "storage/custom_custom_idea_20250612/artwork.png",
+        "script": "\"Understanding your payslip is key to managing your finances. In New Zealand, it shows your earnings, taxes, and other deductions. Always check your net pay to ensure everything's correct, so you know exactly what you're taking home each pay period.\"",
+        "audio_path": "storage/custom_custom_idea_20250612/audio.mp3",
+        "scenario_path": "storage/custom_custom_idea_20250612/scenario.json",
+        "raw_video_url": "https://v21-kling.klingai.com/bs2/upload-ylab-stunt-sgp/se/stream_lake_m2v_extend_video_v15_v16/8a01799f-2fab-42b8-92d5-3cc3e882157b_raw_video.mp4?x-kcdn-pid=112372",
+        "raw_video_local_path": "storage/custom_custom_idea_20250612/raw_video.mp4"
     }
 }

@@ -6,7 +6,9 @@ from sync.common import Audio, GenerationOptions, Video
 from sync.core.api_error import ApiError
 
 # --- Configuration ---
-SYNC_API_KEY = os.environ.get("SYNC_API_KEY")
+# Hardcoded Sync.so API key as per the provided snippet.
+# For better practice, consider moving this to an environment variable later.
+SYNC_API_KEY = os.environ.get("SYNC_API_KEY", "").strip()
 
 # Initialize the client
 if not SYNC_API_KEY or SYNC_API_KEY == "your_sync_so_api_key_here":
@@ -129,10 +131,10 @@ if __name__ == '__main__':
         print("ERROR: Please replace 'your_sync_so_api_key_here' in the script with your actual key.")
     else:
         # For this test, you MUST have a test audio file.
-        test_audio = "storage/test/audio/test_audio.mp3"
+        test_audio = "storage/5_ drink wate_20250613/audio.mp3"
         # The raw video URL would normally come from the video_gen step. We'll use a placeholder.
         # NOTE: This URL must be a real, public video URL for the test to work.
-        test_video_url = "https://v21-kling.klingai.com/bs2/upload-ylab-stunt-sgp/se/stream_lake_m2v_extend_video_v15_v16/74c29198-e512-4636-b3e6-eeb9a03c546a_raw_video.mp4?x-kcdn-pid=112372"
+        test_video_url = "https://v21-kling.klingai.com/bs2/upload-ylab-stunt-sgp/se/stream_lake_m2v_extend_video_v15_v16/650ece21-e762-4e85-897f-76f5ffccb92c_raw_video.mp4?x-kcdn-pid=112372"
 
         if not os.path.exists(test_audio):
             print(f"ERROR: Test audio file not found at '{test_audio}'.")

@@ -1,0 +1,18 @@
+{
+    "idea_name": " payslip",
+    "idea_text": " \"a short video about understanding your payslip (new Zealand)\"",
+    "project_folder": "storage/1_ payslip_20250613",
+    "status": "SUCCESS",
+    "failed_at_step": null,
+    "final_video_path": "storage/1_ payslip_20250613/final_video.mp4",
+    "assets": {
+        "artwork_prompt": "Create an engaging Instagram story scene featuring the reference character in a cozy, well-lit office space in New Zealand. The character stands confidently beside a desk holding a colorful, detailed payslip, with a look of understanding and satisfaction. The office is adorned with elements that reflect New Zealand's culture, like a small Kiwi bird figure and a scenic landscape poster. Natural light filters through a large window, casting a warm glow across the room. The character wears a smart-casual outfit, appearing approachable and knowledgeable. The payslip is prominently displayed on the desk, with key sections highlighted to emphasize clarity and comprehension, symbolizing the core idea of understanding one's payslip. The overall atmosphere is friendly and informative.",
+        "artwork_path": "storage/1_ payslip_20250613/artwork.png",
+        "script": "Understanding your New Zealand payslip is crucial. Start by checking your gross pay, then look at deductions like PAYE tax. Finally, your net pay shows what you take home. Knowing these details helps you manage your finances better!",
+        "audio_path": "storage/1_ payslip_20250613/audio.mp3",
+        "scenario_path": "storage/1_ payslip_20250613/scenario.json",
+        "raw_video_url": "https://v21-kling.klingai.com/bs2/upload-ylab-stunt-sgp/se/stream_lake_m2v_extend_video_v15_v16/b2ab0fd0-d519-4ee5-a2c1-58975e652482_raw_video.mp4?x-kcdn-pid=112372",
+        "raw_video_local_path": "storage/1_ payslip_20250613/raw_video.mp4",
+        "final_video_url": "https://api.sync.so/v2/generations/4507b921-fa5a-4bca-88b7-3eb9c674aae5/result?token=620720ad-5bfe-4096-bc0d-a54032649f86"
+    }
+}

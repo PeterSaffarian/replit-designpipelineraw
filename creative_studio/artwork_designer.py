@@ -39,6 +39,9 @@ def design_artwork_prompt(idea: str, ref_image_path: str) -> str:
         "that includes the character as the main actor. Focus on visual details: lighting, "
         "camera angle, mood, setting, and character expression. Do not write a story, only the prompt."
         "the reference character image will also be given to the engine as reference alongside your prompt."
+        "given the limitations of the video generation machine around working with text, try and make a visual scene and environmnet that can be easily animated."
+        "in the scene let's try and avoide using text content on any screen."
+        "the goal is to make it a visual (and then later adding voice to make it verbal as well). not text filled"
     )
 
     # 2. Define the specific 'task' for our AI model.

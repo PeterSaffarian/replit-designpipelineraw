@@ -1,0 +1,31 @@
+[
+    {
+        "idea_name": " GST",
+        "idea_text": " \"a short video about when do people need to register for GST (New Zealand) - clear and informative and short and to the point please\"",
+        "project_folder": "storage/1_ GST_20250613",
+        "status": "SUCCESS",
+        "failed_at_step": null,
+        "final_video_path": "storage/1_ GST_20250613/final_video.mp4",
+        "assets": {
+            "artwork_prompt": "Create a clear and informative Instagram story animation featuring the reference character in a modern office setting. The character stands confidently in front of a sleek desk with a laptop open, showing a GST registration page. The background is filled with subtle New Zealand motifs, like ferns and kiwi birds, to emphasize the location. The lighting is bright and professional, reflecting a productive atmosphere. The character is smiling, with a focused expression, pointing to the laptop screen. Above her, animated text appears in a clean, bold font: \"When to Register for GST in New Zealand?\" The scene conveys clarity and professionalism, with a pop of color from a potted plant on the desk, enhancing the inviting and informative mood.",
+            "artwork_path": "storage/1_ GST_20250613/artwork.png",
+            "script": "\"If your business in New Zealand earns over $60,000 annually, it\u2019s time to register for GST. It\u2019s a crucial step for compliance and helps manage your tax obligations effectively. Don't wait\u2014get registered and keep your business on track!\"",
+            "audio_path": "storage/1_ GST_20250613/audio.mp3",
+            "scenario_path": "storage/1_ GST_20250613/scenario.json",
+            "raw_video_url": "https://v21-kling.klingai.com/bs2/upload-ylab-stunt-sgp/se/stream_lake_m2v_extend_video_v15_v16/37737b9d-645b-484b-b339-b214429f8b29_raw_video.mp4?x-kcdn-pid=112372",
+            "raw_video_local_path": "storage/1_ GST_20250613/raw_video.mp4",
+            "final_video_url": "https://api.sync.so/v2/generations/4b2c9de9-577e-4f6b-b8b3-c42362384b33/result?token=69cb4ba0-23e1-491c-a65d-5a7a625152e1"
+        }
+    },
+    {
+        "idea_name": " Tax Return",
+        "idea_text": " \"an explainer video about what happens if you forget to file your tax return\"",
+        "project_folder": "storage/2_ Tax Return_20250613",
+        "status": "FAILED",
+        "failed_at_step": "Failed to build artwork.",
+        "final_video_path": null,
+        "assets": {
+            "artwork_prompt": "In a brightly lit home office, the character stands at a cluttered desk filled with papers, a laptop displaying a calendar with a missed deadline, and scattered tax documents. She appears slightly anxious, with wide eyes and a slight furrow in her brow, glancing at a wall clock showing the end of tax season. The room is modern, with shelves of books and a potted plant, casting soft shadows across the scene. A bright window casts a warm glow, highlighting her concerned expression as she holds a form marked \u201cTAXES DUE.\u201d The setting conveys urgency and the importance of timely filing, creating a relatable and informative visual for the explainer video."
+        }
+    }
+]
