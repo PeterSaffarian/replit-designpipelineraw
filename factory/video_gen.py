@@ -5,13 +5,16 @@
 import os
 import json
 import time
+from typing import Optional, Dict
 from . import kling # Import from within the same package
+from . import runway # Import Runway integration
+from . import video_concat # Import video concatenation utilities
 
 # --- Configuration ---
 MAX_RETRIES = 3
 RETRY_DELAY = 10 
 
-def _load_scenario_data(path: str) -> dict:
+def _load_scenario_data(path: str) -> Optional[Dict]:
     """Loads and validates the scenario data from a JSON file."""
     try:
         with open(path, 'r') as f:
@@ -26,9 +29,10 @@ def _load_scenario_data(path: str) -> dict:
         print(f"VIDEO GEN: Error loading scenario file: {e}")
         return None
 
-def generate(scenario_path: str, assets_base_path: str) -> dict:
+def generate(scenario_path: str, assets_base_path: str) -> Optional[Dict]:
     """
     Reads a scenario file and executes the full video generation workflow.
+    Supports both Kling and Runway providers based on scenario configuration.
 
     Args:
         scenario_path (str): The full path to the scenario JSON file.
@@ -38,29 +42,45 @@ def generate(scenario_path: str, assets_base_path: str) -> dict:
         A dictionary containing the final video result, or None on failure.
     """
     print("\n--- Starting Video Generation ---")
-    direction = _load_scenario_data(scenario_path)
-    if not direction:
+    scenario_data = _load_scenario_data(scenario_path)
+    if not scenario_data:
         return None
 
-    opening_config = direction.get('opening_scene', {})
-    global_config = direction.get('global_settings', {})
-    current_result = None
+    global_config = scenario_data.get('global_settings', {})
+    opening_config = scenario_data.get('opening_scene', {})
+    extension_prompts = scenario_data.get('extensions', [])
 
-    # --- Step 1: Generate the Opening Scene ---
+    # Determine provider from global settings
+    provider = global_config.get('provider', 'kling').lower()
+    print(f"VIDEO GEN: Using provider: {provider}")
+
+    # Get image source for the opening scene
+    image_name = opening_config.get('image_source')
+    if not image_name:
+        print("VIDEO GEN: Error - `image_source` not specified in scenario.")
+        return None
+    
+    full_image_path = os.path.join(assets_base_path, image_name)
+    if not os.path.exists(full_image_path):
+        print(f"VIDEO GEN: Error - Asset image not found at {full_image_path}")
+        return None
+
+    # Route to appropriate provider
+    if provider == 'runway':
+        return _generate_runway_video(scenario_data, full_image_path, assets_base_path)
+    else:
+        return _generate_kling_video(scenario_data, full_image_path, assets_base_path)
+
+def _generate_kling_video(scenario_data: dict, full_image_path: str, assets_base_path: str) -> Optional[Dict]:
+    """Generate video using Kling provider (original method)."""
+    global_config = scenario_data.get('global_settings', {})
+    opening_config = scenario_data.get('opening_scene', {})
+    extension_prompts = scenario_data.get('extensions', [])
+
+    print("VIDEO GEN: Using Kling provider")
+
+    # --- Step 1: Create the Opening Scene ---
     if opening_config.get('type') == 'image_to_video':
-        print("VIDEO GEN: Generating opening scene from image...")
-
-        # Construct the full path to the image asset
-        image_name = opening_config.get('image_source')
-        if not image_name:
-            print("VIDEO GEN: Error - `image_source` not specified in scenario.")
-            return None
-        full_image_path = os.path.join(assets_base_path, image_name)
-
-        if not os.path.exists(full_image_path):
-            print(f"VIDEO GEN: Error - Asset image not found at {full_image_path}")
-            return None
-
         current_result = kling.image_to_video(
             image_path=full_image_path,
             prompt=opening_config['prompt'],
@@ -83,7 +103,7 @@ def generate(scenario_path: str, assets_base_path: str) -> dict:
         print("VIDEO GEN: Error - Could not find video ID in the opening scene result.")
         return None
 
-    extension_prompts = direction.get('extensions', [])
+    extension_result = None
     for i, prompt in enumerate(extension_prompts):
         print(f"--- Starting Extension {i+1}/{len(extension_prompts)} ---")
         retries = 0
@@ -95,7 +115,7 @@ def generate(scenario_path: str, assets_base_path: str) -> dict:
 
             if extension_result:
                 extension_successful = True
-                break 
+                break
 
             retries += 1
             if retries < MAX_RETRIES:
@@ -104,9 +124,9 @@ def generate(scenario_path: str, assets_base_path: str) -> dict:
 
         if not extension_successful:
             print(f"VIDEO GEN: Error - Failed on extension {i+1} after {MAX_RETRIES} retries. Stopping.")
-            return current_result # Return the last successful result
+            return current_result
 
-        current_result = extension_result
+        current_result = extension_result if extension_result else current_result
         try:
             current_video_id = current_result['videos'][0]['id']
             print(f"VIDEO GEN: Extension {i+1} successful. New Video ID: {current_video_id}")
@@ -114,8 +134,67 @@ def generate(scenario_path: str, assets_base_path: str) -> dict:
             print("VIDEO GEN: Error - Could not find video ID in extension result. Stopping.")
             return current_result
 
-    print("🎉 --- Video Generation Finished Successfully! --- 🎉")
+    print("🎉 --- Kling Video Generation Finished Successfully! --- 🎉")
     return current_result
+
+def _generate_runway_video(scenario_data: dict, full_image_path: str, assets_base_path: str) -> Optional[Dict]:
+    """Generate video using Runway provider with chaining method."""
+    global_config = scenario_data.get('global_settings', {})
+    opening_config = scenario_data.get('opening_scene', {})
+    extension_prompts = scenario_data.get('extensions', [])
+
+    print("VIDEO GEN: Using Runway provider")
+
+    # Build complete prompts list (opening + extensions)
+    all_prompts = [opening_config.get('prompt', 'A still shot of the character, with subtle ambient motion.')]
+    all_prompts.extend(extension_prompts)
+
+    print(f"VIDEO GEN: Generating {len(all_prompts)} segments with Runway")
+
+    # Create temp directory for segments
+    temp_dir = os.path.join(assets_base_path, f'temp_segments_{int(time.time())}')
+    os.makedirs(temp_dir, exist_ok=True)
+
+    # Generate extended video using Runway's chaining method
+    segments_result = runway.generate_extended_video(
+        image_path=full_image_path,
+        prompts=all_prompts,
+        model_name=global_config.get('model_name', 'gen4_turbo'),
+        segment_duration=opening_config.get('duration', 5),
+        aspect_ratio=global_config.get('aspect_ratio', '16:9'),
+        temp_dir=temp_dir
+    )
+
+    if not segments_result:
+        print("VIDEO GEN: Failed to generate Runway video segments")
+        return None
+
+    # Concatenate segments into final video
+    print("VIDEO GEN: Concatenating Runway segments...")
+    final_video_path = os.path.join(assets_base_path, f'final_runway_video_{int(time.time())}.mp4')
+    
+    if video_concat.concatenate_runway_segments(segments_result, final_video_path):
+        print(f"VIDEO GEN: Runway video successfully created: {final_video_path}")
+        
+        # Clean up temporary segments but keep final video
+        runway.cleanup_temp_files(temp_dir, keep_final=True)
+        
+        print("🎉 --- Runway Video Generation Finished Successfully! --- 🎉")
+        
+        # Return in consistent format with Kling
+        return {
+            'videos': [{
+                'id': f"runway_concat_{int(time.time())}",
+                'url': f"file://{final_video_path}",
+                'path': final_video_path,
+                'segments': len(segments_result['segments']),
+                'provider': 'runway'
+            }],
+            'status': 'completed'
+        }
+    else:
+        print("VIDEO GEN: Failed to concatenate Runway segments")
+        return None
 
 # This allows other scripts to import the 'generate' function easily.
 __all__ = ["generate"]

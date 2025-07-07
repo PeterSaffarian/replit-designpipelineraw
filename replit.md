@@ -33,9 +33,11 @@ The architecture integrates multiple external AI services through dedicated modu
 
 ### Factory (`factory/`)
 - **Audio Generator** - Converts scripts to speech using ElevenLabs TTS
-- **Video Generator** - Creates animated videos from static images using Kling AI
+- **Video Generator** - Creates animated videos from static images using provider-agnostic routing
+- **Kling Integration** - Handles JWT authentication and direct video extension with Kling AI
+- **Runway Integration** - Handles frame extraction and chained segment generation with Runway ML
+- **Video Concatenation** - FFmpeg-based utilities for seamless video segment joining
 - **Assembly** - Combines raw video with audio using Sync.so for final production
-- **Kling Integration** - Handles JWT authentication and API interactions with Kling AI
 
 ### Storage System
 - **Project-based Organization** - Each video generation creates a unique project folder
@@ -81,6 +83,7 @@ The system uses environment variables for API key management:
 - `OPENAI_API_KEY` - OpenAI GPT access
 - `ELEVENLABS_API_KEY` - ElevenLabs TTS access
 - `KLING_ACCESS_KEY` / `KLING_SECRET_KEY` - Kling AI authentication
+- `RUNWAY_API_KEY` - Runway ML video generation access
 - `SYNC_API_KEY` - Sync.so video assembly access
 
 ### Project Structure
@@ -95,8 +98,19 @@ The system uses environment variables for API key management:
 
 ## Changelog
 
-- July 07, 2025. Initial setup
+- July 07, 2025: Initial setup with Kling AI integration
+- July 07, 2025: Added Runway ML support as alternative video provider with frame-extraction chaining method
 
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
+
+## Recent Changes (July 07, 2025)
+
+✓ Added Runway ML integration as alternative to Kling AI
+✓ Implemented frame extraction for seamless video segment chaining  
+✓ Created video concatenation utilities using FFmpeg
+✓ Enhanced scenario configuration with provider selection
+✓ Updated video generation pipeline to support both providers
+
+→ Testing and validation of Runway integration pending API keys
