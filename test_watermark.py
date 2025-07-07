@@ -51,7 +51,7 @@ def test_watermarking():
     print(f"\nTesting watermark application...")
     result = add_logo_watermark(
         input_video_path=video_path,
-        logo_path=logo_path,
+        logo_path=logo_path if logo_path else "",
         output_path=output_path,
         position="top-left",
         opacity=0.7,

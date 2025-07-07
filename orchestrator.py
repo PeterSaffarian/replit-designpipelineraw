@@ -201,7 +201,20 @@ def run_pipeline_for_idea(idea_text, idea_number, idea_name):
 
         # --- Step 8: Assembly (Lipsync) ---
         print("\n--- [Step 7/8] Factory: Assembling Final Video ---")
-        final_video_url = assembly.generate(raw_video_url, generated_audio_path)
+        
+        # For Runway videos (local files), we need to upload to get a public URL for Sync.so
+        if raw_video_url.startswith('file://'):
+            print("   📤 Uploading Runway video to get public URL for lip-sync...")
+            from factory.assembly import _upload_file_for_url
+            public_video_url = _upload_file_for_url(raw_video_path)
+            if not public_video_url:
+                raise RuntimeError("Failed to upload Runway video for lip-sync processing.")
+            print(f"   ✅ Video uploaded successfully: {public_video_url}")
+        else:
+            # Kling videos already have public URLs
+            public_video_url = raw_video_url
+        
+        final_video_url = assembly.generate(public_video_url, generated_audio_path)
         if not final_video_url:
             raise RuntimeError("Failed to assemble final video with Sync.so.")
         print(f"   ✅ Lip-sync complete.")
