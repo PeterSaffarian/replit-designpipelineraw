@@ -12,9 +12,9 @@ from factory.video_watermark import add_logo_watermark, apply_final_branding
 def create_test_logo():
 
     print("get test logo...")
-    logo_path = "/test_files/logo.png"
+    logo_path = "test_files/logo.png"
 
-    if logo_path:    
+    if os.path.exists(logo_path):    
         return logo_path
 
     else:
@@ -25,9 +25,9 @@ def create_test_video():
     
     print("get test video...")
 
-    video_path = "/test_files/video.mp4"
+    video_path = "test_files/video.mp4"
 
-    if video_path:
+    if os.path.exists(video_path):
         return video_path
     else:
         print("❌ NO TEST VIDEO FOUND")
@@ -46,7 +46,7 @@ def test_watermarking():
         return False
     
     # Test watermarking
-    output_path = "/test_files/watermarked_video.mp4"
+    output_path = "test_files/watermarked_video.mp4"
     
     print(f"\nTesting watermark application...")
     result = add_logo_watermark(
