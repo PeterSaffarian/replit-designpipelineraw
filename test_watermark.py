@@ -54,8 +54,8 @@ def test_watermarking():
         logo_path=logo_path,
         output_path=output_path,
         position="top-left",
-        opacity=0.3,
-        scale=100
+        opacity=0.7,
+        scale=150
     )
     
     success = result is not None and os.path.exists(output_path)
@@ -76,11 +76,11 @@ def test_watermarking():
     else:
         print("❌ Final branding test failed!")
     
-    # Cleanup test files
-    for file_path in [logo_path, video_path, output_path, branded_result]:
-        if file_path and os.path.exists(file_path):
-            os.remove(file_path)
-            print(f"Cleaned up: {file_path}")
+    # # Cleanup test files
+    # for file_path in [logo_path, video_path, output_path, branded_result]:
+    #     if file_path and os.path.exists(file_path):
+    #         os.remove(file_path)
+    #         print(f"Cleaned up: {file_path}")
     
     return success
 

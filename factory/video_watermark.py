@@ -137,6 +137,6 @@ def apply_final_branding(
         logo_path=logo_path,
         output_path=branded_path,
         position="top-left",
-        opacity=0.3,
+        opacity=0.7,
         scale=150
     )

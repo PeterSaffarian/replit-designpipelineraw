@@ -1,0 +1,19 @@
+{
+    "idea_name": "Urgent Scam Calls",
+    "idea_text": "A video explaining what to do when someone urgently calls you about \u2018fraud on your account.\u2019",
+    "project_folder": "storage/2_Urgent Scam Calls_20250707",
+    "status": "FAILED",
+    "failed_at_step": "Failed to assemble final video with Sync.so.",
+    "final_video_path": null,
+    "assets": {
+        "artwork_prompt": "Create a scene featuring the character in a brightly lit, modern living room setting. The character is holding a smartphone to their ear, with a concerned yet composed expression. They are dressed in a casual outfit similar to the reference image, standing next to a sleek, minimalistic desk with a laptop open. The background includes a window with soft daylight streaming in, casting gentle shadows. A potted plant and some books are neatly arranged on a shelf nearby. The scene conveys a sense of urgency but also calmness, emphasizing the character\u2019s readiness to address the situation thoughtfully.",
+        "artwork_path": "storage/2_Urgent Scam Calls_20250707/artwork.png",
+        "artwork_retry_count": 0,
+        "script": "\"Getting a call about fraud on your account can be alarming, but stay calm. Don't provide any personal information. Hang up and call your bank directly using the number on their official website to verify the situation.\"",
+        "audio_path": "storage/2_Urgent Scam Calls_20250707/audio.mp3",
+        "scenario_path": "storage/2_Urgent Scam Calls_20250707/scenario.json",
+        "raw_video_url": "file://storage/2_Urgent Scam Calls_20250707/final_runway_video_1751864481.mp4",
+        "video_provider": "runway",
+        "raw_video_local_path": "storage/2_Urgent Scam Calls_20250707/final_runway_video_1751864481.mp4"
+    }
+}

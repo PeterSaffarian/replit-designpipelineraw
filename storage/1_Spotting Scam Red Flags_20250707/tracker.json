@@ -1,0 +1,11 @@
+{
+    "idea_name": "Spotting Scam Red Flags",
+    "idea_text": "A video showing how to spot common scam warning signs in messages or calls.",
+    "project_folder": "storage/1_Spotting Scam Red Flags_20250707",
+    "status": "FAILED",
+    "failed_at_step": "Failed to generate artwork after all retry attempts.",
+    "final_video_path": null,
+    "assets": {
+        "artwork_prompt": "Create an image in an animated style featuring a confident character standing in a modern, well-lit office environment. The character, a young woman with shoulder-length, wavy dark hair, is wearing a smart casual outfit: an orange t-shirt and dark trousers. She is intently examining her smartphone with a focused expression, highlighting her awareness and vigilance. Around her, subtle visual cues suggest scam warning signs: a pop-up bubble with a suspicious-looking phone number, an exclamation mark, and a question mark symbol. The background features a desk with a laptop open, displaying a generic interface without text, and a potted plant adding a touch of greenery. The lighting is bright and natural, casting soft shadows, creating a professional and informative atmosphere that aligns with the theme of identifying scam warnings."
+    }
+}
