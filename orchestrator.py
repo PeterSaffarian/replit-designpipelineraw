@@ -9,7 +9,7 @@ from datetime import datetime
 # It's good practice to wrap imports in a try-except block for clearer error messages
 try:
     from creative_studio import artwork_designer, artwork_builder, artwork_checker, script_writer, producer
-    from factory import audio_gen, video_gen, assembly
+    from factory import audio_gen, video_gen, assembly, video_watermark
 except ImportError as e:
     print(f"FATAL ERROR: A required module could not be imported: {e}")
     print("Please ensure you are running the orchestrator from the project's root directory.")
@@ -22,6 +22,7 @@ SCHEMAS_DIR = "schemas"
 HERO_IMAGE_NAME = "hero.png"
 IDEAS_FILE_NAME = "ideas.csv"
 TEMPLATE_FILE_NAME = "runway_scenario_template.json"
+LOGO_FILE_NAME = "logo.png"
 MAX_ARTWORK_RETRIES = 3  # Maximum attempts to generate acceptable artwork
 
 
@@ -199,7 +200,7 @@ def run_pipeline_for_idea(idea_text, idea_number, idea_name):
         save_tracker()
 
         # --- Step 8: Assembly (Lipsync) ---
-        print("\n--- [Step 7/7] Factory: Assembling Final Video ---")
+        print("\n--- [Step 7/8] Factory: Assembling Final Video ---")
         final_video_url = assembly.generate(raw_video_url, generated_audio_path)
         if not final_video_url:
             raise RuntimeError("Failed to assemble final video with Sync.so.")
@@ -207,10 +208,31 @@ def run_pipeline_for_idea(idea_text, idea_number, idea_name):
         status_report['assets']['final_video_url'] = final_video_url
         final_video_path = os.path.join(project_path, "final_video.mp4")
         download_file(final_video_url, final_video_path)
+        status_report['assets']['final_video_path'] = final_video_path
+        save_tracker()
+
+        # --- Step 9: Logo Watermarking ---
+        print("\n--- [Step 8/8] Factory: Adding Logo Watermark ---")
+        logo_path = os.path.join(INPUTS_DIR, LOGO_FILE_NAME)
+        
+        if os.path.exists(logo_path):
+            print(f"   🏷️  Applying logo watermark from {logo_path}...")
+            branded_video_path = video_watermark.apply_final_branding(
+                final_video_path, logo_path, project_path
+            )
+            
+            if branded_video_path:
+                print(f"   ✅ Logo watermark applied successfully!")
+                print(f"   📍 Original video: {final_video_path}")
+                print(f"   📍 Branded video: {branded_video_path}")
+                status_report['assets']['branded_video_path'] = branded_video_path
+            else:
+                print(f"   ⚠️  Failed to apply logo watermark, keeping original video.")
+        else:
+            print(f"   ℹ️  No logo file found at {logo_path}, skipping watermark step.")
 
         # --- Final Success ---
         status_report['status'] = "SUCCESS"
-        status_report['final_video_path'] = final_video_path
         save_tracker()
         print(f"\n🎉🎉🎉 SUCCESS! Pipeline complete for '{idea_name}'. 🎉🎉🎉")
         print(f"Final video saved at: {final_video_path}")

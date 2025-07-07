@@ -6,13 +6,14 @@
     "failed_at_step": "Failed to assemble final video with Sync.so.",
     "final_video_path": null,
     "assets": {
-        "artwork_prompt": "Create a vibrant, animated scene featuring the reference character standing in a bright, sunlit kitchen. The character is wearing a casual, comfortable outfit similar to the reference, with a warm smile and an inviting expression. She is holding a large, clear glass of water, with droplets of condensation on the outside, reflecting the sunlight streaming in from a nearby window. The kitchen environment is cozy and modern, with lush green plants on the windowsill and a fruit bowl on the counter. The lighting is soft and natural, casting gentle shadows, creating a refreshing and healthy atmosphere. The character is gesturing towards the glass of water, emphasizing the importance of staying hydrated. The scene conveys a sense of warmth and wellness, visually reinforcing the reminder to drink enough water every day.",
+        "artwork_prompt": "Create an animated scene featuring the reference character in a cozy kitchen setting, bathed in warm, natural morning light streaming through a window. The character is happily holding a large glass of water, with a gentle smile and a refreshed expression. They are dressed in casual, comfortable clothing, similar to the reference image, with a slightly animated stance suggesting movement. On the kitchen counter, there's a pitcher of water with slices of lemon and a small succulent plant, adding a touch of freshness. In the background, a soft focus view of the outdoors through the window shows a sunny day, enhancing the positive and healthy atmosphere. The overall mood is inviting and serene, emphasizing the importance of staying hydrated every day.",
         "artwork_path": "storage/5_ drink wate_20250707/artwork.png",
-        "script": "\"Hey there! Remember to drink enough water every day. It's essential for keeping your body energized and your mind clear. So, grab a glass and stay hydrated\u2014your body will thank you!\"",
+        "artwork_retry_count": 0,
+        "script": "\"Feeling sluggish? Maybe it\u2019s time for a water break! Staying hydrated helps keep your energy up and your mind sharp. So grab a glass and make it a habit\u2014your body will thank you!\"",
         "audio_path": "storage/5_ drink wate_20250707/audio.mp3",
         "scenario_path": "storage/5_ drink wate_20250707/scenario.json",
-        "raw_video_url": "file://storage/5_ drink wate_20250707/final_runway_video_1751855408.mp4",
+        "raw_video_url": "file://storage/5_ drink wate_20250707/final_runway_video_1751856508.mp4",
         "video_provider": "runway",
-        "raw_video_local_path": "storage/5_ drink wate_20250707/final_runway_video_1751855408.mp4"
+        "raw_video_local_path": "storage/5_ drink wate_20250707/final_runway_video_1751856508.mp4"
     }
 }

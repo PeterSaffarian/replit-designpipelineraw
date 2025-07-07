@@ -38,6 +38,7 @@ The architecture integrates multiple external AI services through dedicated modu
 - **Kling Integration** - Handles JWT authentication and direct video extension with Kling AI
 - **Runway Integration** - Handles frame extraction and chained segment generation with Runway ML
 - **Video Concatenation** - FFmpeg-based utilities for seamless video segment joining
+- **Video Watermark** - FFmpeg-based logo overlay system with configurable positioning and transparency
 - **Assembly** - Combines raw video with audio using Sync.so for final production
 
 ### Storage System
@@ -116,5 +117,8 @@ Preferred communication style: Simple, everyday language.
 ✓ Added artwork quality checker using OpenAI GPT-4o multimodal model
 ✓ Implemented retry loop with configurable max attempts (default: 3)
 ✓ Enhanced orchestrator with quality control workflow and detailed logging
+✓ Added logo watermarking system with FFmpeg-based overlay functionality
+✓ Implemented final branding step preserving original video while creating branded version
+✓ Added configurable logo positioning, opacity, and scaling options
 
-→ System now validates artwork quality before proceeding to video generation
+→ Complete 8-step pipeline with quality control and professional branding

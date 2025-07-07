@@ -79,7 +79,9 @@ ORIGINAL PROMPT GIVEN TO ARTWORK GENERATOR:
 
 PURPOSE: This artwork will be used as the base image for video generation, so it needs to be clear, well-composed, and free of AI artifacts.
 
-Please examine the attached artwork and determine if it passes quality standards or needs to be regenerated."""
+Please examine the attached artwork and determine if it passes quality standards or needs to be regenerated.
+Be realistic.
+"""
 
     try:
         # Call OpenAI's multimodal model (gpt-4o)
