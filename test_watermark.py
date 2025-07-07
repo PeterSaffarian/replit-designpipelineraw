@@ -10,45 +10,27 @@ from PIL import Image, ImageDraw
 from factory.video_watermark import add_logo_watermark, apply_final_branding
 
 def create_test_logo():
-    """Create a test transparent PNG logo."""
-    print("Creating test logo...")
-    
-    # Create a transparent logo with text
-    img = Image.new('RGBA', (200, 100), (0, 0, 0, 0))  # Transparent background
-    draw = ImageDraw.Draw(img)
-    
-    # Draw a simple logo with text and shape
-    draw.rectangle([10, 10, 190, 90], fill=(0, 123, 255, 180), outline=(0, 100, 200, 255), width=3)
-    draw.text((50, 35), "LOGO", fill=(255, 255, 255, 255))
-    
-    logo_path = "/tmp/test_logo.png"
-    img.save(logo_path)
-    print(f"Test logo saved to: {logo_path}")
-    return logo_path
+
+    print("get test logo...")
+    logo_path = "/test_files/logo.png"
+
+    if logo_path:    
+        return logo_path
+
+    else:
+        print("❌ NO TEST LOGO FOUND")
+        return None
 
 def create_test_video():
-    """Create a simple test video using FFmpeg."""
-    print("Creating test video...")
     
-    video_path = "/tmp/test_video.mp4"
-    
-    # Create a simple 5-second test video with color bars
-    import subprocess
-    cmd = [
-        "ffmpeg", "-f", "lavfi", "-i", "testsrc=duration=5:size=640x480:rate=30",
-        "-c:v", "libx264", "-pix_fmt", "yuv420p", "-y", video_path
-    ]
-    
-    try:
-        result = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
-        if result.returncode == 0:
-            print(f"Test video created: {video_path}")
-            return video_path
-        else:
-            print(f"Failed to create test video: {result.stderr}")
-            return None
-    except Exception as e:
-        print(f"Error creating test video: {e}")
+    print("get test video...")
+
+    video_path = "/test_files/video.mp4"
+
+    if video_path:
+        return video_path
+    else:
+        print("❌ NO TEST VIDEO FOUND")
         return None
 
 def test_watermarking():
@@ -64,14 +46,14 @@ def test_watermarking():
         return False
     
     # Test watermarking
-    output_path = "/tmp/watermarked_video.mp4"
+    output_path = "/test_files/watermarked_video.mp4"
     
     print(f"\nTesting watermark application...")
     result = add_logo_watermark(
         input_video_path=video_path,
         logo_path=logo_path,
         output_path=output_path,
-        position="bottom-right",
+        position="top-left",
         opacity=0.3,
         scale=100
     )

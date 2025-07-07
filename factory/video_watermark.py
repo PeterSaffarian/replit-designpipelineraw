@@ -14,7 +14,7 @@ def add_logo_watermark(
     input_video_path: str,
     logo_path: str,
     output_path: str,
-    position: str = "bottom-right",
+    position: str = "top-left",
     opacity: float = 0.3,
     scale: int = 150
 ) -> Optional[str]:
@@ -136,7 +136,7 @@ def apply_final_branding(
         input_video_path=final_video_path,
         logo_path=logo_path,
         output_path=branded_path,
-        position="bottom-right",
+        position="top-left",
         opacity=0.3,
         scale=150
     )
