@@ -8,7 +8,7 @@ import time
 from typing import Optional, Dict
 from . import kling # Import from within the same package
 from . import runway # Import Runway integration
-from . import video_concat # Import video concatenation utilities
+from . import branding # Import video concatenation utilities
 
 # --- Configuration ---
 MAX_RETRIES = 3
@@ -173,7 +173,7 @@ def _generate_runway_video(scenario_data: dict, full_image_path: str, assets_bas
     print("VIDEO GEN: Concatenating Runway segments...")
     final_video_path = os.path.join(assets_base_path, f'final_runway_video_{int(time.time())}.mp4')
     
-    if video_concat.concatenate_runway_segments(segments_result, final_video_path):
+    if branding.concatenate_videos([seg['video_path'] for seg in segments_result['segments']], final_video_path):
         print(f"VIDEO GEN: Runway video successfully created: {final_video_path}")
         
         # Clean up temporary segments but keep final video

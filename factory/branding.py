@@ -70,8 +70,11 @@ def create_intro_slide(title: str, logo_path: str, output_path: str, width: int,
     if not os.path.exists(logo_path):
         return None
     
+    # Clean title text - remove special characters that break FFmpeg
+    title_clean = title.replace("'", "").replace('"', "").replace(":", "").replace(";", "")
+    
     # Smart text wrapping for title
-    words = title.split()
+    words = title_clean.split()
     if len(words) > 2:
         # Split into two lines for better fit
         mid = len(words) // 2
@@ -79,7 +82,7 @@ def create_intro_slide(title: str, logo_path: str, output_path: str, width: int,
         title_line2 = ' '.join(words[mid:])
         title_text = f"{title_line1}\\n{title_line2}"
     else:
-        title_text = title
+        title_text = title_clean
     
     # Size calculations with smart font sizing
     logo_size = min(width, height) // 3
@@ -98,28 +101,33 @@ def create_intro_slide(title: str, logo_path: str, output_path: str, width: int,
             "-f", "lavfi", "-i", f"color=white:size={width}x{height}:duration=4",
             "-i", logo_path,
             "-filter_complex",
-            # KiaOra presents text with entrance animation
+            # KiaOra presents text - slides down from above after 1 second
             f"[0:v]drawtext=text='KiaOra presents':"
             f"fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:"
             f"fontsize={presents_font}:fontcolor=black:"
-            f"x=(w-text_w)/2:y='if(lt(t,1),{presents_y-30},{presents_y}+if(lt(t,2),30*(1-(t-1)),0))'[with_presents];"
+            f"x=(w-text_w)/2:y='if(gte(t,1),{presents_y},{presents_y-100})'[with_presents];"
             
-            # Title text with smart wrapping and entrance animation
+            # Title text - slides up from below after 2.5 seconds
             f"[with_presents]drawtext=text='{title_text}':"
             f"fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:"
             f"fontsize={title_font}:fontcolor=black:"
-            f"x=(w-text_w)/2:y='if(lt(t,2),{title_y+30},{title_y}+if(lt(t,3),30*(1-(t-2)),0))'[with_title];"
+            f"x=(w-text_w)/2:y='if(gte(t,2.5),{title_y},{title_y+100})'[with_title];"
             
-            # Logo overlay with entrance animation
+            # Logo - slides down from above first
             f"[1:v]scale={logo_size}:{logo_size}[logo_scaled];"
-            f"[with_title][logo_scaled]overlay=x={logo_x}:y='if(lt(t,0.5),{logo_y-20},{logo_y}+if(lt(t,1.5),20*(1-(t-0.5)),0))'",
+            f"[with_title][logo_scaled]overlay=x={logo_x}:"
+            f"y='if(gte(t,0.5),{logo_y},{logo_y-150})'",
             
             "-c:v", "libx264", "-pix_fmt", "yuv420p", "-t", "4", "-y", output_path
         ]
         
         result = subprocess.run(ffmpeg_cmd, capture_output=True, text=True, timeout=60)
+        if result.returncode != 0:
+            print(f"Intro slide FFmpeg error: {result.stderr}")
+            print(f"Title text was: '{title_text}'")
         return output_path if result.returncode == 0 else None
-    except Exception:
+    except Exception as e:
+        print(f"Intro slide exception: {e}")
         return None
 
 
@@ -128,12 +136,24 @@ def create_outro_slide(logo_path: str, output_path: str, width: int, height: int
     if not os.path.exists(logo_path):
         return None
     
+    # Smart text wrapping for outro
+    text = "Follow us for more"
+    words = text.split()
+    if len(words) > 3:
+        # Split into two lines for better fit  
+        mid = len(words) // 2
+        text_line1 = ' '.join(words[:mid])
+        text_line2 = ' '.join(words[mid:])
+        text_display = f"{text_line1}\\n{text_line2}"
+    else:
+        text_display = text
+    
     logo_size = min(width, height) // 3
-    font_size = height // 16
+    font_size = min(height // 18, width // 25)  # Smaller adaptive font
     
     logo_x = (width - logo_size) // 2
     logo_y = height // 3
-    text_y = int(height * 0.7)
+    text_y = int(height * 0.75)  # Move text lower to fit better
     
     try:
         ffmpeg_cmd = [
@@ -141,15 +161,16 @@ def create_outro_slide(logo_path: str, output_path: str, width: int, height: int
             "-f", "lavfi", "-i", f"color=white:size={width}x{height}:duration=3",
             "-i", logo_path,
             "-filter_complex",
-            # Text with entrance animation
-            f"[0:v]drawtext=text='Follow us for more':"
+            # Text - slides up from below after 1 second, then stays put
+            f"[0:v]drawtext=text='{text_display}':"
             f"fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:"
             f"fontsize={font_size}:fontcolor=black:"
-            f"x=(w-text_w)/2:y='if(lt(t,1),{text_y+30},{text_y}+if(lt(t,2),30*(1-(t-1)),0))'[with_text];"
+            f"x=(w-text_w)/2:y='if(gte(t,1),{text_y},{text_y+100})'[with_text];"
             
-            # Logo with entrance animation
+            # Logo - slides down from above first, then stays put
             f"[1:v]scale={logo_size}:{logo_size}[logo_scaled];"
-            f"[with_text][logo_scaled]overlay=x={logo_x}:y='if(lt(t,0.5),{logo_y-20},{logo_y}+if(lt(t,1.5),20*(1-(t-0.5)),0))'",
+            f"[with_text][logo_scaled]overlay=x={logo_x}:"
+            f"y='if(gte(t,0.5),{logo_y},{logo_y-150})'",
             
             "-c:v", "libx264", "-pix_fmt", "yuv420p", "-t", "3", "-y", output_path
         ]

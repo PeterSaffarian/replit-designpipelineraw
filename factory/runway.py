@@ -299,7 +299,7 @@ def generate_extended_video(image_path: str, prompts: List[str], model_name: str
         print(f"\nRUNWAY: All {len(segments)} segments generated successfully")
         
         # Return information about the segmented video
-        # The actual concatenation will be handled by video_concat.py
+        # The actual concatenation will be handled by branding.py
         return {
             'segments': segments,
             'total_segments': len(segments),

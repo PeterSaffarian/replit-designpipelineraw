@@ -8,3 +8,8 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Project-specific temporary files
+test_files/
+attached_assets/
+storage/*/

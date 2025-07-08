@@ -9,7 +9,7 @@ from datetime import datetime
 # It's good practice to wrap imports in a try-except block for clearer error messages
 try:
     from creative_studio import artwork_designer, artwork_builder, artwork_checker, script_writer, producer
-    from factory import audio_gen, video_gen, assembly, video_watermark, subtitle_generator, subtitle_burner, video_branding
+    from factory import audio_gen, video_gen, assembly, subtitle_generator, subtitle_burner, branding
 except ImportError as e:
     print(f"FATAL ERROR: A required module could not be imported: {e}")
     print("Please ensure you are running the orchestrator from the project's root directory.")
@@ -268,8 +268,8 @@ def run_pipeline_for_idea(idea_text, idea_number, idea_name):
         
         if os.path.exists(logo_path):
             print(f"   🏷️  Applying logo watermark to final video...")
-            branded_video_path = video_watermark.apply_final_branding(
-                working_video_path, logo_path, project_path
+            branded_video_path = branding.add_branding(
+                working_video_path, idea_text, script, logo_path, project_path
             )
             
             if branded_video_path:
