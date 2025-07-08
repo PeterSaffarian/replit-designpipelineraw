@@ -1,5 +1,10 @@
 """
 Video Branding Module - Clean implementation for intro/outro slides.
+
+Font and Size Configuration:
+- You can customize fonts by changing the font paths in BRANDING_CONFIG
+- Size ratios can be adjusted in the BRANDING_CONFIG dictionary  
+- Positioning can be modified in the LAYOUT_CONFIG
 """
 
 import os
@@ -7,6 +12,35 @@ import json
 import subprocess
 from typing import Optional, Tuple
 from openai import OpenAI
+
+# CUSTOMIZABLE BRANDING CONFIGURATION
+BRANDING_CONFIG = {
+    'fonts': {
+        'primary': '/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf',
+        'secondary': '/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf',
+        # Alternative fonts you can use:
+        # 'arial': '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',
+        # 'ubuntu': '/usr/share/fonts/truetype/ubuntu/Ubuntu-Bold.ttf'
+    },
+    'size_ratios': {
+        'logo_ratio': 3,            # Logo = min(width,height) / logo_ratio
+        'title_height_ratio': 15,   # Title font = height / title_height_ratio  
+        'title_width_ratio': 20,    # Title font = width / title_width_ratio (backup)
+        'presents_ratio': 20,       # "KiaOra presents" = height / presents_ratio
+        'outro_text_ratio': 25      # "Follow us" = height / outro_text_ratio
+    },
+    'colors': {
+        'text': 'black',
+        'background': 'white'
+    }
+}
+
+LAYOUT_CONFIG = {
+    'logo_y_ratio': 6,         # Logo Y = height / logo_y_ratio
+    'presents_y_ratio': 2,     # "KiaOra presents" Y = height / presents_y_ratio  
+    'title_y_ratio': 0.75,     # Title Y = height * title_y_ratio
+    'outro_text_y_ratio': 0.6  # Outro text Y = height * outro_text_y_ratio
+}
 
 
 def get_video_dimensions(video_path: str) -> Tuple[int, int]:
@@ -84,16 +118,17 @@ def create_intro_slide(title: str, logo_path: str, output_path: str, width: int,
     else:
         title_text = title_clean
     
-    # Size calculations with smart font sizing
-    logo_size = min(width, height) // 3
-    title_font = min(height // 15, width // 20)  # Adaptive font size
-    presents_font = height // 20
+    # Size calculations using configuration
+    logo_size = min(width, height) // BRANDING_CONFIG['size_ratios']['logo_ratio']
+    title_font = min(height // BRANDING_CONFIG['size_ratios']['title_height_ratio'], 
+                     width // BRANDING_CONFIG['size_ratios']['title_width_ratio'])
+    presents_font = height // BRANDING_CONFIG['size_ratios']['presents_ratio']
     
-    # Positioning
+    # Positioning using configuration
     logo_x = (width - logo_size) // 2
-    logo_y = height // 6
-    presents_y = height // 2
-    title_y = int(height * 0.75)
+    logo_y = height // LAYOUT_CONFIG['logo_y_ratio']
+    presents_y = height // LAYOUT_CONFIG['presents_y_ratio']
+    title_y = int(height * LAYOUT_CONFIG['title_y_ratio'])
     
     try:
         ffmpeg_cmd = [
@@ -103,15 +138,15 @@ def create_intro_slide(title: str, logo_path: str, output_path: str, width: int,
             "-filter_complex",
             # KiaOra presents text with fade-in effect (0-1 seconds)
             f"[0:v]drawtext=text='KiaOra presents':"
-            f"fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:"
-            f"fontsize={presents_font}:fontcolor=black:"
+            f"fontfile={BRANDING_CONFIG['fonts']['primary']}:"
+            f"fontsize={presents_font}:fontcolor={BRANDING_CONFIG['colors']['text']}:"
             f"alpha='if(lt(t,1),t,1)':"
             f"x=(w-text_w)/2:y={presents_y}[with_presents];"
             
             # Title text with fade-in effect (0-1 seconds)
             f"[with_presents]drawtext=text='{title_text}':"
-            f"fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:"
-            f"fontsize={title_font}:fontcolor=black:"
+            f"fontfile={BRANDING_CONFIG['fonts']['primary']}:"
+            f"fontsize={title_font}:fontcolor={BRANDING_CONFIG['colors']['text']}:"
             f"alpha='if(lt(t,1),t,1)':"
             f"x=(w-text_w)/2:y={title_y}[with_title];"
             
@@ -140,12 +175,14 @@ def create_outro_slide(logo_path: str, output_path: str, width: int, height: int
     # No text wrapping for outro - keep it simple to avoid formatting issues
     text_display = "Follow us for more"
     
-    logo_size = min(width, height) // 3
-    font_size = min(height // 18, width // 25)  # Smaller adaptive font
+    # Size calculations using configuration
+    logo_size = min(width, height) // BRANDING_CONFIG['size_ratios']['logo_ratio']
+    font_size = height // BRANDING_CONFIG['size_ratios']['outro_text_ratio']
     
+    # Positioning using configuration
     logo_x = (width - logo_size) // 2
-    logo_y = height // 3
-    text_y = int(height * 0.75)  # Move text lower to fit better
+    logo_y = height // LAYOUT_CONFIG['logo_y_ratio']
+    text_y = int(height * LAYOUT_CONFIG['outro_text_y_ratio'])
     
     try:
         ffmpeg_cmd = [
@@ -155,8 +192,8 @@ def create_outro_slide(logo_path: str, output_path: str, width: int, height: int
             "-filter_complex",
             # Text with fade-in effect (0-1 seconds)
             f"[0:v]drawtext=text='{text_display}':"
-            f"fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:"
-            f"fontsize={font_size}:fontcolor=black:"
+            f"fontfile={BRANDING_CONFIG['fonts']['primary']}:"
+            f"fontsize={font_size}:fontcolor={BRANDING_CONFIG['colors']['text']}:"
             f"alpha='if(lt(t,1),t,1)':"
             f"x=(w-text_w)/2:y={text_y}[with_text];"
             
