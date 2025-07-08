@@ -9,7 +9,7 @@ from datetime import datetime
 # It's good practice to wrap imports in a try-except block for clearer error messages
 try:
     from creative_studio import artwork_designer, artwork_builder, artwork_checker, script_writer, producer
-    from factory import audio_gen, video_gen, assembly, video_watermark, subtitle_generator, subtitle_burner
+    from factory import audio_gen, video_gen, assembly, video_watermark, subtitle_generator, subtitle_burner, video_branding
 except ImportError as e:
     print(f"FATAL ERROR: A required module could not be imported: {e}")
     print("Please ensure you are running the orchestrator from the project's root directory.")
@@ -263,7 +263,7 @@ def run_pipeline_for_idea(idea_text, idea_number, idea_name):
             print(f"   ℹ️  No subtitles available, skipping subtitle burning")
 
         # --- Step 11: Logo Watermarking ---
-        print("\n--- [Final Step] Factory: Adding Logo Watermark ---")
+        print("\n--- [Step 11/12] Factory: Adding Logo Watermark ---")
         logo_path = os.path.join(INPUTS_DIR, LOGO_FILE_NAME)
         
         if os.path.exists(logo_path):
@@ -274,12 +274,31 @@ def run_pipeline_for_idea(idea_text, idea_number, idea_name):
             
             if branded_video_path:
                 print(f"   ✅ Logo watermark applied successfully!")
-                print(f"   📍 Final branded video: {branded_video_path}")
-                status_report['assets']['final_branded_video_path'] = branded_video_path
+                print(f"   📍 Branded video: {branded_video_path}")
+                status_report['assets']['branded_video_path'] = branded_video_path
+                working_video_path = branded_video_path  # Use branded version for final step
             else:
-                print(f"   ⚠️  Failed to apply logo watermark")
+                print(f"   ⚠️  Failed to apply logo watermark, using previous version")
         else:
             print(f"   ℹ️  No logo file found at {logo_path}, skipping watermark step")
+
+        # --- Step 12: Branding Sequence ---
+        print("\n--- [Final Step] Factory: Adding Intro/Outro Branding ---")
+        
+        if os.path.exists(logo_path):
+            print(f"   🎬 Creating branded intro/outro sequence...")
+            final_branded_video_path = video_branding.apply_complete_branding(
+                working_video_path, idea_text, script, logo_path, project_path
+            )
+            
+            if final_branded_video_path:
+                print(f"   ✅ Branding sequence completed successfully!")
+                print(f"   📍 Final branded video: {final_branded_video_path}")
+                status_report['assets']['final_branded_video_path'] = final_branded_video_path
+            else:
+                print(f"   ⚠️  Branding sequence failed, keeping previous version")
+        else:
+            print(f"   ℹ️  No logo file available, skipping branding sequence")
 
         # --- Final Success ---
         status_report['status'] = "SUCCESS"

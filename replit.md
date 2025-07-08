@@ -36,6 +36,7 @@ The architecture integrates multiple external AI services through dedicated modu
 - **Audio Generator** - Converts scripts to speech using ElevenLabs TTS
 - **Subtitle Generator** - Creates SRT subtitle files from audio using OpenAI Whisper API
 - **Subtitle Burner** - Burns styled subtitles into videos using FFmpeg with Netflix-style formatting
+- **Video Branding** - Creates animated intro/outro slides with dynamic titles and professional branding
 - **Video Generator** - Creates animated videos from static images using provider-agnostic routing
 - **Kling Integration** - Handles JWT authentication and direct video extension with Kling AI
 - **Runway Integration** - Handles frame extraction and chained segment generation with Runway ML
@@ -109,7 +110,7 @@ The system uses environment variables for API key management:
 
 Preferred communication style: Simple, everyday language.
 
-## Recent Changes (July 07, 2025)
+## Recent Changes (July 08, 2025)
 
 ✓ Added Runway ML integration as alternative to Kling AI
 ✓ Implemented frame extraction for seamless video segment chaining  
@@ -125,5 +126,10 @@ Preferred communication style: Simple, everyday language.
 ✓ Integrated OpenAI Whisper API for automatic subtitle generation from audio
 ✓ Created professional subtitle burning with Netflix-style formatting using FFmpeg
 ✓ Enhanced pipeline workflow: Sync → Subtitles → Logo for streamlined production
+✓ Added professional intro/outro branding system with dynamic title generation
+✓ Implemented OpenAI-powered video title creation with natural language flexibility
+✓ Created animated intro slides with logo animation and custom titles per video
+✓ Added static outro slides with "Follow us for more" branding message
+✓ Integrated complete branding sequence: Intro → Main Content → Outro
 
-→ Complete 9-step pipeline with subtitles, quality control, and professional branding
+→ Complete 12-step pipeline with subtitles, quality control, and professional branding sequence
