@@ -138,7 +138,7 @@ def test_subtitle_burning():
         video_path=video_path,
         srt_path=srt_path,
         output_path=output_path,
-        font_size=24,
+        font_size=12,
         alignment=2  # Bottom center
     )
     
