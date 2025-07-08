@@ -211,13 +211,27 @@ def concatenate_videos(video_list: list, output_path: str) -> Optional[str]:
             # Now concatenate all three with fade transitions
             print("Concatenating intro + main + outro with smooth fade transitions...")
             
-            # Create fade transitions between segments
-            fade_duration = 0.5  # 0.5 second fade
+            # Get video durations for proper fade timing
+            intro_duration = 3.0  # intro slide duration
+            
+            # Get main video duration
+            probe_cmd = ["ffprobe", "-v", "quiet", "-show_entries", "format=duration", 
+                        "-of", "csv=p=0", video_list[1]]
+            probe_result = subprocess.run(probe_cmd, capture_output=True, text=True)
+            try:
+                main_duration = float(probe_result.stdout.strip())
+            except:
+                main_duration = 10.0  # fallback
+            
+            outro_duration = 3.0  # outro slide duration
+            fade_duration = 0.5  # 0.5 second cross-fade
+            
+            # Create smooth cross-fade transitions between videos
             concat_result = subprocess.run([
                 "ffmpeg", "-i", intro_with_audio, "-i", video_list[1], "-i", outro_with_audio,
                 "-filter_complex", 
-                f"[0:v]fade=out:st=2.5:d={fade_duration}[v0];"
-                f"[1:v]fade=in:st=0:d={fade_duration},fade=out:st=end-{fade_duration}:d={fade_duration}[v1];"
+                f"[0:v]fade=out:st={intro_duration-fade_duration}:d={fade_duration}[v0];"
+                f"[1:v]fade=in:st=0:d={fade_duration},fade=out:st={main_duration-fade_duration}:d={fade_duration}[v1];"
                 f"[2:v]fade=in:st=0:d={fade_duration}[v2];"
                 f"[v0][0:a][v1][1:a][v2][2:a]concat=n=3:v=1:a=1[v][a]",
                 "-map", "[v]", "-map", "[a]", "-c:v", "libx264", "-c:a", "aac",

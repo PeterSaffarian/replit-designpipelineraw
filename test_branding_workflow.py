@@ -28,9 +28,9 @@ def test_entrance_animations():
     
     if intro_success:
         print(f"✅ Intro slide created: {intro_path}")
-        print("   - All elements fade in simultaneously (0-1 seconds)")
-        print("   - Smooth fade transitions between slides")
+        print("   - Elements fade in during first 1 second of slide")
         print("   - 2 seconds of static content (1-3 seconds)")
+        print("   - Note: Slide transitions are separate from element entrance")
     else:
         print("❌ Failed to create intro slide")
         return False
@@ -42,10 +42,10 @@ def test_entrance_animations():
     
     if outro_success:
         print(f"✅ Outro slide created: {outro_path}")
-        print("   - All elements fade in simultaneously (0-1 seconds)")
+        print("   - Elements fade in during first 1 second of slide")
         print("   - Text displays properly: 'Follow us for more'")
-        print("   - Smooth fade transitions between slides")
         print("   - 2 seconds of static content (1-3 seconds)")
+        print("   - Note: Slide transitions are separate from element entrance")
     else:
         print("❌ Failed to create outro slide")
         return False
@@ -114,17 +114,19 @@ def main():
     print("\n=== TEST RESULTS ===")
     if animations_ok and workflow_ok:
         print("✅ ALL TESTS PASSED")
-        print("Animation Features:")
-        print("• Smooth 1-second fade-in animations for all elements")
+        print("Element Entrance Animations (within each slide):")
+        print("• 1-second fade-in for all elements at slide start")
+        print("• Elements fade from transparent to opaque simultaneously")
+        print("• 2 seconds of static content after fade-in completes")
         print("• Proper text formatting without unwanted characters")
-        print("• Elements fade in smoothly from transparent to opaque")
-        print("• 2 seconds of static content after fade-in")
-        print("Workflow Features:")
-        print("• Complete branding pipeline working")
-        print("• Intro slide: logo + 'KiaOra presents' + AI title with fade-in")
-        print("• Outro slide: logo + 'Follow us for more' with fade-in")
-        print("• Smooth fade transitions between intro → main → outro")
+        print("Slide Transition Effects (between slides):")
+        print("• 0.5-second cross-fade transitions between videos")
+        print("• Smooth transition: intro → main → outro")
         print("• Audio preservation throughout the sequence")
+        print("Complete Workflow:")
+        print("• Intro slide with element fade-ins + AI-generated title")
+        print("• Cross-fade to main video content")
+        print("• Cross-fade to outro slide with element fade-ins")
     else:
         print("❌ SOME TESTS FAILED")
         if not animations_ok:
