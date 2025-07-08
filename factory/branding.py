@@ -184,69 +184,84 @@ def create_outro_slide(logo_path: str, output_path: str, width: int, height: int
 def concatenate_videos(video_list: list, output_path: str) -> Optional[str]:
     """Concatenate videos with audio preservation and smooth transitions."""
     try:
-        ffmpeg_cmd = ["ffmpeg"]
+        # Verify all input files exist
         for video in video_list:
-            ffmpeg_cmd.extend(["-i", video])
+            if not os.path.exists(video):
+                print(f"ERROR: Input video not found: {video}")
+                return None
         
-        # Simple concatenation with audio preservation
+        print(f"Concatenating {len(video_list)} videos...")
+        
         if len(video_list) == 3:  # intro + main + outro
-            # Create a temporary concat file for FFmpeg
-            import tempfile
-            with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as f:
-                # Add silent audio tracks for intro and outro
-                f.write(f"file '{video_list[0]}'\n")
-                f.write(f"file '{video_list[1]}'\n") 
-                f.write(f"file '{video_list[2]}'\n")
-                concat_file = f.name
-            
-            # First create intro and outro with audio tracks
+            # Add silent audio to intro and outro first
             intro_with_audio = output_path.replace('.mp4', '_intro_audio.mp4')
             outro_with_audio = output_path.replace('.mp4', '_outro_audio.mp4')
             
-            # Add silent audio to intro
-            subprocess.run([
-                "ffmpeg", "-i", video_list[0], "-f", "lavfi", "-i", "anullsrc=channel_layout=stereo:sample_rate=44100",
+            print("Adding silent audio to intro...")
+            intro_result = subprocess.run([
+                "ffmpeg", "-i", video_list[0], 
+                "-f", "lavfi", "-i", "anullsrc=channel_layout=stereo:sample_rate=44100",
                 "-c:v", "copy", "-c:a", "aac", "-shortest", "-y", intro_with_audio
-            ], capture_output=True)
+            ], capture_output=True, text=True, timeout=60)
             
-            # Add silent audio to outro  
-            subprocess.run([
-                "ffmpeg", "-i", video_list[2], "-f", "lavfi", "-i", "anullsrc=channel_layout=stereo:sample_rate=44100",
+            if intro_result.returncode != 0:
+                print(f"Failed to add audio to intro: {intro_result.stderr}")
+                return None
+            
+            print("Adding silent audio to outro...")
+            outro_result = subprocess.run([
+                "ffmpeg", "-i", video_list[2],
+                "-f", "lavfi", "-i", "anullsrc=channel_layout=stereo:sample_rate=44100", 
                 "-c:v", "copy", "-c:a", "aac", "-shortest", "-y", outro_with_audio
-            ], capture_output=True)
+            ], capture_output=True, text=True, timeout=60)
             
-            # Now concatenate all three with proper audio
-            ffmpeg_cmd = [
+            if outro_result.returncode != 0:
+                print(f"Failed to add audio to outro: {outro_result.stderr}")
+                return None
+            
+            # Now concatenate all three
+            print("Concatenating intro + main + outro...")
+            concat_result = subprocess.run([
                 "ffmpeg", "-i", intro_with_audio, "-i", video_list[1], "-i", outro_with_audio,
                 "-filter_complex", "concat=n=3:v=1:a=1[v][a]",
                 "-map", "[v]", "-map", "[a]", "-c:v", "libx264", "-c:a", "aac",
                 "-pix_fmt", "yuv420p", "-y", output_path
-            ]
-            
-            result = subprocess.run(ffmpeg_cmd, capture_output=True, text=True, timeout=120)
+            ], capture_output=True, text=True, timeout=120)
             
             # Cleanup temp files
-            import os
             try:
-                os.unlink(concat_file)
-                os.unlink(intro_with_audio)
-                os.unlink(outro_with_audio)
-            except:
-                pass
+                if os.path.exists(intro_with_audio):
+                    os.unlink(intro_with_audio)
+                    print(f"Cleaned up: {intro_with_audio}")
+                if os.path.exists(outro_with_audio):
+                    os.unlink(outro_with_audio)
+                    print(f"Cleaned up: {outro_with_audio}")
+            except Exception as e:
+                print(f"Warning: Could not clean up temp files: {e}")
+            
+            if concat_result.returncode != 0:
+                print(f"FFmpeg concatenation error: {concat_result.stderr}")
+                return None
                 
         else:
-            # Fallback for other cases
+            # Fallback for other cases - direct concatenation
+            ffmpeg_cmd = ["ffmpeg"]
+            for video in video_list:
+                ffmpeg_cmd.extend(["-i", video])
+            
             ffmpeg_cmd.extend([
                 "-filter_complex", f"concat=n={len(video_list)}:v=1:a=1[v][a]",
                 "-map", "[v]", "-map", "[a]", "-c:v", "libx264", "-c:a", "aac",
                 "-pix_fmt", "yuv420p", "-y", output_path
             ])
+            
             result = subprocess.run(ffmpeg_cmd, capture_output=True, text=True, timeout=120)
+            if result.returncode != 0:
+                print(f"FFmpeg concatenation error: {result.stderr}")
+                return None
         
-        result = subprocess.run(ffmpeg_cmd, capture_output=True, text=True, timeout=120)
-        if result.returncode != 0:
-            print(f"FFmpeg concatenation error: {result.stderr}")
-        return output_path if result.returncode == 0 else None
+        return output_path if os.path.exists(output_path) else None
+        
     except Exception as e:
         print(f"Concatenation exception: {e}")
         return None
