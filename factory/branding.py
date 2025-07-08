@@ -115,9 +115,9 @@ def create_intro_slide(title: str, logo_path: str, output_path: str, width: int,
             f"alpha='if(lt(t,1),t,1)':"
             f"x=(w-text_w)/2:y={title_y}[with_title];"
             
-            # Logo with fade-in effect
-            f"[1:v]scale={logo_size}:{logo_size},format=yuva420p,fade=in:st=0:d=1:alpha=1[logo_scaled];"
-            f"[with_title][logo_scaled]overlay=x={logo_x}:y={logo_y}",
+            # Scale logo, apply fade-in, then overlay
+            f"[1:v]scale={logo_size}:{logo_size},format=yuva420p,fade=in:st=0:d=1:alpha=1[logo_faded];"
+            f"[with_title][logo_faded]overlay=x={logo_x}:y={logo_y}",
             
             "-c:v", "libx264", "-pix_fmt", "yuv420p", "-t", "3", "-y", output_path
         ]
@@ -160,9 +160,9 @@ def create_outro_slide(logo_path: str, output_path: str, width: int, height: int
             f"alpha='if(lt(t,1),t,1)':"
             f"x=(w-text_w)/2:y={text_y}[with_text];"
             
-            # Logo with fade-in effect
-            f"[1:v]scale={logo_size}:{logo_size},format=yuva420p,fade=in:st=0:d=1:alpha=1[logo_scaled];"
-            f"[with_text][logo_scaled]overlay=x={logo_x}:y={logo_y}",
+            # Scale logo, apply fade-in, then overlay
+            f"[1:v]scale={logo_size}:{logo_size},format=yuva420p,fade=in:st=0:d=1:alpha=1[logo_faded];"
+            f"[with_text][logo_faded]overlay=x={logo_x}:y={logo_y}",
             
             "-c:v", "libx264", "-pix_fmt", "yuv420p", "-t", "3", "-y", output_path
         ]
