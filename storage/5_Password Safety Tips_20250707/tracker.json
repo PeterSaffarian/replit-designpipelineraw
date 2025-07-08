@@ -1,0 +1,22 @@
+{
+    "idea_name": "Password Safety Tips",
+    "idea_text": "A video where Laura gets a suspicious call \u2014 should she give her password?",
+    "project_folder": "storage/5_Password Safety Tips_20250707",
+    "status": "SUCCESS",
+    "failed_at_step": null,
+    "final_video_path": null,
+    "assets": {
+        "artwork_prompt": "Create an animated scene featuring Laura in a cozy, softly lit living room, her features mirroring the style of the reference image. She stands by a window, her face illuminated by the warm glow of a lamp. In her hand, she holds a phone, her expression a mix of curiosity and concern, eyebrows slightly furrowed. The room around her is filled with subtle details: a plush sofa, a coffee table with scattered magazines, and a glimpse of a city skyline through the window. The atmosphere is tense yet intimate, capturing the pivotal moment as Laura considers whether to trust the voice on the other end of the line. The scene is framed in portrait orientation, perfect for an Instagram story, inviting viewers into this suspenseful moment.",
+        "artwork_path": "storage/5_Password Safety Tips_20250707/artwork.png",
+        "artwork_retry_count": 0,
+        "script": "\"Wait, they're asking for my password? This feels off. Remember, never share personal information over the phone, especially if it seems suspicious. It's always better to hang up and verify from a trusted source.\"",
+        "audio_path": "storage/5_Password Safety Tips_20250707/audio.mp3",
+        "scenario_path": "storage/5_Password Safety Tips_20250707/scenario.json",
+        "raw_video_url": "file://storage/5_Password Safety Tips_20250707/final_runway_video_1751867888.mp4",
+        "video_provider": "runway",
+        "raw_video_local_path": "storage/5_Password Safety Tips_20250707/final_runway_video_1751867888.mp4",
+        "final_video_url": "https://api.sync.so/v2/generations/4a74a177-de20-407f-b39e-c018b0c472ae/result?token=afe9547e-b29d-461d-96ab-d7830cac89ab",
+        "final_video_path": "storage/5_Password Safety Tips_20250707/final_video.mp4",
+        "branded_video_path": "storage/5_Password Safety Tips_20250707/final_video_branded.mp4"
+    }
+}

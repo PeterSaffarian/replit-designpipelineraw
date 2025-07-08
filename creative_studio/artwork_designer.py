@@ -42,6 +42,7 @@ def design_artwork_prompt(idea: str, ref_image_path: str) -> str:
         "given the limitations of the video generation machine around working with text, try and make a visual scene and environmnet that can be easily animated."
         "in the scene let's try and avoide using text content on any screen."
         "the goal is to make it a visual (and then later adding voice to make it verbal as well). not text filled"
+        "the size of the image and it's aspect ratio must be suitable for instagram stories."
     )
 
     # 2. Define the specific 'task' for our AI model.

@@ -1,0 +1,112 @@
+[
+    {
+        "idea_name": "Spotting Scam Red Flags",
+        "idea_text": "A video showing how to spot common scam warning signs in messages or calls.",
+        "project_folder": "storage/1_Spotting Scam Red Flags_20250707",
+        "status": "SUCCESS",
+        "failed_at_step": null,
+        "final_video_path": null,
+        "assets": {
+            "artwork_prompt": "Create an animated scene featuring the character in a modern, cozy living room setting, sitting comfortably on a sofa with a smartphone in hand. The room is softly lit by a warm table lamp, casting gentle shadows. The character, dressed in a casual outfit similar to the reference image, has a focused expression, examining a message on the phone. Around her, subtle visual cues like exclamation marks and warning symbols float above the phone screen, signaling scam warning signs. The background includes a coffee table with a steaming mug and a bookshelf filled with colorful books, adding to the inviting atmosphere. The camera angle is slightly over-the-shoulder, providing a clear view of the phone screen without any text, emphasizing the theme of identifying scams visually. The scene is designed for an Instagram story, ensuring vertical orientation and engaging composition.",
+            "artwork_path": "storage/1_Spotting Scam Red Flags_20250707/artwork.png",
+            "artwork_retry_count": 0,
+            "script": "\"Hey there! If you ever get messages that ask for personal info, have urgent demands, or sound too good to be true, be careful. These are classic scam warning signs. Always verify the source before responding or clicking any links!\"",
+            "audio_path": "storage/1_Spotting Scam Red Flags_20250707/audio.mp3",
+            "scenario_path": "storage/1_Spotting Scam Red Flags_20250707/scenario.json",
+            "raw_video_url": "file://storage/1_Spotting Scam Red Flags_20250707/final_runway_video_1751866505.mp4",
+            "video_provider": "runway",
+            "raw_video_local_path": "storage/1_Spotting Scam Red Flags_20250707/final_runway_video_1751866505.mp4",
+            "final_video_url": "https://api.sync.so/v2/generations/8f1c05cf-061a-4bc5-9c58-1c7532df7b11/result?token=91fa2d08-961c-468a-af08-70acbe00aa51",
+            "final_video_path": "storage/1_Spotting Scam Red Flags_20250707/final_video.mp4",
+            "branded_video_path": "storage/1_Spotting Scam Red Flags_20250707/final_video_branded.mp4"
+        }
+    },
+    {
+        "idea_name": "Urgent Scam Calls",
+        "idea_text": "A video explaining what to do when someone urgently calls you about \u2018fraud on your account.\u2019",
+        "project_folder": "storage/2_Urgent Scam Calls_20250707",
+        "status": "SUCCESS",
+        "failed_at_step": null,
+        "final_video_path": null,
+        "assets": {
+            "artwork_prompt": "In a cozy living room setting, the character stands by a small, modern desk with a smartphone in hand, displaying an incoming call alert. Her expression is a mix of concern and attentiveness, reflecting the urgency of the situation. Soft, warm lighting from a nearby lamp creates a comforting ambiance, contrasting with the tension of the moment. Behind her, a window shows a serene, evening sky, emphasizing the importance of staying calm. The room is tastefully decorated with a few potted plants and framed art on the walls, adding a personal touch. The character is dressed in a casual, comfortable outfit, similar to the reference image, embodying a relatable and approachable persona. The scene captures the essence of handling an unexpected call about potential fraud with composure and focus.",
+            "artwork_path": "storage/2_Urgent Scam Calls_20250707/artwork.png",
+            "artwork_retry_count": 0,
+            "script": "\"Stay calm and don't panic. Hang up, then call your bank directly using the number on their official website to confirm any fraud alerts. Never provide personal information or passwords over the phone to unsolicited callers.\"",
+            "audio_path": "storage/2_Urgent Scam Calls_20250707/audio.mp3",
+            "scenario_path": "storage/2_Urgent Scam Calls_20250707/scenario.json",
+            "raw_video_url": "file://storage/2_Urgent Scam Calls_20250707/final_runway_video_1751866870.mp4",
+            "video_provider": "runway",
+            "raw_video_local_path": "storage/2_Urgent Scam Calls_20250707/final_runway_video_1751866870.mp4",
+            "final_video_url": "https://api.sync.so/v2/generations/be93fd20-fa2e-4362-a913-a2bb8180786e/result?token=675e81d5-40c7-4536-a9dd-ed6fc4954a8d",
+            "final_video_path": "storage/2_Urgent Scam Calls_20250707/final_video.mp4",
+            "branded_video_path": "storage/2_Urgent Scam Calls_20250707/final_video_branded.mp4"
+        }
+    },
+    {
+        "idea_name": "How to Tell if a Website is Safe",
+        "idea_text": "A video teaching why websites must start with \u2018https\u2019 to be considered safe.",
+        "project_folder": "storage/3_How to Tell if a Website is Safe_20250707",
+        "status": "SUCCESS",
+        "failed_at_step": null,
+        "final_video_path": null,
+        "assets": {
+            "artwork_prompt": "Create an animated scene with the reference character standing confidently in a modern, minimalist tech office. She is positioned slightly to the side, facing forward, with a welcoming and informative expression. Her eyes convey curiosity and assurance. In the background, a large, glowing digital padlock hovers above a computer screen displaying a stylized web browser. The screen prominently features a green lock icon, symbolizing a secure 'https' connection. Soft, ambient lighting highlights the character and the lock, creating a sense of trust and security. The color scheme is a blend of blues and greens, reinforcing the safe and secure theme. The setting should be dynamic and engaging, suitable for an Instagram story format.",
+            "artwork_path": "storage/3_How to Tell if a Website is Safe_20250707/artwork.png",
+            "artwork_retry_count": 0,
+            "script": "\"Starting a website with 'https' means your data is encrypted, protecting your sensitive information from hackers. It\u2019s like having a secure lock on your digital front door, ensuring that your online interactions remain private and safe.\"",
+            "audio_path": "storage/3_How to Tell if a Website is Safe_20250707/audio.mp3",
+            "scenario_path": "storage/3_How to Tell if a Website is Safe_20250707/scenario.json",
+            "raw_video_url": "file://storage/3_How to Tell if a Website is Safe_20250707/final_runway_video_1751867173.mp4",
+            "video_provider": "runway",
+            "raw_video_local_path": "storage/3_How to Tell if a Website is Safe_20250707/final_runway_video_1751867173.mp4",
+            "final_video_url": "https://api.sync.so/v2/generations/2fd1168e-09a4-426c-b2c9-0f60a1065b33/result?token=f7146df6-1bb9-4006-a066-900359cfa843",
+            "final_video_path": "storage/3_How to Tell if a Website is Safe_20250707/final_video.mp4",
+            "branded_video_path": "storage/3_How to Tell if a Website is Safe_20250707/final_video_branded.mp4"
+        }
+    },
+    {
+        "idea_name": "Don't Click That Link",
+        "idea_text": "A video showing why you should never click suspicious links from emails or texts.",
+        "project_folder": "storage/4_Dont Click That Link_20250707",
+        "status": "SUCCESS",
+        "failed_at_step": null,
+        "final_video_path": null,
+        "assets": {
+            "artwork_prompt": "Create an image of a young woman sitting at a cozy wooden desk in a softly lit room, with warm sunlight streaming through a nearby window. She has dark, wavy hair and is wearing a rust-colored t-shirt and dark pants, matching the reference character. Her expression is a mix of curiosity and concern as she hovers her finger over an email link on her sleek laptop screen. The room is filled with subtle details: a potted plant on the windowsill, a mug of coffee beside her, and a smartphone vibrating with notifications. The atmosphere is tense yet inviting, highlighting the theme of internet security. The camera angle is slightly over-the-shoulder, focusing on her cautious demeanor and the glowing screen, emphasizing the idea of digital vigilance.",
+            "artwork_path": "storage/4_Dont Click That Link_20250707/artwork.png",
+            "artwork_retry_count": 0,
+            "script": "\"Whoa, hold on! Before you click that link, remember it could lead to a scam or malware. Always double-check the sender and think twice. Stay safe and protect your information by avoiding suspicious links in emails or texts.\"",
+            "audio_path": "storage/4_Dont Click That Link_20250707/audio.mp3",
+            "scenario_path": "storage/4_Dont Click That Link_20250707/scenario.json",
+            "raw_video_url": "file://storage/4_Dont Click That Link_20250707/final_runway_video_1751867543.mp4",
+            "video_provider": "runway",
+            "raw_video_local_path": "storage/4_Dont Click That Link_20250707/final_runway_video_1751867543.mp4",
+            "final_video_url": "https://api.sync.so/v2/generations/3d75c7e5-28d8-4b97-bdd0-1888f4846a81/result?token=c6ac81a3-3ee1-404c-9161-ad1618cf5990",
+            "final_video_path": "storage/4_Dont Click That Link_20250707/final_video.mp4",
+            "branded_video_path": "storage/4_Dont Click That Link_20250707/final_video_branded.mp4"
+        }
+    },
+    {
+        "idea_name": "Password Safety Tips",
+        "idea_text": "A video where Laura gets a suspicious call \u2014 should she give her password?",
+        "project_folder": "storage/5_Password Safety Tips_20250707",
+        "status": "SUCCESS",
+        "failed_at_step": null,
+        "final_video_path": null,
+        "assets": {
+            "artwork_prompt": "Create an animated scene featuring Laura in a cozy, softly lit living room, her features mirroring the style of the reference image. She stands by a window, her face illuminated by the warm glow of a lamp. In her hand, she holds a phone, her expression a mix of curiosity and concern, eyebrows slightly furrowed. The room around her is filled with subtle details: a plush sofa, a coffee table with scattered magazines, and a glimpse of a city skyline through the window. The atmosphere is tense yet intimate, capturing the pivotal moment as Laura considers whether to trust the voice on the other end of the line. The scene is framed in portrait orientation, perfect for an Instagram story, inviting viewers into this suspenseful moment.",
+            "artwork_path": "storage/5_Password Safety Tips_20250707/artwork.png",
+            "artwork_retry_count": 0,
+            "script": "\"Wait, they're asking for my password? This feels off. Remember, never share personal information over the phone, especially if it seems suspicious. It's always better to hang up and verify from a trusted source.\"",
+            "audio_path": "storage/5_Password Safety Tips_20250707/audio.mp3",
+            "scenario_path": "storage/5_Password Safety Tips_20250707/scenario.json",
+            "raw_video_url": "file://storage/5_Password Safety Tips_20250707/final_runway_video_1751867888.mp4",
+            "video_provider": "runway",
+            "raw_video_local_path": "storage/5_Password Safety Tips_20250707/final_runway_video_1751867888.mp4",
+            "final_video_url": "https://api.sync.so/v2/generations/4a74a177-de20-407f-b39e-c018b0c472ae/result?token=afe9547e-b29d-461d-96ab-d7830cac89ab",
+            "final_video_path": "storage/5_Password Safety Tips_20250707/final_video.mp4",
+            "branded_video_path": "storage/5_Password Safety Tips_20250707/final_video_branded.mp4"
+        }
+    }
+]

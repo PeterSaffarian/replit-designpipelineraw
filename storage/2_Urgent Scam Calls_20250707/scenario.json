@@ -8,11 +8,10 @@
     "opening_scene": {
         "type": "image_to_video",
         "duration": 10,
-        "prompt": "A still shot of the character, with subtle ambient motion, as if they are preparing to speak.",
+        "prompt": "A still shot of the character, with subtle ambient motion and the character must softly start talking.",
         "image_source": "artwork.png"
     },
     "extensions": [
-        "The character begins to speak, their expression animated and eyes focused.",
-        "The character continues talking, gesturing subtly with one hand for emphasis."
+        "The character continues to speak, their expression animated."
     ]
 }

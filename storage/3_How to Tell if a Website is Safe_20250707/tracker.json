@@ -2,10 +2,21 @@
     "idea_name": "How to Tell if a Website is Safe",
     "idea_text": "A video teaching why websites must start with \u2018https\u2019 to be considered safe.",
     "project_folder": "storage/3_How to Tell if a Website is Safe_20250707",
-    "status": "IN_PROGRESS",
+    "status": "SUCCESS",
     "failed_at_step": null,
     "final_video_path": null,
     "assets": {
-        "artwork_prompt": "Create an animated scene featuring the character standing confidently in a modern, tech-inspired environment. She is positioned in front of an oversized, holographic digital pad displaying a web browser interface with a prominent padlock icon symbolizing security. The background is filled with abstract digital elements like binary code and floating network connections, giving a sense of cybersecurity. The character is wearing a stylish, tech-themed outfit, with a focused and thoughtful expression as she gestures towards the padlock icon. The lighting is a cool blue, highlighting the futuristic and educational theme. The camera angle is slightly elevated, capturing the character\u2019s upper body and the digital elements around her, emphasizing her role as a guide in understanding online safety."
+        "artwork_prompt": "Create an animated scene with the reference character standing confidently in a modern, minimalist tech office. She is positioned slightly to the side, facing forward, with a welcoming and informative expression. Her eyes convey curiosity and assurance. In the background, a large, glowing digital padlock hovers above a computer screen displaying a stylized web browser. The screen prominently features a green lock icon, symbolizing a secure 'https' connection. Soft, ambient lighting highlights the character and the lock, creating a sense of trust and security. The color scheme is a blend of blues and greens, reinforcing the safe and secure theme. The setting should be dynamic and engaging, suitable for an Instagram story format.",
+        "artwork_path": "storage/3_How to Tell if a Website is Safe_20250707/artwork.png",
+        "artwork_retry_count": 0,
+        "script": "\"Starting a website with 'https' means your data is encrypted, protecting your sensitive information from hackers. It\u2019s like having a secure lock on your digital front door, ensuring that your online interactions remain private and safe.\"",
+        "audio_path": "storage/3_How to Tell if a Website is Safe_20250707/audio.mp3",
+        "scenario_path": "storage/3_How to Tell if a Website is Safe_20250707/scenario.json",
+        "raw_video_url": "file://storage/3_How to Tell if a Website is Safe_20250707/final_runway_video_1751867173.mp4",
+        "video_provider": "runway",
+        "raw_video_local_path": "storage/3_How to Tell if a Website is Safe_20250707/final_runway_video_1751867173.mp4",
+        "final_video_url": "https://api.sync.so/v2/generations/2fd1168e-09a4-426c-b2c9-0f60a1065b33/result?token=f7146df6-1bb9-4006-a066-900359cfa843",
+        "final_video_path": "storage/3_How to Tell if a Website is Safe_20250707/final_video.mp4",
+        "branded_video_path": "storage/3_How to Tell if a Website is Safe_20250707/final_video_branded.mp4"
     }
 }

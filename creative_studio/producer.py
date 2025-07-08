@@ -14,7 +14,7 @@ def _get_audio_duration(audio_path: str) -> float:
         print(f"PRODUCER: Error reading audio file duration: {e}")
         return 0.0
 
-def _calculate_extensions(audio_duration_seconds: float, opening_duration: int = 10, extension_duration: int = 4) -> int:
+def _calculate_extensions(audio_duration_seconds: float, opening_duration: int = 10, extension_duration: int = 8) -> int:
     """
     Calculates the number of video extensions needed to cover the audio length.
 
@@ -78,8 +78,8 @@ def produce_scenario(script: str, audio_path: str, artwork_path: str, template_p
         "Please populate the provided JSON template based on the following materials.\n\n"
         "INSTRUCTIONS:\n"
         f"1. Update the `image_source` field to be exactly this path: '{os.path.basename(artwork_path)}'.\n"
-        f"2. Write a new `prompt` for the `opening_scene`. This prompt should be a simple, cinematic description of the provided artwork, focusing on creating a 'living photo' effect. For example: 'A still shot of the character, with subtle ambient motion.'\n"
-        f"3. Based on the provided script, generate exactly {num_extensions} simple, sequential motion prompts for the `extensions` array. Each extension should describe a small, natural progression of movement related to speaking, like 'The character begins to speak, their expression animated.' or 'The character continues talking, gesturing subtly for emphasis.' Do not try to make a complex movie plot. The goal is a simple, animated image that appears to be talking.\n\n"
+        f"2. Write a new `prompt` for the `opening_scene`. This prompt should be a simple, cinematic description of the provided artwork, focusing on creating a 'living photo' effect. For example: 'A still shot of the character, with subtle ambient motion and the character must softly start talking'\n"
+        f"3. Based on the provided script, generate exactly {num_extensions} simple, sequential motion prompts for the `extensions` array. Each extension should describe a small, natural progression of movement related to speaking, like 'The character continues to speak, their expression animated.' or 'The character continues talking, gesturing subtly for emphasis.' Do not try to make a complex movie plot. The goal is a simple, animated engaging image-videos that appears to be talking.\n\n it is also not a bad idea for the character to look at the camera at some point when she's talking\n\n"
         f"SCRIPT:\n---\n{script}\n---\n\n"
         f"ARTWORK CONTEXT:\n---\nThe artwork is located at '{artwork_path}' and features the character who will be speaking the script.\n---\n\n"
         "JSON TEMPLATE TO POPULATE:\n"

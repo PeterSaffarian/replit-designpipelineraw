@@ -121,6 +121,9 @@ def run_pipeline_for_idea(idea_text, idea_number, idea_name):
             
             # Check artwork quality
             quality_result = artwork_checker.check_artwork_quality(generated_artwork_path, artwork_prompt)
+
+            print("quality_result: ")
+            print(quality_result)
             
             if quality_result['status'] == 'Pass':
                 print(f"   ✅ Artwork passed quality check! {quality_result.get('feedback', '')}")

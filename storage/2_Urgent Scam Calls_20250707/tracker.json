@@ -2,18 +2,21 @@
     "idea_name": "Urgent Scam Calls",
     "idea_text": "A video explaining what to do when someone urgently calls you about \u2018fraud on your account.\u2019",
     "project_folder": "storage/2_Urgent Scam Calls_20250707",
-    "status": "FAILED",
-    "failed_at_step": "Failed to assemble final video with Sync.so.",
+    "status": "SUCCESS",
+    "failed_at_step": null,
     "final_video_path": null,
     "assets": {
-        "artwork_prompt": "Create a scene featuring the character in a brightly lit, modern living room setting. The character is holding a smartphone to their ear, with a concerned yet composed expression. They are dressed in a casual outfit similar to the reference image, standing next to a sleek, minimalistic desk with a laptop open. The background includes a window with soft daylight streaming in, casting gentle shadows. A potted plant and some books are neatly arranged on a shelf nearby. The scene conveys a sense of urgency but also calmness, emphasizing the character\u2019s readiness to address the situation thoughtfully.",
+        "artwork_prompt": "In a cozy living room setting, the character stands by a small, modern desk with a smartphone in hand, displaying an incoming call alert. Her expression is a mix of concern and attentiveness, reflecting the urgency of the situation. Soft, warm lighting from a nearby lamp creates a comforting ambiance, contrasting with the tension of the moment. Behind her, a window shows a serene, evening sky, emphasizing the importance of staying calm. The room is tastefully decorated with a few potted plants and framed art on the walls, adding a personal touch. The character is dressed in a casual, comfortable outfit, similar to the reference image, embodying a relatable and approachable persona. The scene captures the essence of handling an unexpected call about potential fraud with composure and focus.",
         "artwork_path": "storage/2_Urgent Scam Calls_20250707/artwork.png",
         "artwork_retry_count": 0,
-        "script": "\"Getting a call about fraud on your account can be alarming, but stay calm. Don't provide any personal information. Hang up and call your bank directly using the number on their official website to verify the situation.\"",
+        "script": "\"Stay calm and don't panic. Hang up, then call your bank directly using the number on their official website to confirm any fraud alerts. Never provide personal information or passwords over the phone to unsolicited callers.\"",
         "audio_path": "storage/2_Urgent Scam Calls_20250707/audio.mp3",
         "scenario_path": "storage/2_Urgent Scam Calls_20250707/scenario.json",
-        "raw_video_url": "file://storage/2_Urgent Scam Calls_20250707/final_runway_video_1751864481.mp4",
+        "raw_video_url": "file://storage/2_Urgent Scam Calls_20250707/final_runway_video_1751866870.mp4",
         "video_provider": "runway",
-        "raw_video_local_path": "storage/2_Urgent Scam Calls_20250707/final_runway_video_1751864481.mp4"
+        "raw_video_local_path": "storage/2_Urgent Scam Calls_20250707/final_runway_video_1751866870.mp4",
+        "final_video_url": "https://api.sync.so/v2/generations/be93fd20-fa2e-4362-a913-a2bb8180786e/result?token=675e81d5-40c7-4536-a9dd-ed6fc4954a8d",
+        "final_video_path": "storage/2_Urgent Scam Calls_20250707/final_video.mp4",
+        "branded_video_path": "storage/2_Urgent Scam Calls_20250707/final_video_branded.mp4"
     }
 }

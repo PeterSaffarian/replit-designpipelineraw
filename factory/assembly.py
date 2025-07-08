@@ -90,7 +90,7 @@ def generate(raw_video_url: str, audio_path: str) -> str:
     try:
         response = client.create(
             input=[Video(url=raw_video_url), Audio(url=public_audio_url)],
-            model="lipsync-2",
+            model="lipsync-1.9.0-beta",
             options=GenerationOptions(sync_mode="cut_off"),
         )
         job_id = response.id

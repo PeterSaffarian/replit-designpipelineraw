@@ -58,6 +58,11 @@ You should FAIL artwork that has:
 - Spelling mistakes or garbled text
 - Poor composition that would look bad in video
 - Elements that don't match the intended prompt
+- the placement of elements is too chaotic 
+- the aspect ration and size of the image is not appropriate for instagram stories
+- or not suitable for AI video generation.
+- if a screen or device is presente, they need to make sence (e.g. no screen on the back of a laptop or phone)
+- also the character should have a well defined mouth to be used for video and lip-syncing
 
 You should PASS artwork that:
 - Has clear, well-composed visuals

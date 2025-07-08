@@ -1,0 +1,22 @@
+{
+    "idea_name": "Investment Scam Signs",
+    "idea_text": "A video where Tane is offered a \u2018get rich quick\u2019 investment \u2014 should he say yes?",
+    "project_folder": "storage/6_Investment Scam Signs_20250707",
+    "status": "SUCCESS",
+    "failed_at_step": null,
+    "final_video_path": null,
+    "assets": {
+        "artwork_prompt": "Create an image of Tane, a young adult with curly brown hair and an orange shirt, standing in a modern, bustling caf\u00e9. The setting features large windows letting in warm, natural light, casting soft shadows on the wooden floor. Tane is seated at a small table, looking intently at a sleek tablet in front of him, which displays colorful graphs and charts. His expression is a mix of curiosity and contemplation, eyebrows slightly furrowed. Around him, other patrons are engaged in conversations, creating a lively yet cozy atmosphere. The camera angle is slightly elevated, capturing Tane's thoughtful demeanor and the inviting environment, emphasizing the pivotal decision he faces about the investment opportunity.",
+        "artwork_path": "storage/6_Investment Scam Signs_20250707/artwork.png",
+        "artwork_retry_count": 0,
+        "script": "\"Wow, this investment looks promising, but is it too good to be true? I need to weigh the risks and think it through carefully. Quick gains sound tempting, but are they worth the gamble?\"",
+        "audio_path": "storage/6_Investment Scam Signs_20250707/audio.mp3",
+        "scenario_path": "storage/6_Investment Scam Signs_20250707/scenario.json",
+        "raw_video_url": "file://storage/6_Investment Scam Signs_20250707/final_runway_video_1751868301.mp4",
+        "video_provider": "runway",
+        "raw_video_local_path": "storage/6_Investment Scam Signs_20250707/final_runway_video_1751868301.mp4",
+        "final_video_url": "https://api.sync.so/v2/generations/8e75e964-577a-4e57-b8e0-68ca1b4dc1f2/result?token=57059873-592f-44cc-b519-b3c5a69e1562",
+        "final_video_path": "storage/6_Investment Scam Signs_20250707/final_video.mp4",
+        "branded_video_path": "storage/6_Investment Scam Signs_20250707/final_video_branded.mp4"
+    }
+}
