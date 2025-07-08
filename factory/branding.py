@@ -101,22 +101,21 @@ def create_intro_slide(title: str, logo_path: str, output_path: str, width: int,
             "-f", "lavfi", "-i", f"color=white:size={width}x{height}:duration=4",
             "-i", logo_path,
             "-filter_complex",
-            # KiaOra presents text - starts off-screen above, slides down (0-1 seconds)
-            f"[0:v]drawtext=text='KiaOra presents':"
+            # Create fade-in effect for entire video (0-1 seconds)
+            f"[0:v]fade=in:st=0:d=1,drawtext=text='KiaOra presents':"
             f"fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:"
             f"fontsize={presents_font}:fontcolor=black:"
-            f"x=(w-text_w)/2:y=if(lt(t\\,1)\\,-100+t*({presents_y}+100)\\,{presents_y})[with_presents];"
+            f"x=(w-text_w)/2:y={presents_y}[with_presents];"
             
-            # Title text - starts off-screen below, slides up (0-1 seconds)
+            # Add title text
             f"[with_presents]drawtext=text='{title_text}':"
             f"fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:"
             f"fontsize={title_font}:fontcolor=black:"
-            f"x=(w-text_w)/2:y=if(lt(t\\,1)\\,{height}+100-t*({height}+100-{title_y})\\,{title_y})[with_title];"
+            f"x=(w-text_w)/2:y={title_y}[with_title];"
             
-            # Logo - starts off-screen above, slides down (0-1 seconds)
-            f"[1:v]scale={logo_size}:{logo_size}[logo_scaled];"
-            f"[with_title][logo_scaled]overlay=x={logo_x}:"
-            f"y=if(lt(t\\,1)\\,-200+t*({logo_y}+200)\\,{logo_y})",
+            # Add logo with fade-in
+            f"[1:v]scale={logo_size}:{logo_size},fade=in:st=0:d=1[logo_scaled];"
+            f"[with_title][logo_scaled]overlay=x={logo_x}:y={logo_y}",
             
             "-c:v", "libx264", "-pix_fmt", "yuv420p", "-t", "3", "-y", output_path
         ]
@@ -152,16 +151,15 @@ def create_outro_slide(logo_path: str, output_path: str, width: int, height: int
             "-f", "lavfi", "-i", f"color=white:size={width}x{height}:duration=3",
             "-i", logo_path,
             "-filter_complex",
-            # Text - starts off-screen below, slides up (0-1 seconds)
-            f"[0:v]drawtext=text='{text_display}':"
+            # Create fade-in effect for entire video (0-1 seconds)
+            f"[0:v]fade=in:st=0:d=1,drawtext=text='{text_display}':"
             f"fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:"
             f"fontsize={font_size}:fontcolor=black:"
-            f"x=(w-text_w)/2:y=if(lt(t\\,1)\\,{height}+100-t*({height}+100-{text_y})\\,{text_y})[with_text];"
+            f"x=(w-text_w)/2:y={text_y}[with_text];"
             
-            # Logo - starts off-screen above, slides down (0-1 seconds)
-            f"[1:v]scale={logo_size}:{logo_size}[logo_scaled];"
-            f"[with_text][logo_scaled]overlay=x={logo_x}:"
-            f"y=if(lt(t\\,1)\\,-200+t*({logo_y}+200)\\,{logo_y})",
+            # Add logo with fade-in
+            f"[1:v]scale={logo_size}:{logo_size},fade=in:st=0:d=1[logo_scaled];"
+            f"[with_text][logo_scaled]overlay=x={logo_x}:y={logo_y}",
             
             "-c:v", "libx264", "-pix_fmt", "yuv420p", "-t", "3", "-y", output_path
         ]
@@ -211,16 +209,20 @@ def concatenate_videos(video_list: list, output_path: str) -> Optional[str]:
                 return None
             
             # Now concatenate all three with fade transitions
-            print("Concatenating intro + main + outro with fade transitions...")
+            print("Concatenating intro + main + outro with smooth fade transitions...")
             
-            # Use simple concatenation for reliability
-            print("Using simple concatenation for faster processing...")
+            # Create fade transitions between segments
+            fade_duration = 0.5  # 0.5 second fade
             concat_result = subprocess.run([
                 "ffmpeg", "-i", intro_with_audio, "-i", video_list[1], "-i", outro_with_audio,
-                "-filter_complex", "concat=n=3:v=1:a=1[v][a]",
+                "-filter_complex", 
+                f"[0:v]fade=out:st=2.5:d={fade_duration}[v0];"
+                f"[1:v]fade=in:st=0:d={fade_duration},fade=out:st=end-{fade_duration}:d={fade_duration}[v1];"
+                f"[2:v]fade=in:st=0:d={fade_duration}[v2];"
+                f"[v0][0:a][v1][1:a][v2][2:a]concat=n=3:v=1:a=1[v][a]",
                 "-map", "[v]", "-map", "[a]", "-c:v", "libx264", "-c:a", "aac",
                 "-pix_fmt", "yuv420p", "-y", output_path
-            ], capture_output=True, text=True, timeout=60)
+            ], capture_output=True, text=True, timeout=120)
             
             # Cleanup temp files
             try:
