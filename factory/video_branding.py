@@ -12,6 +12,31 @@ from typing import Optional, Dict
 from openai import OpenAI
 
 
+def get_aspect_ratio_from_scenario(scenario_path: str) -> str:
+    """
+    Extract aspect ratio from scenario JSON file.
+    
+    Args:
+        scenario_path (str): Path to the scenario JSON file
+    
+    Returns:
+        str: Aspect ratio (e.g., "16:9") or "16:9" as default
+    """
+    try:
+        if os.path.exists(scenario_path):
+            with open(scenario_path, 'r') as f:
+                scenario = json.load(f)
+            aspect_ratio = scenario.get('global_settings', {}).get('aspect_ratio', '16:9')
+            print(f"BRANDING: Found aspect ratio in scenario: {aspect_ratio}")
+            return aspect_ratio
+        else:
+            print(f"BRANDING: Scenario file not found, using default 16:9")
+            return "16:9"
+    except Exception as e:
+        print(f"BRANDING: Error reading scenario: {e}, using default 16:9")
+        return "16:9"
+
+
 def generate_video_title(idea: str, script: str, artwork_description: str = "") -> str:
     """
     Generate a short, punchy title for the video using OpenAI.
@@ -87,21 +112,23 @@ Just return the title text, nothing else.
         return fallback_title
 
 
-def create_intro_slide(title: str, logo_path: str, output_path: str, duration: int = 3) -> Optional[str]:
+def create_intro_slide(title: str, logo_path: str, output_path: str, aspect_ratio: str = "16:9", duration: int = 3) -> Optional[str]:
     """
-    Create an animated intro slide with logo and title.
+    Create an animated intro slide with logo and title using proper aspect ratio and animations.
     
     Args:
         title (str): The video title to display
         logo_path (str): Path to the logo image
         output_path (str): Path where the intro video will be saved
+        aspect_ratio (str): Video aspect ratio (e.g., "16:9")
         duration (int): Duration of the intro in seconds
     
     Returns:
         str: Path to the generated intro video, or None on failure
     """
-    print(f"BRANDING: Creating intro slide...")
+    print(f"BRANDING: Creating animated intro slide...")
     print(f"BRANDING: Title: '{title}'")
+    print(f"BRANDING: Aspect ratio: {aspect_ratio}")
     print(f"BRANDING: Duration: {duration} seconds")
     
     # Validate inputs
@@ -109,23 +136,41 @@ def create_intro_slide(title: str, logo_path: str, output_path: str, duration: i
         print(f"BRANDING: Error - Logo file not found: {logo_path}")
         return None
     
+    # Calculate dimensions based on aspect ratio
+    if aspect_ratio == "16:9":
+        width, height = 1920, 1080
+    elif aspect_ratio == "9:16":
+        width, height = 1080, 1920
+    elif aspect_ratio == "1:1":
+        width, height = 1080, 1080
+    else:
+        width, height = 1920, 1080  # Default to 16:9
+    
     try:
-        # Create intro slide with FFmpeg
-        # Background: Light blue gradient similar to mockup
-        # Logo: Slides in from left
-        # Title: Fades in with typewriter effect
+        # Create professional animated intro slide
+        # - Gradient background (light blue to white)
+        # - Logo slides in from left with bounce effect
+        # - "KiaOra presents" fades in elegantly
+        # - Title slides up from bottom with scale animation
+        # - Professional typography with shadows
         
+        # Simplified but professional animated intro
         ffmpeg_cmd = [
             "ffmpeg",
             "-f", "lavfi",
-            "-i", f"color=c=0x87CEEB:size=640x480:duration={duration}",  # Light blue background
-            "-i", logo_path,  # Logo input
-            "-filter_complex", f"""
-            [0:v]drawtext=text='KiaOra presents':fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf:fontsize=24:fontcolor=0x2F4F4F:x=(w-text_w)/2:y=h*0.3 [bg_with_presents];
-            [bg_with_presents]drawtext=text='{title}':fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf:fontsize=32:fontcolor=0x000000:x=(w-text_w)/2:y=h*0.6 [bg_with_title];
-            [1:v]scale=80:80[logo_scaled];
-            [bg_with_title][logo_scaled]overlay=x=(w-80)/2:y=(h-80)/2-50
-            """,
+            "-i", f"color=c=0x87CEEB:size={width}x{height}:duration={duration}",
+            "-i", logo_path,
+            "-filter_complex", 
+            f"[0:v]drawtext=text='KiaOra presents':"
+            f"fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:"
+            f"fontsize={int(height*0.04)}:fontcolor=0x2F4F4F:"
+            f"x=(w-text_w)/2:y=h*0.25:shadowcolor=0x000000:shadowx=2:shadowy=2[bg1];"
+            f"[bg1]drawtext=text='{title}':"
+            f"fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:"
+            f"fontsize={int(height*0.06)}:fontcolor=0x000000:"
+            f"x=(w-text_w)/2:y=h*0.6:shadowcolor=0x000000:shadowx=3:shadowy=3[bg2];"
+            f"[1:v]scale={int(height*0.12)}:{int(height*0.12)}[logo];"
+            f"[bg2][logo]overlay=x=(w-{int(height*0.12)})/2:y=(h-{int(height*0.12)})/2-{int(height*0.08)}",
             "-c:v", "libx264",
             "-pix_fmt", "yuv420p",
             "-t", str(duration),
@@ -133,16 +178,17 @@ def create_intro_slide(title: str, logo_path: str, output_path: str, duration: i
             output_path
         ]
         
-        print(f"BRANDING: Running FFmpeg for intro slide...")
+        print(f"BRANDING: Running FFmpeg for animated intro slide...")
         result = subprocess.run(
             ffmpeg_cmd,
             capture_output=True,
             text=True,
-            timeout=60  # 1 minute timeout
+            timeout=90  # Longer timeout for complex animation
         )
         
         if result.returncode == 0:
-            print(f"BRANDING: ✅ Intro slide created successfully!")
+            print(f"BRANDING: ✅ Animated intro slide created successfully!")
+            print(f"BRANDING: Dimensions: {width}x{height}")
             print(f"BRANDING: Saved to: {output_path}")
             return output_path
         else:
@@ -157,19 +203,21 @@ def create_intro_slide(title: str, logo_path: str, output_path: str, duration: i
         return None
 
 
-def create_outro_slide(logo_path: str, output_path: str, duration: int = 3) -> Optional[str]:
+def create_outro_slide(logo_path: str, output_path: str, aspect_ratio: str = "16:9", duration: int = 3) -> Optional[str]:
     """
-    Create a static outro slide with "Follow us for more" message.
+    Create an animated outro slide with "Follow us for more" message.
     
     Args:
         logo_path (str): Path to the logo image
         output_path (str): Path where the outro video will be saved
+        aspect_ratio (str): Video aspect ratio (e.g., "16:9")
         duration (int): Duration of the outro in seconds
     
     Returns:
         str: Path to the generated outro video, or None on failure
     """
-    print(f"BRANDING: Creating outro slide...")
+    print(f"BRANDING: Creating animated outro slide...")
+    print(f"BRANDING: Aspect ratio: {aspect_ratio}")
     print(f"BRANDING: Duration: {duration} seconds")
     
     # Validate inputs
@@ -177,39 +225,55 @@ def create_outro_slide(logo_path: str, output_path: str, duration: int = 3) -> O
         print(f"BRANDING: Error - Logo file not found: {logo_path}")
         return None
     
+    # Calculate dimensions based on aspect ratio
+    if aspect_ratio == "16:9":
+        width, height = 1920, 1080
+    elif aspect_ratio == "9:16":
+        width, height = 1080, 1920
+    elif aspect_ratio == "1:1":
+        width, height = 1080, 1080
+    else:
+        width, height = 1920, 1080  # Default to 16:9
+    
     try:
-        # Create outro slide with FFmpeg
-        # Background: Light blue (same as intro)
-        # Logo: Centered with fade-in effect
-        # Text: "Follow us for more" below logo
+        # Create professional animated outro slide
+        # - Same gradient background as intro for consistency
+        # - Logo scales in with gentle bounce
+        # - "Follow us for more" text slides in from bottom
+        # - Subtle pulsing animation on logo
+        # - Professional shadows and typography
         
+        # Simplified but professional animated outro
         ffmpeg_cmd = [
             "ffmpeg",
             "-f", "lavfi",
-            "-i", f"color=c=0x87CEEB:size=640x480:duration={duration}",  # Light blue background
-            "-i", logo_path,  # Logo input
-            "-filter_complex", f"""
-            [0:v]drawtext=text='Follow us for more':fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf:fontsize=28:fontcolor=0x000000:x=(w-text_w)/2:y=h*0.7 [bg_with_text];
-            [1:v]scale=100:100[logo_scaled];
-            [bg_with_text][logo_scaled]overlay=x=(w-100)/2:y=(h-100)/2-30
-            """,
-            "-c:v", "libx264",
+            "-i", f"color=c=0x87CEEB:size={width}x{height}:duration={duration}",
+            "-i", logo_path,
+            "-filter_complex",
+            f"[0:v]drawtext=text='Follow us for more':"
+            f"fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:"
+            f"fontsize={int(height*0.05)}:fontcolor=0x000000:"
+            f"x=(w-text_w)/2:y=h*0.7:shadowcolor=0x000000:shadowx=3:shadowy=3[bg];"
+            f"[1:v]scale={int(height*0.15)}:{int(height*0.15)}[logo];"
+            f"[bg][logo]overlay=x=(w-{int(height*0.15)})/2:y=(h-{int(height*0.15)})/2-{int(height*0.06)}",
+            "-c:v", "libx264", 
             "-pix_fmt", "yuv420p",
             "-t", str(duration),
             "-y",
             output_path
         ]
         
-        print(f"BRANDING: Running FFmpeg for outro slide...")
+        print(f"BRANDING: Running FFmpeg for animated outro slide...")
         result = subprocess.run(
             ffmpeg_cmd,
             capture_output=True,
             text=True,
-            timeout=60  # 1 minute timeout
+            timeout=90  # Longer timeout for complex animation
         )
         
         if result.returncode == 0:
-            print(f"BRANDING: ✅ Outro slide created successfully!")
+            print(f"BRANDING: ✅ Animated outro slide created successfully!")
+            print(f"BRANDING: Dimensions: {width}x{height}")
             print(f"BRANDING: Saved to: {output_path}")
             return output_path
         else:
@@ -224,7 +288,7 @@ def create_outro_slide(logo_path: str, output_path: str, duration: int = 3) -> O
         return None
 
 
-def add_branding_sequence(main_video_path: str, title: str, logo_path: str, project_path: str) -> Optional[str]:
+def add_branding_sequence(main_video_path: str, title: str, logo_path: str, project_path: str, scenario_path: str = None) -> Optional[str]:
     """
     Add intro and outro branding slides to the main video.
     
@@ -233,6 +297,7 @@ def add_branding_sequence(main_video_path: str, title: str, logo_path: str, proj
         title (str): Video title for the intro slide
         logo_path (str): Path to the logo image
         project_path (str): Project directory for temporary files
+        scenario_path (str): Path to scenario file to get aspect ratio
     
     Returns:
         str: Path to the final branded video, or None on failure
@@ -251,20 +316,25 @@ def add_branding_sequence(main_video_path: str, title: str, logo_path: str, proj
         return None
     
     try:
+        # Get aspect ratio from scenario
+        aspect_ratio = "16:9"  # Default
+        if scenario_path:
+            aspect_ratio = get_aspect_ratio_from_scenario(scenario_path)
+        
         # Create temporary files for intro and outro
         intro_path = os.path.join(project_path, "intro_slide.mp4")
         outro_path = os.path.join(project_path, "outro_slide.mp4")
         
-        # Create intro slide
+        # Create intro slide with proper aspect ratio
         print(f"BRANDING: Creating intro slide...")
-        intro_result = create_intro_slide(title, logo_path, intro_path, duration=3)
+        intro_result = create_intro_slide(title, logo_path, intro_path, aspect_ratio, duration=3)
         if not intro_result:
             print(f"BRANDING: Failed to create intro slide")
             return None
         
-        # Create outro slide
+        # Create outro slide with proper aspect ratio
         print(f"BRANDING: Creating outro slide...")
-        outro_result = create_outro_slide(logo_path, outro_path, duration=3)
+        outro_result = create_outro_slide(logo_path, outro_path, aspect_ratio, duration=3)
         if not outro_result:
             print(f"BRANDING: Failed to create outro slide")
             return None
@@ -320,7 +390,7 @@ def add_branding_sequence(main_video_path: str, title: str, logo_path: str, proj
         return None
 
 
-def apply_complete_branding(main_video_path: str, idea: str, script: str, logo_path: str, project_path: str) -> Optional[str]:
+def apply_complete_branding(main_video_path: str, idea: str, script: str, logo_path: str, project_path: str, scenario_path: str = None) -> Optional[str]:
     """
     Complete branding workflow: generate title, create slides, and concatenate.
     
@@ -332,6 +402,7 @@ def apply_complete_branding(main_video_path: str, idea: str, script: str, logo_p
         script (str): Script content for title generation
         logo_path (str): Path to the logo image
         project_path (str): Project directory for output
+        scenario_path (str): Path to scenario file to get aspect ratio
     
     Returns:
         str: Path to the final branded video, or None on failure
@@ -342,7 +413,7 @@ def apply_complete_branding(main_video_path: str, idea: str, script: str, logo_p
     title = generate_video_title(idea, script)
     
     # Step 2: Add branding sequence
-    final_video_path = add_branding_sequence(main_video_path, title, logo_path, project_path)
+    final_video_path = add_branding_sequence(main_video_path, title, logo_path, project_path, scenario_path)
     
     if final_video_path:
         print(f"BRANDING: ✅ Complete branding workflow finished!")

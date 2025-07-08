@@ -288,7 +288,7 @@ def run_pipeline_for_idea(idea_text, idea_number, idea_name):
         if os.path.exists(logo_path):
             print(f"   🎬 Creating branded intro/outro sequence...")
             final_branded_video_path = video_branding.apply_complete_branding(
-                working_video_path, idea_text, script, logo_path, project_path
+                working_video_path, idea_text, script, logo_path, project_path, generated_scenario_path
             )
             
             if final_branded_video_path:
