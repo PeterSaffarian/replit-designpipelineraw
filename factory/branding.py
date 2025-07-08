@@ -16,11 +16,8 @@ from openai import OpenAI
 # CUSTOMIZABLE BRANDING CONFIGURATION
 BRANDING_CONFIG = {
     'fonts': {
-        'primary': '/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf',
-        'secondary': '/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf',
-        # Alternative fonts you can use:
-        # 'arial': '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',
-        # 'ubuntu': '/usr/share/fonts/truetype/ubuntu/Ubuntu-Bold.ttf'
+        'primary': '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',      # Main font for titles and text
+        'secondary': '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf',        # Backup font (lighter weight)
     },
     'size_ratios': {
         'logo_ratio': 3,            # Logo = min(width,height) / logo_ratio
@@ -41,6 +38,46 @@ LAYOUT_CONFIG = {
     'title_y_ratio': 0.75,     # Title Y = height * title_y_ratio
     'outro_text_y_ratio': 0.6  # Outro text Y = height * outro_text_y_ratio
 }
+
+# ============================================================================
+# AVAILABLE FONTS ON SYSTEM:
+# Copy any of these paths to BRANDING_CONFIG['fonts']['primary'] or ['secondary']
+# ============================================================================
+#
+# === SANS SERIF FONTS (Clean, Modern Look) ===
+# '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'           # DejaVu Sans Regular - Clean, readable
+# '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf'      # DejaVu Sans Bold ⭐ RECOMMENDED - Professional, strong
+#
+# === SERIF FONTS (Traditional, Elegant Look) ===  
+# '/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf'          # DejaVu Serif Regular - Classical, readable
+# '/usr/share/fonts/truetype/dejavu/DejaVuSerif-Bold.ttf'     # DejaVu Serif Bold ⭐ GREAT FOR HEADLINES - Elegant, formal
+#
+# === MONOSPACE FONTS (Technical, Code-like Look) ===
+# '/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf'       # DejaVu Sans Mono Regular - Tech, minimal
+# '/usr/share/fonts/truetype/dejavu/DejaVuSansMono-Bold.ttf'  # DejaVu Sans Mono Bold ⭐ PERFECT FOR TECH CONTENT
+#
+# === ITALIC/SLANTED VARIATIONS ===
+# '/usr/share/fonts/truetype/dejavu/DejaVuSansMono-Oblique.ttf'     # Mono Italic - Creative tech look
+# '/usr/share/fonts/truetype/dejavu/DejaVuSansMono-BoldOblique.ttf' # Mono Bold Italic - Strong + creative
+#
+# === QUICK STYLE GUIDE ===
+# 🎯 Business/Professional:   DejaVu Sans Bold (current default works great)
+# 🎭 Creative/Artistic:       DejaVu Serif Bold 
+# 💻 Technology/Coding:       DejaVu Sans Mono Bold
+# 📚 Educational/Academic:    DejaVu Serif Bold
+# 🚀 Modern/Startup:         DejaVu Sans Bold
+#
+# === EXAMPLE USAGE ===
+# For modern clean look:    BRANDING_CONFIG['fonts']['primary'] = '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf'
+# For traditional look:     BRANDING_CONFIG['fonts']['primary'] = '/usr/share/fonts/truetype/dejavu/DejaVuSerif-Bold.ttf'  
+# For technical/tech look:  BRANDING_CONFIG['fonts']['primary'] = '/usr/share/fonts/truetype/dejavu/DejaVuSansMono-Bold.ttf'
+# For creative tech look:   BRANDING_CONFIG['fonts']['primary'] = '/usr/share/fonts/truetype/dejavu/DejaVuSansMono-BoldOblique.ttf'
+#
+# === HOW TO CHANGE ===
+# 1. Pick a font path from above
+# 2. Update BRANDING_CONFIG['fonts']['primary'] = 'your_chosen_path'
+# 3. Test with: python test_branding_workflow.py
+# ============================================================================
 
 
 def get_video_dimensions(video_path: str) -> Tuple[int, int]:
