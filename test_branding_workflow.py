@@ -15,7 +15,10 @@ def main():
     main_video = "test_files/video_with_subtitles.mp4"  # Already lipsynced + subtitled
     logo_path = "test_files/logo.png"
     idea = "Digital privacy and online safety"
-    script = "Remember, never share personal information over the phone, especially if it seems suspicious. Always verify who you're speaking with through official channels."
+    script = "Wait, they're asking for my password? This feels off. Remember, never share personal information over the phone, especially if it seems suspicious. It's always better to hang up and verify from a trusted source."
+
+
+
     output_dir = "test_files"
     
     # Check inputs

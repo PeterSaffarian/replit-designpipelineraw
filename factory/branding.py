@@ -34,27 +34,35 @@ def generate_title(idea: str, script: str) -> str:
     try:
         client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
         
-        prompt = f"""Create a short video title (max 5 words) for:
+        prompt = f"""Create a short video title for:
 Idea: {idea}
 Script: {script[:200]}...
 
 Requirements:
-- Maximum 5 words
+- Maximum 4 words (to fit on slide)
 - Educational tone
 - Clear and engaging
+- No quotes or punctuation
 
 Return only the title."""
 
         response = client.chat.completions.create(
             model="gpt-4o",
             messages=[{"role": "user", "content": prompt}],
-            max_tokens=20,
+            max_tokens=15,
             temperature=0.7
         )
         
-        return response.choices[0].message.content.strip().strip('"')
+        title = response.choices[0].message.content.strip().strip('"\'.,!?')
+        
+        # Smart truncation if still too long
+        words = title.split()
+        if len(words) > 4:
+            title = ' '.join(words[:4])
+        
+        return title
     except Exception:
-        return "Learn Something New"
+        return "Stay Safe Online"
 
 
 def create_intro_slide(title: str, logo_path: str, output_path: str, width: int, height: int) -> Optional[str]:
@@ -62,16 +70,27 @@ def create_intro_slide(title: str, logo_path: str, output_path: str, width: int,
     if not os.path.exists(logo_path):
         return None
     
-    # Size calculations
+    # Smart text wrapping for title
+    words = title.split()
+    if len(words) > 2:
+        # Split into two lines for better fit
+        mid = len(words) // 2
+        title_line1 = ' '.join(words[:mid])
+        title_line2 = ' '.join(words[mid:])
+        title_text = f"{title_line1}\\n{title_line2}"
+    else:
+        title_text = title
+    
+    # Size calculations with smart font sizing
     logo_size = min(width, height) // 3
-    title_font = height // 12
-    presents_font = height // 18
+    title_font = min(height // 15, width // 20)  # Adaptive font size
+    presents_font = height // 20
     
     # Positioning
     logo_x = (width - logo_size) // 2
     logo_y = height // 6
     presents_y = height // 2
-    title_y = int(height * 0.7)
+    title_y = int(height * 0.75)
     
     try:
         ffmpeg_cmd = [
@@ -79,21 +98,21 @@ def create_intro_slide(title: str, logo_path: str, output_path: str, width: int,
             "-f", "lavfi", "-i", f"color=white:size={width}x{height}:duration=4",
             "-i", logo_path,
             "-filter_complex",
-            # KiaOra presents text
+            # KiaOra presents text with entrance animation
             f"[0:v]drawtext=text='KiaOra presents':"
             f"fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:"
             f"fontsize={presents_font}:fontcolor=black:"
-            f"x=(w-text_w)/2:y={presents_y}[with_presents];"
+            f"x=(w-text_w)/2:y='if(lt(t,1),{presents_y-30},{presents_y}+if(lt(t,2),30*(1-(t-1)),0))'[with_presents];"
             
-            # Title text  
-            f"[with_presents]drawtext=text='{title}':"
+            # Title text with smart wrapping and entrance animation
+            f"[with_presents]drawtext=text='{title_text}':"
             f"fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:"
             f"fontsize={title_font}:fontcolor=black:"
-            f"x=(w-text_w)/2:y={title_y}[with_title];"
+            f"x=(w-text_w)/2:y='if(lt(t,2),{title_y+30},{title_y}+if(lt(t,3),30*(1-(t-2)),0))'[with_title];"
             
-            # Logo overlay
+            # Logo overlay with entrance animation
             f"[1:v]scale={logo_size}:{logo_size}[logo_scaled];"
-            f"[with_title][logo_scaled]overlay=x={logo_x}:y={logo_y}",
+            f"[with_title][logo_scaled]overlay=x={logo_x}:y='if(lt(t,0.5),{logo_y-20},{logo_y}+if(lt(t,1.5),20*(1-(t-0.5)),0))'",
             
             "-c:v", "libx264", "-pix_fmt", "yuv420p", "-t", "4", "-y", output_path
         ]
@@ -122,15 +141,15 @@ def create_outro_slide(logo_path: str, output_path: str, width: int, height: int
             "-f", "lavfi", "-i", f"color=white:size={width}x{height}:duration=3",
             "-i", logo_path,
             "-filter_complex",
-            # Text
+            # Text with entrance animation
             f"[0:v]drawtext=text='Follow us for more':"
             f"fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:"
             f"fontsize={font_size}:fontcolor=black:"
-            f"x=(w-text_w)/2:y={text_y}[with_text];"
+            f"x=(w-text_w)/2:y='if(lt(t,1),{text_y+30},{text_y}+if(lt(t,2),30*(1-(t-1)),0))'[with_text];"
             
-            # Logo
+            # Logo with entrance animation
             f"[1:v]scale={logo_size}:{logo_size}[logo_scaled];"
-            f"[with_text][logo_scaled]overlay=x={logo_x}:y={logo_y}",
+            f"[with_text][logo_scaled]overlay=x={logo_x}:y='if(lt(t,0.5),{logo_y-20},{logo_y}+if(lt(t,1.5),20*(1-(t-0.5)),0))'",
             
             "-c:v", "libx264", "-pix_fmt", "yuv420p", "-t", "3", "-y", output_path
         ]
@@ -142,20 +161,73 @@ def create_outro_slide(logo_path: str, output_path: str, width: int, height: int
 
 
 def concatenate_videos(video_list: list, output_path: str) -> Optional[str]:
-    """Concatenate videos."""
+    """Concatenate videos with audio preservation and smooth transitions."""
     try:
         ffmpeg_cmd = ["ffmpeg"]
         for video in video_list:
             ffmpeg_cmd.extend(["-i", video])
         
-        ffmpeg_cmd.extend([
-            "-filter_complex", f"concat=n={len(video_list)}:v=1:a=0[v]",
-            "-map", "[v]", "-c:v", "libx264", "-pix_fmt", "yuv420p", "-y", output_path
-        ])
+        # Simple concatenation with audio preservation
+        if len(video_list) == 3:  # intro + main + outro
+            # Create a temporary concat file for FFmpeg
+            import tempfile
+            with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as f:
+                # Add silent audio tracks for intro and outro
+                f.write(f"file '{video_list[0]}'\n")
+                f.write(f"file '{video_list[1]}'\n") 
+                f.write(f"file '{video_list[2]}'\n")
+                concat_file = f.name
+            
+            # First create intro and outro with audio tracks
+            intro_with_audio = output_path.replace('.mp4', '_intro_audio.mp4')
+            outro_with_audio = output_path.replace('.mp4', '_outro_audio.mp4')
+            
+            # Add silent audio to intro
+            subprocess.run([
+                "ffmpeg", "-i", video_list[0], "-f", "lavfi", "-i", "anullsrc=channel_layout=stereo:sample_rate=44100",
+                "-c:v", "copy", "-c:a", "aac", "-shortest", "-y", intro_with_audio
+            ], capture_output=True)
+            
+            # Add silent audio to outro  
+            subprocess.run([
+                "ffmpeg", "-i", video_list[2], "-f", "lavfi", "-i", "anullsrc=channel_layout=stereo:sample_rate=44100",
+                "-c:v", "copy", "-c:a", "aac", "-shortest", "-y", outro_with_audio
+            ], capture_output=True)
+            
+            # Now concatenate all three with proper audio
+            ffmpeg_cmd = [
+                "ffmpeg", "-i", intro_with_audio, "-i", video_list[1], "-i", outro_with_audio,
+                "-filter_complex", "concat=n=3:v=1:a=1[v][a]",
+                "-map", "[v]", "-map", "[a]", "-c:v", "libx264", "-c:a", "aac",
+                "-pix_fmt", "yuv420p", "-y", output_path
+            ]
+            
+            result = subprocess.run(ffmpeg_cmd, capture_output=True, text=True, timeout=120)
+            
+            # Cleanup temp files
+            import os
+            try:
+                os.unlink(concat_file)
+                os.unlink(intro_with_audio)
+                os.unlink(outro_with_audio)
+            except:
+                pass
+                
+        else:
+            # Fallback for other cases
+            ffmpeg_cmd.extend([
+                "-filter_complex", f"concat=n={len(video_list)}:v=1:a=1[v][a]",
+                "-map", "[v]", "-map", "[a]", "-c:v", "libx264", "-c:a", "aac",
+                "-pix_fmt", "yuv420p", "-y", output_path
+            ])
+            result = subprocess.run(ffmpeg_cmd, capture_output=True, text=True, timeout=120)
         
         result = subprocess.run(ffmpeg_cmd, capture_output=True, text=True, timeout=120)
+        if result.returncode != 0:
+            print(f"FFmpeg concatenation error: {result.stderr}")
         return output_path if result.returncode == 0 else None
-    except Exception:
+    except Exception as e:
+        print(f"Concatenation exception: {e}")
         return None
 
 
