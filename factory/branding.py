@@ -75,7 +75,7 @@ def create_intro_slide(title: str, logo_path: str, output_path: str, width: int,
     
     # Smart text wrapping for title
     words = title_clean.split()
-    if len(words) > 2:
+    if len(words) > 3:  # Only wrap if really long
         # Split into two lines for better fit - proper FFmpeg line break
         mid = len(words) // 2
         title_line1 = ' '.join(words[:mid])
@@ -101,24 +101,24 @@ def create_intro_slide(title: str, logo_path: str, output_path: str, width: int,
             "-f", "lavfi", "-i", f"color=white:size={width}x{height}:duration=4",
             "-i", logo_path,
             "-filter_complex",
-            # KiaOra presents text - starts off-screen above, slides down (1-2 seconds)
+            # KiaOra presents text - starts off-screen above, slides down (0-1 seconds)
             f"[0:v]drawtext=text='KiaOra presents':"
             f"fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:"
             f"fontsize={presents_font}:fontcolor=black:"
-            f"x=(w-text_w)/2:y='if(lt(t,1),-100,if(lt(t,2),-100+(t-1)*({presents_y}+100),{presents_y}))'[with_presents];"
+            f"x=(w-text_w)/2:y=if(lt(t\\,1)\\,-100+t*({presents_y}+100)\\,{presents_y})[with_presents];"
             
-            # Title text - starts off-screen below, slides up (2.5-3.5 seconds)
+            # Title text - starts off-screen below, slides up (0-1 seconds)
             f"[with_presents]drawtext=text='{title_text}':"
             f"fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:"
             f"fontsize={title_font}:fontcolor=black:"
-            f"x=(w-text_w)/2:y='if(lt(t,2.5),{height}+100,if(lt(t,3.5),{height}+100-(t-2.5)*({height}+100-{title_y}),{title_y}))'[with_title];"
+            f"x=(w-text_w)/2:y=if(lt(t\\,1)\\,{height}+100-t*({height}+100-{title_y})\\,{title_y})[with_title];"
             
-            # Logo - starts off-screen above, slides down (0.5-1.5 seconds)
+            # Logo - starts off-screen above, slides down (0-1 seconds)
             f"[1:v]scale={logo_size}:{logo_size}[logo_scaled];"
             f"[with_title][logo_scaled]overlay=x={logo_x}:"
-            f"y='if(lt(t,0.5),-200,if(lt(t,1.5),-200+(t-0.5)*({logo_y}+200),{logo_y}))'",
+            f"y=if(lt(t\\,1)\\,-200+t*({logo_y}+200)\\,{logo_y})",
             
-            "-c:v", "libx264", "-pix_fmt", "yuv420p", "-t", "5", "-y", output_path
+            "-c:v", "libx264", "-pix_fmt", "yuv420p", "-t", "3", "-y", output_path
         ]
         
         result = subprocess.run(ffmpeg_cmd, capture_output=True, text=True, timeout=60)
@@ -136,17 +136,8 @@ def create_outro_slide(logo_path: str, output_path: str, width: int, height: int
     if not os.path.exists(logo_path):
         return None
     
-    # Smart text wrapping for outro
-    text = "Follow us for more"
-    words = text.split()
-    if len(words) > 3:
-        # Split into two lines for better fit - proper FFmpeg line break
-        mid = len(words) // 2
-        text_line1 = ' '.join(words[:mid])
-        text_line2 = ' '.join(words[mid:])
-        text_display = f"{text_line1}\\\\n{text_line2}"  # Double backslash for FFmpeg
-    else:
-        text_display = text
+    # No text wrapping for outro - keep it simple to avoid formatting issues
+    text_display = "Follow us for more"
     
     logo_size = min(width, height) // 3
     font_size = min(height // 18, width // 25)  # Smaller adaptive font
@@ -161,18 +152,18 @@ def create_outro_slide(logo_path: str, output_path: str, width: int, height: int
             "-f", "lavfi", "-i", f"color=white:size={width}x{height}:duration=3",
             "-i", logo_path,
             "-filter_complex",
-            # Text - starts off-screen below, slides up (1-2 seconds)
+            # Text - starts off-screen below, slides up (0-1 seconds)
             f"[0:v]drawtext=text='{text_display}':"
             f"fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:"
             f"fontsize={font_size}:fontcolor=black:"
-            f"x=(w-text_w)/2:y='if(lt(t,1),{height}+100,if(lt(t,2),{height}+100-(t-1)*({height}+100-{text_y}),{text_y}))'[with_text];"
+            f"x=(w-text_w)/2:y=if(lt(t\\,1)\\,{height}+100-t*({height}+100-{text_y})\\,{text_y})[with_text];"
             
-            # Logo - starts off-screen above, slides down (0.5-1.5 seconds)
+            # Logo - starts off-screen above, slides down (0-1 seconds)
             f"[1:v]scale={logo_size}:{logo_size}[logo_scaled];"
             f"[with_text][logo_scaled]overlay=x={logo_x}:"
-            f"y='if(lt(t,0.5),-200,if(lt(t,1.5),-200+(t-0.5)*({logo_y}+200),{logo_y}))'",
+            f"y=if(lt(t\\,1)\\,-200+t*({logo_y}+200)\\,{logo_y})",
             
-            "-c:v", "libx264", "-pix_fmt", "yuv420p", "-t", "4", "-y", output_path
+            "-c:v", "libx264", "-pix_fmt", "yuv420p", "-t", "3", "-y", output_path
         ]
         
         result = subprocess.run(ffmpeg_cmd, capture_output=True, text=True, timeout=60)
