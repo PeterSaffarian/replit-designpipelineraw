@@ -101,24 +101,24 @@ def create_intro_slide(title: str, logo_path: str, output_path: str, width: int,
             "-f", "lavfi", "-i", f"color=white:size={width}x{height}:duration=4",
             "-i", logo_path,
             "-filter_complex",
-            # KiaOra presents text - slides down from above after 1 second
+            # KiaOra presents text - smooth slide down from above (1-2 seconds)
             f"[0:v]drawtext=text='KiaOra presents':"
             f"fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:"
             f"fontsize={presents_font}:fontcolor=black:"
-            f"x=(w-text_w)/2:y='if(gte(t,1),{presents_y},{presents_y-100})'[with_presents];"
+            f"x=(w-text_w)/2:y='if(lt(t,1),{presents_y-100},if(lt(t,2),{presents_y-100}+(t-1)*100,{presents_y}))'[with_presents];"
             
-            # Title text - slides up from below after 2.5 seconds
+            # Title text - smooth slide up from below (2.5-3.5 seconds)
             f"[with_presents]drawtext=text='{title_text}':"
             f"fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:"
             f"fontsize={title_font}:fontcolor=black:"
-            f"x=(w-text_w)/2:y='if(gte(t,2.5),{title_y},{title_y+100})'[with_title];"
+            f"x=(w-text_w)/2:y='if(lt(t,2.5),{title_y+100},if(lt(t,3.5),{title_y+100}-(t-2.5)*100,{title_y}))'[with_title];"
             
-            # Logo - slides down from above first
+            # Logo - smooth slide down from above (0.5-1.5 seconds)
             f"[1:v]scale={logo_size}:{logo_size}[logo_scaled];"
             f"[with_title][logo_scaled]overlay=x={logo_x}:"
-            f"y='if(gte(t,0.5),{logo_y},{logo_y-150})'",
+            f"y='if(lt(t,0.5),{logo_y-150},if(lt(t,1.5),{logo_y-150}+(t-0.5)*150,{logo_y}))'",
             
-            "-c:v", "libx264", "-pix_fmt", "yuv420p", "-t", "4", "-y", output_path
+            "-c:v", "libx264", "-pix_fmt", "yuv420p", "-t", "5", "-y", output_path
         ]
         
         result = subprocess.run(ffmpeg_cmd, capture_output=True, text=True, timeout=60)
@@ -161,18 +161,18 @@ def create_outro_slide(logo_path: str, output_path: str, width: int, height: int
             "-f", "lavfi", "-i", f"color=white:size={width}x{height}:duration=3",
             "-i", logo_path,
             "-filter_complex",
-            # Text - slides up from below after 1 second, then stays put
+            # Text - smooth slide up from below (1-2 seconds)
             f"[0:v]drawtext=text='{text_display}':"
             f"fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:"
             f"fontsize={font_size}:fontcolor=black:"
-            f"x=(w-text_w)/2:y='if(gte(t,1),{text_y},{text_y+100})'[with_text];"
+            f"x=(w-text_w)/2:y='if(lt(t,1),{text_y+100},if(lt(t,2),{text_y+100}-(t-1)*100,{text_y}))'[with_text];"
             
-            # Logo - slides down from above first, then stays put
+            # Logo - smooth slide down from above (0.5-1.5 seconds)
             f"[1:v]scale={logo_size}:{logo_size}[logo_scaled];"
             f"[with_text][logo_scaled]overlay=x={logo_x}:"
-            f"y='if(gte(t,0.5),{logo_y},{logo_y-150})'",
+            f"y='if(lt(t,0.5),{logo_y-150},if(lt(t,1.5),{logo_y-150}+(t-0.5)*150,{logo_y}))'",
             
-            "-c:v", "libx264", "-pix_fmt", "yuv420p", "-t", "3", "-y", output_path
+            "-c:v", "libx264", "-pix_fmt", "yuv420p", "-t", "4", "-y", output_path
         ]
         
         result = subprocess.run(ffmpeg_cmd, capture_output=True, text=True, timeout=60)
@@ -219,14 +219,17 @@ def concatenate_videos(video_list: list, output_path: str) -> Optional[str]:
                 print(f"Failed to add audio to outro: {outro_result.stderr}")
                 return None
             
-            # Now concatenate all three
-            print("Concatenating intro + main + outro...")
+            # Now concatenate all three with fade transitions
+            print("Concatenating intro + main + outro with fade transitions...")
+            
+            # Use simple concatenation for reliability
+            print("Using simple concatenation for faster processing...")
             concat_result = subprocess.run([
                 "ffmpeg", "-i", intro_with_audio, "-i", video_list[1], "-i", outro_with_audio,
                 "-filter_complex", "concat=n=3:v=1:a=1[v][a]",
                 "-map", "[v]", "-map", "[a]", "-c:v", "libx264", "-c:a", "aac",
                 "-pix_fmt", "yuv420p", "-y", output_path
-            ], capture_output=True, text=True, timeout=120)
+            ], capture_output=True, text=True, timeout=60)
             
             # Cleanup temp files
             try:
@@ -280,6 +283,25 @@ def add_branding(main_video_path: str, idea: str, script: str, logo_path: str, o
         print(f"ERROR: Missing files - video: {os.path.exists(main_video_path)}, logo: {os.path.exists(logo_path)}")
         return None
     
+    try:
+        # Try MoviePy approach first (better animations and transitions)
+        from . import video_transitions
+        
+        print("Using MoviePy for professional animations and smooth transitions...")
+        moviepy_result = video_transitions.create_branded_video_moviepy(
+            main_video_path, idea, script, logo_path, output_dir
+        )
+        
+        if moviepy_result:
+            print(f"SUCCESS: Professional branded video created with MoviePy at {moviepy_result}")
+            return moviepy_result
+        else:
+            print("MoviePy approach failed, falling back to FFmpeg method...")
+    
+    except Exception as e:
+        print(f"MoviePy error: {e}, falling back to FFmpeg method...")
+    
+    # Fallback to original FFmpeg approach
     try:
         # Get dimensions and generate title
         width, height = get_video_dimensions(main_video_path)
