@@ -9,7 +9,7 @@ from datetime import datetime
 # It's good practice to wrap imports in a try-except block for clearer error messages
 try:
     from creative_studio import artwork_designer, artwork_builder, artwork_checker, script_writer, producer
-    from factory import audio_gen, video_gen, assembly, video_watermark
+    from factory import audio_gen, video_gen, assembly, video_watermark, subtitle_generator, subtitle_burner
 except ImportError as e:
     print(f"FATAL ERROR: A required module could not be imported: {e}")
     print("Please ensure you are running the orchestrator from the project's root directory.")
@@ -154,7 +154,7 @@ def run_pipeline_for_idea(idea_text, idea_number, idea_name):
         save_tracker()
 
         # --- Step 5: Audio Generation ---
-        print("\n--- [Step 4/7] Factory: Generating Voiceover ---")
+        print("\n--- [Step 4/9] Factory: Generating Voiceover ---")
         audio_path = os.path.join(project_path, "audio.mp3")
         generated_audio_path = audio_gen.generate(script, audio_path)
         if not generated_audio_path:
@@ -163,8 +163,23 @@ def run_pipeline_for_idea(idea_text, idea_number, idea_name):
         status_report['assets']['audio_path'] = generated_audio_path
         save_tracker()
 
-        # --- Step 6: Producer ---
-        print("\n--- [Step 5/7] Creative Studio: Producing Scenario ---")
+        # --- Step 6: Subtitle Generation ---
+        print("\n--- [Step 5/9] Factory: Generating Subtitles ---")
+        srt_path = os.path.join(project_path, "subtitles.srt")
+        generated_srt_path = subtitle_generator.generate_srt_subtitles(generated_audio_path, srt_path)
+        if generated_srt_path:
+            print(f"   ✅ Subtitles generated and saved to {generated_srt_path}")
+            status_report['assets']['srt_path'] = generated_srt_path
+            # Get subtitle statistics
+            srt_stats = subtitle_generator.get_subtitle_stats(generated_srt_path)
+            status_report['assets']['subtitle_stats'] = srt_stats
+        else:
+            print(f"   ⚠️  Subtitle generation failed, continuing without subtitles")
+            status_report['assets']['srt_path'] = None
+        save_tracker()
+
+        # --- Step 7: Producer ---
+        print("\n--- [Step 6/9] Creative Studio: Producing Scenario ---")
         template_path = os.path.join(SCHEMAS_DIR, TEMPLATE_FILE_NAME)
         scenario_path = os.path.join(project_path, "scenario.json")
         generated_scenario_path = producer.produce_scenario(script, generated_audio_path, generated_artwork_path, template_path, scenario_path)
@@ -174,8 +189,8 @@ def run_pipeline_for_idea(idea_text, idea_number, idea_name):
         status_report['assets']['scenario_path'] = generated_scenario_path
         save_tracker()
 
-        # --- Step 7: Raw Video Generation ---
-        print("\n--- [Step 6/7] Factory: Generating Raw Video ---")
+        # --- Step 8: Raw Video Generation ---
+        print("\n--- [Step 7/9] Factory: Generating Raw Video ---")
         video_gen_result = video_gen.generate(generated_scenario_path, project_path)
         if not video_gen_result or 'videos' not in video_gen_result:
             raise RuntimeError("Failed to generate raw video.")
@@ -202,8 +217,8 @@ def run_pipeline_for_idea(idea_text, idea_number, idea_name):
         
         save_tracker()
 
-        # --- Step 8: Assembly (Lipsync) ---
-        print("\n--- [Step 7/8] Factory: Assembling Final Video ---")
+        # --- Step 9: Assembly (Lipsync) ---
+        print("\n--- [Step 8/9] Factory: Assembling Final Video ---")
         
         # For Runway videos (local files), we need to upload to get a public URL for Sync.so
         if raw_video_url.startswith('file://'):
@@ -227,25 +242,44 @@ def run_pipeline_for_idea(idea_text, idea_number, idea_name):
         status_report['assets']['final_video_path'] = final_video_path
         save_tracker()
 
-        # --- Step 9: Logo Watermarking ---
-        print("\n--- [Step 8/8] Factory: Adding Logo Watermark ---")
+        # --- Step 10: Subtitle Burning ---
+        print("\n--- [Step 9/9] Factory: Adding Subtitles to Video ---")
+        working_video_path = final_video_path  # Start with lip-synced video
+        
+        if generated_srt_path and os.path.exists(generated_srt_path):
+            print(f"   📝 Burning subtitles into video...")
+            subtitled_video_path = subtitle_burner.create_subtitled_video(
+                final_video_path, generated_srt_path, project_path, style="netflix"
+            )
+            
+            if subtitled_video_path:
+                print(f"   ✅ Subtitles burned successfully!")
+                print(f"   📍 Subtitled video: {subtitled_video_path}")
+                status_report['assets']['subtitled_video_path'] = subtitled_video_path
+                working_video_path = subtitled_video_path  # Use subtitled version for logo
+            else:
+                print(f"   ⚠️  Subtitle burning failed, using original video")
+        else:
+            print(f"   ℹ️  No subtitles available, skipping subtitle burning")
+
+        # --- Step 11: Logo Watermarking ---
+        print("\n--- [Final Step] Factory: Adding Logo Watermark ---")
         logo_path = os.path.join(INPUTS_DIR, LOGO_FILE_NAME)
         
         if os.path.exists(logo_path):
-            print(f"   🏷️  Applying logo watermark from {logo_path}...")
+            print(f"   🏷️  Applying logo watermark to final video...")
             branded_video_path = video_watermark.apply_final_branding(
-                final_video_path, logo_path, project_path
+                working_video_path, logo_path, project_path
             )
             
             if branded_video_path:
                 print(f"   ✅ Logo watermark applied successfully!")
-                print(f"   📍 Original video: {final_video_path}")
-                print(f"   📍 Branded video: {branded_video_path}")
-                status_report['assets']['branded_video_path'] = branded_video_path
+                print(f"   📍 Final branded video: {branded_video_path}")
+                status_report['assets']['final_branded_video_path'] = branded_video_path
             else:
-                print(f"   ⚠️  Failed to apply logo watermark, keeping original video.")
+                print(f"   ⚠️  Failed to apply logo watermark")
         else:
-            print(f"   ℹ️  No logo file found at {logo_path}, skipping watermark step.")
+            print(f"   ℹ️  No logo file found at {logo_path}, skipping watermark step")
 
         # --- Final Success ---
         status_report['status'] = "SUCCESS"

@@ -34,6 +34,8 @@ The architecture integrates multiple external AI services through dedicated modu
 
 ### Factory (`factory/`)
 - **Audio Generator** - Converts scripts to speech using ElevenLabs TTS
+- **Subtitle Generator** - Creates SRT subtitle files from audio using OpenAI Whisper API
+- **Subtitle Burner** - Burns styled subtitles into videos using FFmpeg with Netflix-style formatting
 - **Video Generator** - Creates animated videos from static images using provider-agnostic routing
 - **Kling Integration** - Handles JWT authentication and direct video extension with Kling AI
 - **Runway Integration** - Handles frame extraction and chained segment generation with Runway ML
@@ -120,5 +122,8 @@ Preferred communication style: Simple, everyday language.
 ✓ Added logo watermarking system with FFmpeg-based overlay functionality
 ✓ Implemented final branding step preserving original video while creating branded version
 ✓ Added configurable logo positioning, opacity, and scaling options
+✓ Integrated OpenAI Whisper API for automatic subtitle generation from audio
+✓ Created professional subtitle burning with Netflix-style formatting using FFmpeg
+✓ Enhanced pipeline workflow: Sync → Subtitles → Logo for streamlined production
 
-→ Complete 8-step pipeline with quality control and professional branding
+→ Complete 9-step pipeline with subtitles, quality control, and professional branding
