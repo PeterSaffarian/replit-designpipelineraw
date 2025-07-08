@@ -6,14 +6,15 @@
 **Purpose:** How elements appear when a slide starts
 **Duration:** 1 second at the beginning of each slide
 **Effect:** Fade-in from transparent to opaque
+**Background:** Static white background (no slide fade)
 **Elements Affected:**
-- Logo
-- "KiaOra presents" text
-- AI-generated title
-- "Follow us for more" text
+- Logo: Uses `fade=in:st=0:d=1:alpha=1` with `format=yuva420p`
+- "KiaOra presents" text: Uses `alpha='if(lt(t,1),t,1)'`
+- AI-generated title: Uses `alpha='if(lt(t,1),t,1)'`
+- "Follow us for more" text: Uses `alpha='if(lt(t,1),t,1)'`
 
 **Timeline within each slide:**
-- 0.0-1.0s: All elements fade in simultaneously
+- 0.0-1.0s: All elements fade in simultaneously (background stays static)
 - 1.0-3.0s: All elements remain static at full opacity
 
 ### 2. Slide Transition Effects (Between Videos)

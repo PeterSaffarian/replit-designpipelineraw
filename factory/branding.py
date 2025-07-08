@@ -101,20 +101,22 @@ def create_intro_slide(title: str, logo_path: str, output_path: str, width: int,
             "-f", "lavfi", "-i", f"color=white:size={width}x{height}:duration=4",
             "-i", logo_path,
             "-filter_complex",
-            # Create fade-in effect for entire video (0-1 seconds)
-            f"[0:v]fade=in:st=0:d=1,drawtext=text='KiaOra presents':"
+            # KiaOra presents text with fade-in effect (0-1 seconds)
+            f"[0:v]drawtext=text='KiaOra presents':"
             f"fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:"
             f"fontsize={presents_font}:fontcolor=black:"
+            f"alpha='if(lt(t,1),t,1)':"
             f"x=(w-text_w)/2:y={presents_y}[with_presents];"
             
-            # Add title text
+            # Title text with fade-in effect (0-1 seconds)
             f"[with_presents]drawtext=text='{title_text}':"
             f"fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:"
             f"fontsize={title_font}:fontcolor=black:"
+            f"alpha='if(lt(t,1),t,1)':"
             f"x=(w-text_w)/2:y={title_y}[with_title];"
             
-            # Add logo with fade-in
-            f"[1:v]scale={logo_size}:{logo_size},fade=in:st=0:d=1[logo_scaled];"
+            # Logo with fade-in effect
+            f"[1:v]scale={logo_size}:{logo_size},format=yuva420p,fade=in:st=0:d=1:alpha=1[logo_scaled];"
             f"[with_title][logo_scaled]overlay=x={logo_x}:y={logo_y}",
             
             "-c:v", "libx264", "-pix_fmt", "yuv420p", "-t", "3", "-y", output_path
@@ -151,14 +153,15 @@ def create_outro_slide(logo_path: str, output_path: str, width: int, height: int
             "-f", "lavfi", "-i", f"color=white:size={width}x{height}:duration=3",
             "-i", logo_path,
             "-filter_complex",
-            # Create fade-in effect for entire video (0-1 seconds)
-            f"[0:v]fade=in:st=0:d=1,drawtext=text='{text_display}':"
+            # Text with fade-in effect (0-1 seconds)
+            f"[0:v]drawtext=text='{text_display}':"
             f"fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:"
             f"fontsize={font_size}:fontcolor=black:"
+            f"alpha='if(lt(t,1),t,1)':"
             f"x=(w-text_w)/2:y={text_y}[with_text];"
             
-            # Add logo with fade-in
-            f"[1:v]scale={logo_size}:{logo_size},fade=in:st=0:d=1[logo_scaled];"
+            # Logo with fade-in effect
+            f"[1:v]scale={logo_size}:{logo_size},format=yuva420p,fade=in:st=0:d=1:alpha=1[logo_scaled];"
             f"[with_text][logo_scaled]overlay=x={logo_x}:y={logo_y}",
             
             "-c:v", "libx264", "-pix_fmt", "yuv420p", "-t", "3", "-y", output_path
