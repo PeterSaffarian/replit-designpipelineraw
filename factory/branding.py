@@ -1,0 +1,213 @@
+"""
+Video Branding Module - Clean implementation for intro/outro slides.
+"""
+
+import os
+import json
+import subprocess
+from typing import Optional, Tuple
+from openai import OpenAI
+
+
+def get_video_dimensions(video_path: str) -> Tuple[int, int]:
+    """Get video dimensions using ffprobe."""
+    try:
+        result = subprocess.run([
+            "ffprobe", "-v", "quiet", "-print_format", "json", 
+            "-show_streams", video_path
+        ], capture_output=True, text=True, timeout=30)
+        
+        if result.returncode == 0:
+            data = json.loads(result.stdout)
+            for stream in data.get('streams', []):
+                if stream.get('codec_type') == 'video':
+                    width = stream.get('width', 720)
+                    height = stream.get('height', 1280)
+                    return width, height
+        return 720, 1280
+    except Exception:
+        return 720, 1280
+
+
+def generate_title(idea: str, script: str) -> str:
+    """Generate video title using OpenAI."""
+    try:
+        client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+        
+        prompt = f"""Create a short video title (max 5 words) for:
+Idea: {idea}
+Script: {script[:200]}...
+
+Requirements:
+- Maximum 5 words
+- Educational tone
+- Clear and engaging
+
+Return only the title."""
+
+        response = client.chat.completions.create(
+            model="gpt-4o",
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=20,
+            temperature=0.7
+        )
+        
+        return response.choices[0].message.content.strip().strip('"')
+    except Exception:
+        return "Learn Something New"
+
+
+def create_intro_slide(title: str, logo_path: str, output_path: str, width: int, height: int) -> Optional[str]:
+    """Create intro slide: logo first, then 'KiaOra presents', then title."""
+    if not os.path.exists(logo_path):
+        return None
+    
+    # Size calculations
+    logo_size = min(width, height) // 3
+    title_font = height // 12
+    presents_font = height // 18
+    
+    # Positioning
+    logo_x = (width - logo_size) // 2
+    logo_y = height // 6
+    presents_y = height // 2
+    title_y = int(height * 0.7)
+    
+    try:
+        ffmpeg_cmd = [
+            "ffmpeg",
+            "-f", "lavfi", "-i", f"color=white:size={width}x{height}:duration=4",
+            "-i", logo_path,
+            "-filter_complex",
+            # KiaOra presents text
+            f"[0:v]drawtext=text='KiaOra presents':"
+            f"fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:"
+            f"fontsize={presents_font}:fontcolor=black:"
+            f"x=(w-text_w)/2:y={presents_y}[with_presents];"
+            
+            # Title text  
+            f"[with_presents]drawtext=text='{title}':"
+            f"fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:"
+            f"fontsize={title_font}:fontcolor=black:"
+            f"x=(w-text_w)/2:y={title_y}[with_title];"
+            
+            # Logo overlay
+            f"[1:v]scale={logo_size}:{logo_size}[logo_scaled];"
+            f"[with_title][logo_scaled]overlay=x={logo_x}:y={logo_y}",
+            
+            "-c:v", "libx264", "-pix_fmt", "yuv420p", "-t", "4", "-y", output_path
+        ]
+        
+        result = subprocess.run(ffmpeg_cmd, capture_output=True, text=True, timeout=60)
+        return output_path if result.returncode == 0 else None
+    except Exception:
+        return None
+
+
+def create_outro_slide(logo_path: str, output_path: str, width: int, height: int) -> Optional[str]:
+    """Create outro slide with logo and 'Follow us for more'."""
+    if not os.path.exists(logo_path):
+        return None
+    
+    logo_size = min(width, height) // 3
+    font_size = height // 16
+    
+    logo_x = (width - logo_size) // 2
+    logo_y = height // 3
+    text_y = int(height * 0.7)
+    
+    try:
+        ffmpeg_cmd = [
+            "ffmpeg",
+            "-f", "lavfi", "-i", f"color=white:size={width}x{height}:duration=3",
+            "-i", logo_path,
+            "-filter_complex",
+            # Text
+            f"[0:v]drawtext=text='Follow us for more':"
+            f"fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:"
+            f"fontsize={font_size}:fontcolor=black:"
+            f"x=(w-text_w)/2:y={text_y}[with_text];"
+            
+            # Logo
+            f"[1:v]scale={logo_size}:{logo_size}[logo_scaled];"
+            f"[with_text][logo_scaled]overlay=x={logo_x}:y={logo_y}",
+            
+            "-c:v", "libx264", "-pix_fmt", "yuv420p", "-t", "3", "-y", output_path
+        ]
+        
+        result = subprocess.run(ffmpeg_cmd, capture_output=True, text=True, timeout=60)
+        return output_path if result.returncode == 0 else None
+    except Exception:
+        return None
+
+
+def concatenate_videos(video_list: list, output_path: str) -> Optional[str]:
+    """Concatenate videos."""
+    try:
+        ffmpeg_cmd = ["ffmpeg"]
+        for video in video_list:
+            ffmpeg_cmd.extend(["-i", video])
+        
+        ffmpeg_cmd.extend([
+            "-filter_complex", f"concat=n={len(video_list)}:v=1:a=0[v]",
+            "-map", "[v]", "-c:v", "libx264", "-pix_fmt", "yuv420p", "-y", output_path
+        ])
+        
+        result = subprocess.run(ffmpeg_cmd, capture_output=True, text=True, timeout=120)
+        return output_path if result.returncode == 0 else None
+    except Exception:
+        return None
+
+
+def add_branding(main_video_path: str, idea: str, script: str, logo_path: str, output_dir: str) -> Optional[str]:
+    """
+    Main branding workflow:
+    1. Generate title
+    2. Get video dimensions
+    3. Create intro slide
+    4. Create outro slide
+    5. Concatenate: intro + main + outro
+    """
+    if not os.path.exists(main_video_path) or not os.path.exists(logo_path):
+        print(f"ERROR: Missing files - video: {os.path.exists(main_video_path)}, logo: {os.path.exists(logo_path)}")
+        return None
+    
+    try:
+        # Get dimensions and generate title
+        width, height = get_video_dimensions(main_video_path)
+        print(f"Video dimensions: {width}x{height}")
+        
+        title = generate_title(idea, script)
+        print(f"Generated title: '{title}'")
+        
+        # Create slide paths
+        intro_path = os.path.join(output_dir, "intro.mp4")
+        outro_path = os.path.join(output_dir, "outro.mp4")
+        final_path = os.path.join(output_dir, "branded_video.mp4")
+        
+        # Create slides
+        print("Creating intro slide...")
+        if not create_intro_slide(title, logo_path, intro_path, width, height):
+            print("ERROR: Failed to create intro slide")
+            return None
+        print(f"Intro slide created: {intro_path}")
+        
+        print("Creating outro slide...")
+        if not create_outro_slide(logo_path, outro_path, width, height):
+            print("ERROR: Failed to create outro slide")
+            return None
+        print(f"Outro slide created: {outro_path}")
+        
+        # Concatenate
+        print("Concatenating videos...")
+        video_list = [intro_path, main_video_path, outro_path]
+        result = concatenate_videos(video_list, final_path)
+        if result:
+            print(f"Final video created: {result}")
+        else:
+            print("ERROR: Failed to concatenate videos")
+        return result
+        
+    except Exception as e:
+        print(f"ERROR: Exception in add_branding: {e}")
+        return None
