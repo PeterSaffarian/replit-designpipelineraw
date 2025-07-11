@@ -259,30 +259,44 @@ def concatenate_videos(video_list: list, output_path: str) -> Optional[str]:
         print(f"Concatenating {len(video_list)} videos...")
         
         if len(video_list) == 3:  # intro + main + outro
-            # Add silent audio to intro and outro first
-            intro_with_audio = output_path.replace('.mp4', '_intro_audio.mp4')
-            outro_with_audio = output_path.replace('.mp4', '_outro_audio.mp4')
+            # Get main video dimensions to use as target
+            probe_cmd = ["ffprobe", "-v", "quiet", "-select_streams", "v:0", 
+                        "-show_entries", "stream=width,height", "-of", "csv=s=x:p=0", video_list[1]]
+            probe_result = subprocess.run(probe_cmd, capture_output=True, text=True)
+            try:
+                main_width, main_height = map(int, probe_result.stdout.strip().split('x'))
+                target_size = f"{main_width}x{main_height}"
+            except:
+                target_size = "720x1280"  # fallback
             
-            print("Adding silent audio to intro...")
+            print(f"Scaling intro/outro to match main video: {target_size}")
+            
+            # Scale intro and outro to match main video, then add audio
+            intro_scaled = output_path.replace('.mp4', '_intro_scaled.mp4')
+            outro_scaled = output_path.replace('.mp4', '_outro_scaled.mp4')
+            
+            print("Scaling and adding audio to intro...")
             intro_result = subprocess.run([
                 "ffmpeg", "-i", video_list[0], 
                 "-f", "lavfi", "-i", "anullsrc=channel_layout=stereo:sample_rate=44100",
-                "-c:v", "copy", "-c:a", "aac", "-shortest", "-y", intro_with_audio
+                "-filter_complex", f"[0:v]scale={main_width}:{main_height}:force_original_aspect_ratio=decrease,pad={main_width}:{main_height}:(ow-iw)/2:(oh-ih)/2[v]",
+                "-map", "[v]", "-map", "1:a", "-c:v", "libx264", "-c:a", "aac", "-shortest", "-y", intro_scaled
             ], capture_output=True, text=True, timeout=60)
             
             if intro_result.returncode != 0:
-                print(f"Failed to add audio to intro: {intro_result.stderr}")
+                print(f"Failed to scale intro: {intro_result.stderr}")
                 return None
             
-            print("Adding silent audio to outro...")
+            print("Scaling and adding audio to outro...")
             outro_result = subprocess.run([
                 "ffmpeg", "-i", video_list[2],
                 "-f", "lavfi", "-i", "anullsrc=channel_layout=stereo:sample_rate=44100", 
-                "-c:v", "copy", "-c:a", "aac", "-shortest", "-y", outro_with_audio
+                "-filter_complex", f"[0:v]scale={main_width}:{main_height}:force_original_aspect_ratio=decrease,pad={main_width}:{main_height}:(ow-iw)/2:(oh-ih)/2[v]",
+                "-map", "[v]", "-map", "1:a", "-c:v", "libx264", "-c:a", "aac", "-shortest", "-y", outro_scaled
             ], capture_output=True, text=True, timeout=60)
             
             if outro_result.returncode != 0:
-                print(f"Failed to add audio to outro: {outro_result.stderr}")
+                print(f"Failed to scale outro: {outro_result.stderr}")
                 return None
             
             # Now concatenate all three with fade transitions
@@ -303,9 +317,10 @@ def concatenate_videos(video_list: list, output_path: str) -> Optional[str]:
             outro_duration = 3.0  # outro slide duration
             fade_duration = 0.5  # 0.5 second cross-fade
             
-            # Create smooth cross-fade transitions between videos
+            # Now concatenate the scaled videos with fade transitions
+            print("Concatenating scaled videos with fade transitions...")
             concat_result = subprocess.run([
-                "ffmpeg", "-i", intro_with_audio, "-i", video_list[1], "-i", outro_with_audio,
+                "ffmpeg", "-i", intro_scaled, "-i", video_list[1], "-i", outro_scaled,
                 "-filter_complex", 
                 f"[0:v]fade=out:st={intro_duration-fade_duration}:d={fade_duration}[v0];"
                 f"[1:v]fade=in:st=0:d={fade_duration},fade=out:st={main_duration-fade_duration}:d={fade_duration}[v1];"
@@ -317,12 +332,12 @@ def concatenate_videos(video_list: list, output_path: str) -> Optional[str]:
             
             # Cleanup temp files
             try:
-                if os.path.exists(intro_with_audio):
-                    os.unlink(intro_with_audio)
-                    print(f"Cleaned up: {intro_with_audio}")
-                if os.path.exists(outro_with_audio):
-                    os.unlink(outro_with_audio)
-                    print(f"Cleaned up: {outro_with_audio}")
+                if os.path.exists(intro_scaled):
+                    os.unlink(intro_scaled)
+                    print(f"Cleaned up: {intro_scaled}")
+                if os.path.exists(outro_scaled):
+                    os.unlink(outro_scaled)
+                    print(f"Cleaned up: {outro_scaled}")
             except Exception as e:
                 print(f"Warning: Could not clean up temp files: {e}")
             
