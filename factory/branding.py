@@ -434,7 +434,7 @@ def add_title_overlay(intro_video_path: str, title: str, output_path: str) -> Op
         title_y = int(height * 0.30)
         
         # Adjust horizontal positioning - box appears to be left of center
-        title_x_offset = int(width * 0.42)  # Shift left from center (50% would be center)
+        title_x_offset = int(width * 0.39)  # Shift left from center (50% would be center)
         
         # Get intro video duration to show text for full duration
         try:
