@@ -224,8 +224,8 @@ def image_to_video(image_path: str, prompt: str, model_name: str = "gen4_turbo",
         return None
 
 def generate_extended_video(image_path: str, prompts: List[str], model_name: str = "gen4_turbo",
-                          segment_duration: int = 5, aspect_ratio: str = "16:9",
-                          temp_dir: Optional[str] = None) -> Optional[Dict]:
+                          segment_durations: Optional[List[int]] = None, segment_duration: int = 5, 
+                          aspect_ratio: str = "16:9", temp_dir: Optional[str] = None) -> Optional[Dict]:
     """
     Generate an extended video by chaining multiple segments with frame extraction.
     
@@ -233,7 +233,8 @@ def generate_extended_video(image_path: str, prompts: List[str], model_name: str
         image_path (str): Path to the initial reference image
         prompts (List[str]): List of prompts for each segment
         model_name (str): Runway model to use
-        segment_duration (int): Duration of each segment in seconds
+        segment_durations (List[int], optional): List of durations for each segment. If None, uses segment_duration for all.
+        segment_duration (int): Default duration for segments when segment_durations is not provided
         aspect_ratio (str): Video aspect ratio
         temp_dir (str): Directory for temporary files (optional)
     
