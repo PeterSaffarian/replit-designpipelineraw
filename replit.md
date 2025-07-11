@@ -195,5 +195,6 @@ Preferred communication style: Simple, everyday language.
 ✓ Complete 12-step production pipeline with PRE-MADE VIDEO BRANDING, title overlay, seamless concatenation, subtitle burning, and flexible user-controlled intro/outro design
 ✓ Fixed video dimension mismatch: All videos now scaled to match main video dimensions (720x1280) before concatenation
 ✓ Optimized transition timing: Reduced fade duration to 0.5s to prevent black screens between segments
-✓ Enhanced title positioning: Titles now positioned in dotted box area (upper 25% of video) and styled in uppercase white text to match reference design
+✓ Perfected title positioning: Titles now centered within dotted box area (30% from top) with smart text wrapping for longer titles
+✓ Enhanced text styling: White uppercase text with black shadow, properly sized and wrapped to fit within box constraints
 ✓ Production-ready branding workflow: Seamless intro → main → outro with proper scaling, positioning, and timing

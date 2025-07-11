@@ -394,23 +394,23 @@ def add_title_overlay(intro_video_path: str, title: str, output_path: str) -> Op
         title_clean = title.replace("'", "").replace('"', "").replace(":", "").replace(";", "")
         title_upper = title_clean.upper()  # Match "HOW TO SPOT A SCAM" style
         
-        # Smart text wrapping for title to fit in dotted box
+        # Smart text wrapping to fit within dotted box dimensions
         words = title_upper.split()
-        if len(words) > 3:  # Wrap longer titles
+        # Force wrapping for titles longer than 2 words to fit in box
+        if len(words) > 2:  
             mid = len(words) // 2
             title_line1 = ' '.join(words[:mid])
             title_line2 = ' '.join(words[mid:])
-            # Fix the "n" issue by using proper line break encoding
-            title_text = f"{title_line1}\\n{title_line2}"  # Single backslash for FFmpeg line break
+            title_text = f"{title_line1}\\n{title_line2}"
         else:
             title_text = title_upper
         
-        # Font sizing for the dotted box area - based on your examples
-        title_font = min(height // 16, width // 20)  # Larger font for better visibility
+        # Font sizing adapted for dotted box - smaller to ensure fit
+        title_font = min(height // 20, width // 25)  # Smaller font to fit in box
         
-        # Position title inside the dotted box area (based on your screenshot feedback)
-        # The dotted box center appears to be around 35% from top
-        title_y = int(height * 0.35)
+        # Position title to center within the dotted box area
+        # Based on your screenshot, the box center is around 30% from top
+        title_y = int(height * 0.30)
         
         ffmpeg_cmd = [
             "ffmpeg",
