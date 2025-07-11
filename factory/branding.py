@@ -426,12 +426,15 @@ def add_title_overlay(intro_video_path: str, title: str, output_path: str) -> Op
             title_text = title_line1
             use_multiline = False
         
-        # Larger font size for better visibility - we're using line breaks now
-        title_font = min(height // 14, width // 18)  # Bigger font since we're breaking lines
+        # Even larger font size to fill the dotted box better
+        title_font = min(height // 12, width // 16)  # Increased size to use available space
         
         # Position title to center within the dotted box area
         # Based on your screenshot, the box center is around 30% from top
         title_y = int(height * 0.30)
+        
+        # Adjust horizontal positioning - box appears to be left of center
+        title_x_offset = int(width * 0.42)  # Shift left from center (50% would be center)
         
         # Create FFmpeg command with proper multi-line text handling
         if use_multiline:
@@ -447,13 +450,13 @@ def add_title_overlay(intro_video_path: str, title: str, output_path: str) -> Op
                 f"drawtext=text='{title_text}':"
                 f"fontfile={BRANDING_CONFIG['fonts']['secondary']}:"
                 f"fontsize={title_font}:fontcolor=white:"
-                f"x=(w-text_w)/2:y={line1_y}:"
+                f"x={title_x_offset}-(text_w/2):y={line1_y}:"
                 f"shadowcolor=black:shadowx=2:shadowy=2:"
                 f"enable='between(t,1,4)',"
                 f"drawtext=text='{title_text_line2}':"
                 f"fontfile={BRANDING_CONFIG['fonts']['secondary']}:"
                 f"fontsize={title_font}:fontcolor=white:"
-                f"x=(w-text_w)/2:y={line2_y}:"
+                f"x={title_x_offset}-(text_w/2):y={line2_y}:"
                 f"shadowcolor=black:shadowx=2:shadowy=2:"
                 f"enable='between(t,1,4)'",
                 "-c:a", "copy", "-y", output_path
@@ -467,7 +470,7 @@ def add_title_overlay(intro_video_path: str, title: str, output_path: str) -> Op
                 f"drawtext=text='{title_text}':"
                 f"fontfile={BRANDING_CONFIG['fonts']['secondary']}:"
                 f"fontsize={title_font}:fontcolor=white:"
-                f"x=(w-text_w)/2:y={title_y}:"
+                f"x={title_x_offset}-(text_w/2):y={title_y}:"
                 f"shadowcolor=black:shadowx=2:shadowy=2:"
                 f"enable='between(t,1,4)'",
                 "-c:a", "copy", "-y", output_path
