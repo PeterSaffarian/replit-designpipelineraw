@@ -1,0 +1,25 @@
+[
+    {
+        "idea_name": "How to Spot a Fake Bank Text",
+        "idea_text": "A video where your friend gets a scam text from a bank they don\u2019t even use.",
+        "project_folder": "storage/7_How to Spot a Fake Bank Text_20250711",
+        "status": "FAILED",
+        "failed_at_step": "Failed to generate raw video.",
+        "final_video_path": null,
+        "assets": {
+            "artwork_prompt": "In a cozy living room filled with warm, ambient light filtering through a nearby window, the character stands holding a smartphone, their expression a mix of surprise and skepticism. They are wearing the same rust-colored shirt and dark pants as in the reference image. The room is softly decorated with a comfortable couch and a small coffee table, creating a relaxed atmosphere. The phone screen is subtly visible, displaying a suspicious text message claiming to be from a bank. The background showcases a few green indoor plants, adding a touch of freshness to the scene. The character's eyebrows are slightly raised, and their mouth is just open, conveying a moment of disbelief and curiosity as they realize the message is a scam. The angle is slightly over-the-shoulder, focusing on their reaction while providing a glimpse of the room, emphasizing the personal intrusion of the scam in the comfort of their home.",
+            "artwork_path": "storage/7_How to Spot a Fake Bank Text_20250711/artwork.png",
+            "artwork_retry_count": 2,
+            "script": "\"Whoa, I just got a text from a bank I don't even use, asking for my details. This has to be a scam! Remember, never share your info unless you're sure it's legit.\"",
+            "audio_path": "storage/7_How to Spot a Fake Bank Text_20250711/audio.mp3",
+            "srt_path": "storage/7_How to Spot a Fake Bank Text_20250711/subtitles.srt",
+            "subtitle_stats": {
+                "subtitle_count": 2,
+                "total_characters": 230,
+                "duration_seconds": 10.0,
+                "valid_format": true
+            },
+            "scenario_path": "storage/7_How to Spot a Fake Bank Text_20250711/scenario.json"
+        }
+    }
+]

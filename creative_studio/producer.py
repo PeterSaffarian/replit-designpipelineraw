@@ -5,6 +5,18 @@ from mutagen.mp3 import MP3
 from creative_studio.models import call_text_model
 from typing import Optional
 
+def _read_image_bytes(image_path: str) -> Optional[bytes]:
+    """Reads an image file and returns its content as bytes."""
+    try:
+        with open(image_path, "rb") as f:
+            return f.read()
+    except FileNotFoundError:
+        print(f"PRODUCER: Error - Artwork image not found at {image_path}")
+        return None
+    except Exception as e:
+        print(f"PRODUCER: Error reading image file: {e}")
+        return None
+
 def _get_audio_duration(audio_path: str) -> float:
     """Calculates the duration of an MP3 file in seconds."""
     try:
@@ -64,41 +76,54 @@ def produce_scenario(script: str, audio_path: str, artwork_path: str, template_p
         return ""
     num_extensions = _calculate_extensions(audio_duration)
 
-    # 3. Define the 'role' for our AI model
+    # 3. Read and analyze the artwork image
+    artwork_bytes = _read_image_bytes(artwork_path)
+    if not artwork_bytes:
+        print("PRODUCER: Warning - Could not read artwork image, continuing with text-only context.")
+    
+    # 4. Define the 'role' for our AI model
     system_prompt = (
-        "You are a meticulous AI video production assistant. Your task is to populate a JSON "
-        "template for a video generator. You must follow all instructions precisely. Your output "
-        "must be ONLY the raw, valid JSON content, with no explanatory text before or after."
-        "your prompts will be used to animate the character in the provided artwork."
-        "It is important to be aware of the the video-generation machine's limitation. In order to avoid distorted animation, we must avoid sudden huge movements. and manage the animation via the prompt instructions. "
+        "You are a meticulous AI video production assistant with vision capabilities. Your task is to populate a JSON "
+        "template for a video generator by analyzing the provided artwork image. You must follow all instructions precisely. "
+        "Your output must be ONLY the raw, valid JSON content, with no explanatory text before or after. "
+        "Look carefully at the character, scene, and visual elements in the provided artwork image. Your animation prompts "
+        "will be used to animate this specific character and scene. It is important to be aware of the video-generation "
+        "machine's limitations. In order to avoid distorted animation, we must avoid sudden huge movements and manage "
+        "the animation via precise, gentle prompt instructions that work with the character's pose and environment shown in the image."
     )
 
-    # 4. Define the specific 'task' for our AI model
+    # 5. Define the specific 'task' for our AI model
     user_prompt = (
-        "Please populate the provided JSON template based on the following materials.\n\n"
+        "Please populate the provided JSON template based on the following materials and the provided artwork image.\n\n"
         "INSTRUCTIONS:\n"
         f"1. Update the `image_source` field to be exactly this path: '{os.path.basename(artwork_path)}'.\n"
-        f"2. Write a new `prompt` for the `opening_scene`. This prompt should be a simple, cinematic description of the provided artwork, focusing on creating a 'living photo' effect. For example: 'A still shot of the character, with subtle ambient motion and the character must softly start talking'\n"
-        f"3. Based on the provided script, generate exactly {num_extensions} simple, sequential motion prompts for the `extensions` array. Each extension should describe a small, natural progression of movement related to speaking, like 'The character continues to speak, their expression animated.' or 'The character continues talking, gesturing subtly for emphasis.' Do not try to make a complex movie plot. The goal is a simple, animated engaging image-videos that appears to be talking.\n\n it is also not a bad idea for the character to look at the camera at some point when she's talking\n\n"
+        f"2. Analyze the character, pose, environment, and visual elements in the provided artwork image. Write a new `prompt` "
+        f"for the `opening_scene` that creates a 'living photo' effect from this specific image. Consider the character's "
+        f"current pose, facial expression, and setting. For example: 'The character maintains their current pose with subtle "
+        f"ambient motion, beginning to speak with natural lip movement' or describe what you actually see in the image.\n"
+        f"3. Based on both the provided script AND the visual analysis of the artwork, generate exactly {num_extensions} "
+        f"simple, sequential motion prompts for the `extensions` array. Each extension should work naturally with the "
+        f"character's pose and environment shown in the image. Describe small, natural progressions that maintain visual "
+        f"consistency with the artwork while showing speaking animation. Consider the character's hand positions, body "
+        f"orientation, and background elements when crafting these prompts.\n\n"
         f"SCRIPT:\n---\n{script}\n---\n\n"
-        f"ARTWORK CONTEXT:\n---\nThe artwork is located at '{artwork_path}' and features the character who will be speaking the script.\n---\n\n"
         "JSON TEMPLATE TO POPULATE:\n"
         f"{json.dumps(scenario_data, indent=4)}"
     )
 
-    # 5. Call the text model to get the populated JSON string
-    # We don't need to send the image here, as the context is in the prompt.
+    # 6. Call the text model with vision to get the populated JSON string
     json_string_output = call_text_model(
         model_name='gpt-4o',
         system_prompt=system_prompt,
-        user_prompt=user_prompt
+        user_prompt=user_prompt,
+        image_bytes=artwork_bytes  # Now the producer can "see" the artwork
     )
 
     if not json_string_output:
         print("PRODUCER: Failed to get a response from the model.")
         return ""
 
-    # 6. Save the generated JSON to the output file
+    # 7. Save the generated JSON to the output file
     try:
         # The model might sometimes include markdown backticks, so we clean them up.
         cleaned_json_string = json_string_output.strip().replace('```json', '').replace('```', '')
