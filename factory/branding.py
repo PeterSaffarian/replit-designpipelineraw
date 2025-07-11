@@ -427,7 +427,7 @@ def add_title_overlay(intro_video_path: str, title: str, output_path: str) -> Op
             use_multiline = False
         
         # Even larger font size to fill the dotted box better
-        title_font = min(height // 12, width // 16)  # Increased size to use available space
+        title_font = min(height // 13, width // 16)  # Increased size to use available space
         
         # Position title to center within the dotted box area
         # Based on your screenshot, the box center is around 30% from top
@@ -435,6 +435,20 @@ def add_title_overlay(intro_video_path: str, title: str, output_path: str) -> Op
         
         # Adjust horizontal positioning - box appears to be left of center
         title_x_offset = int(width * 0.42)  # Shift left from center (50% would be center)
+        
+        # Get intro video duration to show text for full duration
+        try:
+            duration_cmd = ["ffprobe", "-v", "quiet", "-show_entries", "format=duration", "-of", "csv=p=0", intro_video_path]
+            duration_result = subprocess.run(duration_cmd, capture_output=True, text=True, timeout=10)
+            if duration_result.returncode == 0:
+                intro_duration = float(duration_result.stdout.strip())
+                # Show text from 1 second to end of video
+                text_end_time = intro_duration
+            else:
+                # Fallback to 5 seconds if duration detection fails
+                text_end_time = 5.0
+        except:
+            text_end_time = 5.0
         
         # Create FFmpeg command with proper multi-line text handling
         if use_multiline:
@@ -452,13 +466,13 @@ def add_title_overlay(intro_video_path: str, title: str, output_path: str) -> Op
                 f"fontsize={title_font}:fontcolor=white:"
                 f"x={title_x_offset}-(text_w/2):y={line1_y}:"
                 f"shadowcolor=black:shadowx=2:shadowy=2:"
-                f"enable='between(t,1,4)',"
+                f"enable='between(t,1,{text_end_time})',"
                 f"drawtext=text='{title_text_line2}':"
                 f"fontfile={BRANDING_CONFIG['fonts']['secondary']}:"
                 f"fontsize={title_font}:fontcolor=white:"
                 f"x={title_x_offset}-(text_w/2):y={line2_y}:"
                 f"shadowcolor=black:shadowx=2:shadowy=2:"
-                f"enable='between(t,1,4)'",
+                f"enable='between(t,1,{text_end_time})'",
                 "-c:a", "copy", "-y", output_path
             ]
         else:
@@ -472,7 +486,7 @@ def add_title_overlay(intro_video_path: str, title: str, output_path: str) -> Op
                 f"fontsize={title_font}:fontcolor=white:"
                 f"x={title_x_offset}-(text_w/2):y={title_y}:"
                 f"shadowcolor=black:shadowx=2:shadowy=2:"
-                f"enable='between(t,1,4)'",
+                f"enable='between(t,1,{text_end_time})'",
                 "-c:a", "copy", "-y", output_path
             ]
         

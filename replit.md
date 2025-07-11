@@ -197,4 +197,5 @@ Preferred communication style: Simple, everyday language.
 ✓ Optimized transition timing: Reduced fade duration to 0.5s to prevent black screens between segments
 ✓ Perfected title positioning: Titles now centered within dotted box area (30% from top) with smart text wrapping for longer titles
 ✓ Enhanced text styling: White uppercase text with black shadow, properly sized and wrapped to fit within box constraints
+✓ Fixed text timing: Title now displays for full intro video duration using dynamic duration detection
 ✓ Production-ready branding workflow: Seamless intro → main → outro with proper scaling, positioning, and timing
