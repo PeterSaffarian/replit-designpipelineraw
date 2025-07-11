@@ -302,8 +302,15 @@ def concatenate_videos(video_list: list, output_path: str) -> Optional[str]:
             # Now concatenate all three with fade transitions
             print("Concatenating intro + main + outro with smooth fade transitions...")
             
-            # Get video durations for proper fade timing
-            intro_duration = 3.0  # intro slide duration
+            # Get actual video durations for proper fade timing
+            # Get intro duration
+            probe_cmd = ["ffprobe", "-v", "quiet", "-show_entries", "format=duration", 
+                        "-of", "csv=p=0", intro_scaled]
+            probe_result = subprocess.run(probe_cmd, capture_output=True, text=True)
+            try:
+                intro_duration = float(probe_result.stdout.strip())
+            except:
+                intro_duration = 5.0  # fallback
             
             # Get main video duration
             probe_cmd = ["ffprobe", "-v", "quiet", "-show_entries", "format=duration", 
@@ -314,10 +321,18 @@ def concatenate_videos(video_list: list, output_path: str) -> Optional[str]:
             except:
                 main_duration = 10.0  # fallback
             
-            outro_duration = 3.0  # outro slide duration
+            # Get outro duration
+            probe_cmd = ["ffprobe", "-v", "quiet", "-show_entries", "format=duration", 
+                        "-of", "csv=p=0", outro_scaled]
+            probe_result = subprocess.run(probe_cmd, capture_output=True, text=True)
+            try:
+                outro_duration = float(probe_result.stdout.strip())
+            except:
+                outro_duration = 5.0  # fallback
             fade_duration = 0.5  # 0.5 second cross-fade transitions
             
             # Now concatenate the scaled videos with fade transitions
+            print(f"Video durations - Intro: {intro_duration:.1f}s, Main: {main_duration:.1f}s, Outro: {outro_duration:.1f}s")
             print("Concatenating scaled videos with fade transitions...")
             concat_result = subprocess.run([
                 "ffmpeg", "-i", intro_scaled, "-i", video_list[1], "-i", outro_scaled,
