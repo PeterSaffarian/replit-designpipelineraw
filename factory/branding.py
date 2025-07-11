@@ -16,8 +16,8 @@ from openai import OpenAI
 # CUSTOMIZABLE BRANDING CONFIGURATION
 BRANDING_CONFIG = {
     'fonts': {
-        'primary': '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',      # Main font for titles and text
-        'secondary': '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf',        # Backup font (lighter weight)
+        'primary': '/usr/share/fonts/truetype/dejavu/DejaVuSansMono-BoldOblique.ttf',      # Main font for titles and text
+        'secondary': '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',        # Backup font (lighter weight)
     },
     'size_ratios': {
         'logo_ratio': 3,            # Logo = min(width,height) / logo_ratio
@@ -354,36 +354,98 @@ def concatenate_videos(video_list: list, output_path: str) -> Optional[str]:
         return None
 
 
-def add_branding(main_video_path: str, idea: str, script: str, logo_path: str, output_dir: str) -> Optional[str]:
+def add_title_overlay(intro_video_path: str, title: str, output_path: str) -> Optional[str]:
+    """Add title text overlay to pre-made intro video."""
+    try:
+        # Get video dimensions
+        width, height = get_video_dimensions(intro_video_path)
+        
+        # Clean title text - remove special characters that break FFmpeg
+        title_clean = title.replace("'", "").replace('"', "").replace(":", "").replace(";", "")
+        
+        # Smart text wrapping for title
+        words = title_clean.split()
+        if len(words) > 3:  # Only wrap if really long
+            mid = len(words) // 2
+            title_line1 = ' '.join(words[:mid])
+            title_line2 = ' '.join(words[mid:])
+            title_text = f"{title_line1}\\\\n{title_line2}"  # Double backslash for FFmpeg
+        else:
+            title_text = title_clean
+        
+        # Font sizing - adaptive based on video dimensions
+        title_font = min(height // 15, width // 20)  # Adaptive font size
+        
+        # Position title in lower third of video (typical title card area)
+        title_y = int(height * 0.75)
+        
+        ffmpeg_cmd = [
+            "ffmpeg",
+            "-i", intro_video_path,
+            "-vf",
+            f"drawtext=text='{title_text}':"
+            f"fontfile={BRANDING_CONFIG['fonts']['primary']}:"
+            f"fontsize={title_font}:fontcolor={BRANDING_CONFIG['colors']['text']}:"
+            f"x=(w-text_w)/2:y={title_y}:"
+            f"enable='between(t,1,4)'",  # Show title from 1-4 seconds
+            "-c:a", "copy", "-y", output_path
+        ]
+        
+        result = subprocess.run(ffmpeg_cmd, capture_output=True, text=True, timeout=60)
+        if result.returncode != 0:
+            print(f"Title overlay FFmpeg error: {result.stderr}")
+            return None
+        return output_path
+    except Exception as e:
+        print(f"Title overlay error: {e}")
+        return None
+
+
+def add_branding(main_video_path: str, idea: str, script: str, intro_video_path: str, outro_video_path: str, output_dir: str) -> Optional[str]:
     """
-    Main branding workflow:
-    1. Generate title
-    2. Get video dimensions
-    3. Create intro slide
-    4. Create outro slide
-    5. Concatenate: intro + main + outro
+    Main branding workflow with pre-made videos:
+    1. Generate title using OpenAI
+    2. Add title overlay to intro video
+    3. Concatenate: intro_with_title + main + outro
     """
-    if not os.path.exists(main_video_path) or not os.path.exists(logo_path):
-        print(f"ERROR: Missing files - video: {os.path.exists(main_video_path)}, logo: {os.path.exists(logo_path)}")
+    if not os.path.exists(main_video_path) or not os.path.exists(intro_video_path) or not os.path.exists(outro_video_path):
+        print(f"ERROR: Missing files - main: {os.path.exists(main_video_path)}, intro: {os.path.exists(intro_video_path)}, outro: {os.path.exists(outro_video_path)}")
         return None
     
     try:
-        # Try MoviePy approach first (better animations and transitions)
-        from . import video_transitions
+        # Generate title using OpenAI
+        title = generate_title(idea, script)
+        print(f"Generated title: '{title}'")
         
-        print("Using MoviePy for professional animations and smooth transitions...")
-        moviepy_result = video_transitions.create_branded_video_moviepy(
-            main_video_path, idea, script, logo_path, output_dir
-        )
+        # Create output paths
+        intro_with_title_path = os.path.join(output_dir, "intro_with_title.mp4")
+        final_path = os.path.join(output_dir, "branded_video.mp4")
         
-        if moviepy_result:
-            print(f"SUCCESS: Professional branded video created with MoviePy at {moviepy_result}")
-            return moviepy_result
-        else:
-            print("MoviePy approach failed, falling back to FFmpeg method...")
-    
+        # Add title overlay to intro video
+        print("Adding title overlay to intro video...")
+        if not add_title_overlay(intro_video_path, title, intro_with_title_path):
+            print("ERROR: Failed to add title overlay to intro")
+            return None
+        print(f"Title overlay added: {intro_with_title_path}")
+        
+        # Concatenate: intro_with_title + main + outro
+        print("Concatenating videos...")
+        video_list = [intro_with_title_path, main_video_path, outro_video_path]
+        result = concatenate_videos(video_list, final_path)
+        
+        # Clean up temporary intro file
+        try:
+            if os.path.exists(intro_with_title_path):
+                os.unlink(intro_with_title_path)
+                print(f"Cleaned up: {intro_with_title_path}")
+        except Exception:
+            pass
+        
+        return result
+        
     except Exception as e:
-        print(f"MoviePy error: {e}, falling back to FFmpeg method...")
+        print(f"Branding workflow error: {e}")
+        return None
     
     # Fallback to original FFmpeg approach
     try:

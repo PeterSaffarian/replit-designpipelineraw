@@ -22,7 +22,9 @@ SCHEMAS_DIR = "schemas"
 HERO_IMAGE_NAME = "hero.png"
 IDEAS_FILE_NAME = "ideas.csv"
 TEMPLATE_FILE_NAME = "runway_scenario_template.json"
-LOGO_FILE_NAME = "logo.png"
+HERO_FILE_NAME = "hero.png"  # Expected hero image file name
+INTRO_VIDEO_NAME = "intro.mp4"  # Expected intro video file name  
+OUTRO_VIDEO_NAME = "outro.mp4"  # Expected outro video file name
 MAX_ARTWORK_RETRIES = 3  # Maximum attempts to generate acceptable artwork
 
 
@@ -89,7 +91,7 @@ def run_pipeline_for_idea(idea_text, idea_number, idea_name):
         # --- Step 2: Artwork Designer ---
         print("\n--- [Step 1/7] Creative Studio: Designing Artwork ---")
         print("   Your idea is with our designer...")
-        hero_image_path = os.path.join(INPUTS_DIR, HERO_IMAGE_NAME)
+        hero_image_path = os.path.join(INPUTS_DIR, HERO_FILE_NAME)
         artwork_prompt = artwork_designer.design_artwork_prompt(idea_text, hero_image_path)
         if not artwork_prompt:
             raise RuntimeError("Failed to design artwork prompt.")
@@ -262,43 +264,30 @@ def run_pipeline_for_idea(idea_text, idea_number, idea_name):
         else:
             print(f"   ℹ️  No subtitles available, skipping subtitle burning")
 
-        # --- Step 11: Logo Watermarking ---
-        print("\n--- [Step 11/12] Factory: Adding Logo Watermark ---")
-        logo_path = os.path.join(INPUTS_DIR, LOGO_FILE_NAME)
+        # --- Step 11: Video Branding ---
+        print("\n--- [Step 11/12] Factory: Adding Intro/Outro Branding ---")
+        intro_video_path = os.path.join(INPUTS_DIR, "intro.mp4")
+        outro_video_path = os.path.join(INPUTS_DIR, "outro.mp4")
         
-        if os.path.exists(logo_path):
-            print(f"   🏷️  Applying logo watermark to final video...")
+        if os.path.exists(intro_video_path) and os.path.exists(outro_video_path):
+            print(f"   🎬  Adding intro/outro with title overlay...")
             branded_video_path = branding.add_branding(
-                working_video_path, idea_text, script, logo_path, project_path
+                working_video_path, idea_text, script, intro_video_path, outro_video_path, project_path
             )
             
             if branded_video_path:
-                print(f"   ✅ Logo watermark applied successfully!")
+                print(f"   ✅ Intro/outro branding applied successfully!")
                 print(f"   📍 Branded video: {branded_video_path}")
                 status_report['assets']['branded_video_path'] = branded_video_path
                 working_video_path = branded_video_path  # Use branded version for final step
             else:
-                print(f"   ⚠️  Failed to apply logo watermark, using previous version")
+                print(f"   ⚠️  Failed to apply intro/outro branding, using previous version")
         else:
-            print(f"   ℹ️  No logo file found at {logo_path}, skipping watermark step")
+            print(f"   ℹ️  Pre-made intro/outro videos not found (intro.mp4, outro.mp4), skipping branding step")
+            print(f"   📁  Place intro.mp4 and outro.mp4 in {INPUTS_DIR} to enable branding")
 
-        # --- Step 12: Branding Sequence ---
-        print("\n--- [Final Step] Factory: Adding Intro/Outro Branding ---")
-        
-        if os.path.exists(logo_path):
-            print(f"   🎬 Creating branded intro/outro sequence...")
-            final_branded_video_path = video_branding.apply_complete_branding(
-                working_video_path, idea_text, script, logo_path, project_path, generated_scenario_path
-            )
-            
-            if final_branded_video_path:
-                print(f"   ✅ Branding sequence completed successfully!")
-                print(f"   📍 Final branded video: {final_branded_video_path}")
-                status_report['assets']['final_branded_video_path'] = final_branded_video_path
-            else:
-                print(f"   ⚠️  Branding sequence failed, keeping previous version")
-        else:
-            print(f"   ℹ️  No logo file available, skipping branding sequence")
+        # --- Step 12: Final Wrap-up ---
+        print("\n--- [Final Step] Pipeline Complete ---")
 
         # --- Final Success ---
         status_report['status'] = "SUCCESS"
