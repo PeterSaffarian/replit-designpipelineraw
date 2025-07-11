@@ -189,6 +189,7 @@ Preferred communication style: Simple, everyday language.
 ✓ Added title overlay function to add generated titles to pre-made intro videos
 ✓ Simplified branding workflow: intro_with_title + main + outro concatenation
 ✓ Updated orchestrator to look for intro.mp4/outro.mp4 in inputs directory
-✓ Created new test script for pre-made video workflow verification
+✓ Created single test script (test_branding.py) for pre-made video workflow verification
+✓ Cleaned up redundant test files - now using one comprehensive test script
 
 → Complete 12-step production pipeline with PRE-MADE VIDEO BRANDING, title overlay, seamless concatenation, subtitle burning, and flexible user-controlled intro/outro design
