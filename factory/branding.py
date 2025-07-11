@@ -400,16 +400,17 @@ def add_title_overlay(intro_video_path: str, title: str, output_path: str) -> Op
             mid = len(words) // 2
             title_line1 = ' '.join(words[:mid])
             title_line2 = ' '.join(words[mid:])
-            title_text = f"{title_line1}\\\\n{title_line2}"  # Double backslash for FFmpeg
+            # Fix the "n" issue by using proper line break encoding
+            title_text = f"{title_line1}\\n{title_line2}"  # Single backslash for FFmpeg line break
         else:
             title_text = title_upper
         
         # Font sizing for the dotted box area - based on your examples
         title_font = min(height // 16, width // 20)  # Larger font for better visibility
         
-        # Position title in the dotted box area (looking at your images more carefully)
-        # The dotted box appears to be slightly higher, around 20% from top
-        title_y = int(height * 0.20)
+        # Position title inside the dotted box area (based on your screenshot feedback)
+        # The dotted box center appears to be around 35% from top
+        title_y = int(height * 0.35)
         
         ffmpeg_cmd = [
             "ffmpeg",
