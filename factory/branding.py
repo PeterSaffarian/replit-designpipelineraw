@@ -405,20 +405,21 @@ def add_title_overlay(intro_video_path: str, title: str, output_path: str) -> Op
             title_text = title_upper
         
         # Font sizing for the dotted box area - based on your examples
-        title_font = min(height // 18, width // 25)  # Slightly smaller for box area
+        title_font = min(height // 16, width // 20)  # Larger font for better visibility
         
-        # Position title in the dotted box area (upper center, like "HOW TO SPOT A SCAM")
-        # Based on your images, this appears to be around 25% from the top
-        title_y = int(height * 0.25)
+        # Position title in the dotted box area (looking at your images more carefully)
+        # The dotted box appears to be slightly higher, around 20% from top
+        title_y = int(height * 0.20)
         
         ffmpeg_cmd = [
             "ffmpeg",
             "-i", intro_video_path,
             "-vf",
             f"drawtext=text='{title_text}':"
-            f"fontfile={BRANDING_CONFIG['fonts']['primary']}:"
-            f"fontsize={title_font}:fontcolor={BRANDING_CONFIG['colors']['text']}:"
+            f"fontfile={BRANDING_CONFIG['fonts']['secondary']}:"  # Use cleaner DejaVu Sans Bold
+            f"fontsize={title_font}:fontcolor=white:"  # Force white color
             f"x=(w-text_w)/2:y={title_y}:"
+            f"shadowcolor=black:shadowx=2:shadowy=2:"  # Add black shadow for contrast
             f"enable='between(t,1,4)'",  # Show title from 1-4 seconds
             "-c:a", "copy", "-y", output_path
         ]
