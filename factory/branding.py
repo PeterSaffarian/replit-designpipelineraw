@@ -315,7 +315,7 @@ def concatenate_videos(video_list: list, output_path: str) -> Optional[str]:
                 main_duration = 10.0  # fallback
             
             outro_duration = 3.0  # outro slide duration
-            fade_duration = 0.5  # 0.5 second cross-fade
+            fade_duration = 0.5  # 0.5 second cross-fade transitions
             
             # Now concatenate the scaled videos with fade transitions
             print("Concatenating scaled videos with fade transitions...")
@@ -375,24 +375,26 @@ def add_title_overlay(intro_video_path: str, title: str, output_path: str) -> Op
         # Get video dimensions
         width, height = get_video_dimensions(intro_video_path)
         
-        # Clean title text - remove special characters that break FFmpeg
+        # Clean title text and convert to uppercase like your examples
         title_clean = title.replace("'", "").replace('"', "").replace(":", "").replace(";", "")
+        title_upper = title_clean.upper()  # Match "HOW TO SPOT A SCAM" style
         
-        # Smart text wrapping for title
-        words = title_clean.split()
-        if len(words) > 3:  # Only wrap if really long
+        # Smart text wrapping for title to fit in dotted box
+        words = title_upper.split()
+        if len(words) > 3:  # Wrap longer titles
             mid = len(words) // 2
             title_line1 = ' '.join(words[:mid])
             title_line2 = ' '.join(words[mid:])
             title_text = f"{title_line1}\\\\n{title_line2}"  # Double backslash for FFmpeg
         else:
-            title_text = title_clean
+            title_text = title_upper
         
-        # Font sizing - adaptive based on video dimensions
-        title_font = min(height // 15, width // 20)  # Adaptive font size
+        # Font sizing for the dotted box area - based on your examples
+        title_font = min(height // 18, width // 25)  # Slightly smaller for box area
         
-        # Position title in lower third of video (typical title card area)
-        title_y = int(height * 0.75)
+        # Position title in the dotted box area (upper center, like "HOW TO SPOT A SCAM")
+        # Based on your images, this appears to be around 25% from the top
+        title_y = int(height * 0.25)
         
         ffmpeg_cmd = [
             "ffmpeg",
