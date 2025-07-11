@@ -394,36 +394,84 @@ def add_title_overlay(intro_video_path: str, title: str, output_path: str) -> Op
         title_clean = title.replace("'", "").replace('"', "").replace(":", "").replace(";", "")
         title_upper = title_clean.upper()  # Match "HOW TO SPOT A SCAM" style
         
-        # Smart text wrapping to fit within dotted box dimensions
+        # Smart text wrapping to maximize font size while fitting in box
         words = title_upper.split()
-        # Force wrapping for titles longer than 2 words to fit in box
-        if len(words) > 2:  
+        
+        # Intelligent line breaking for maximum readability
+        if len(words) >= 4:
+            # For 4+ words, try to balance lines
             mid = len(words) // 2
             title_line1 = ' '.join(words[:mid])
             title_line2 = ' '.join(words[mid:])
-            title_text = f"{title_line1}\\n{title_line2}"
+        elif len(words) == 3:
+            # For 3 words, put 2 on first line, 1 on second
+            title_line1 = ' '.join(words[:2])
+            title_line2 = words[2]
+        elif len(words) == 2:
+            # For 2 words, each on its own line for bigger font
+            title_line1 = words[0]
+            title_line2 = words[1]
         else:
-            title_text = title_upper
+            # Single word stays on one line
+            title_line1 = title_upper
+            title_line2 = ""
         
-        # Font sizing adapted for dotted box - smaller to ensure fit
-        title_font = min(height // 20, width // 25)  # Smaller font to fit in box
+        # Create final text with proper line breaks
+        if title_line2:
+            # Fix the "n" issue by using text parameter instead of embedding line breaks
+            title_text = f"{title_line1}"  # We'll handle multi-line differently
+            title_text_line2 = f"{title_line2}"
+            use_multiline = True
+        else:
+            title_text = title_line1
+            use_multiline = False
+        
+        # Larger font size for better visibility - we're using line breaks now
+        title_font = min(height // 14, width // 18)  # Bigger font since we're breaking lines
         
         # Position title to center within the dotted box area
         # Based on your screenshot, the box center is around 30% from top
         title_y = int(height * 0.30)
         
-        ffmpeg_cmd = [
-            "ffmpeg",
-            "-i", intro_video_path,
-            "-vf",
-            f"drawtext=text='{title_text}':"
-            f"fontfile={BRANDING_CONFIG['fonts']['secondary']}:"  # Use cleaner DejaVu Sans Bold
-            f"fontsize={title_font}:fontcolor=white:"  # Force white color
-            f"x=(w-text_w)/2:y={title_y}:"
-            f"shadowcolor=black:shadowx=2:shadowy=2:"  # Add black shadow for contrast
-            f"enable='between(t,1,4)'",  # Show title from 1-4 seconds
-            "-c:a", "copy", "-y", output_path
-        ]
+        # Create FFmpeg command with proper multi-line text handling
+        if use_multiline:
+            # For multi-line text, use multiple drawtext filters
+            line_spacing = title_font * 1.2  # 120% of font size for line spacing
+            line1_y = title_y - (line_spacing // 2)  # First line above center
+            line2_y = title_y + (line_spacing // 2)  # Second line below center
+            
+            ffmpeg_cmd = [
+                "ffmpeg",
+                "-i", intro_video_path,
+                "-vf",
+                f"drawtext=text='{title_text}':"
+                f"fontfile={BRANDING_CONFIG['fonts']['secondary']}:"
+                f"fontsize={title_font}:fontcolor=white:"
+                f"x=(w-text_w)/2:y={line1_y}:"
+                f"shadowcolor=black:shadowx=2:shadowy=2:"
+                f"enable='between(t,1,4)',"
+                f"drawtext=text='{title_text_line2}':"
+                f"fontfile={BRANDING_CONFIG['fonts']['secondary']}:"
+                f"fontsize={title_font}:fontcolor=white:"
+                f"x=(w-text_w)/2:y={line2_y}:"
+                f"shadowcolor=black:shadowx=2:shadowy=2:"
+                f"enable='between(t,1,4)'",
+                "-c:a", "copy", "-y", output_path
+            ]
+        else:
+            # Single line text
+            ffmpeg_cmd = [
+                "ffmpeg",
+                "-i", intro_video_path,
+                "-vf",
+                f"drawtext=text='{title_text}':"
+                f"fontfile={BRANDING_CONFIG['fonts']['secondary']}:"
+                f"fontsize={title_font}:fontcolor=white:"
+                f"x=(w-text_w)/2:y={title_y}:"
+                f"shadowcolor=black:shadowx=2:shadowy=2:"
+                f"enable='between(t,1,4)'",
+                "-c:a", "copy", "-y", output_path
+            ]
         
         result = subprocess.run(ffmpeg_cmd, capture_output=True, text=True, timeout=60)
         if result.returncode != 0:
