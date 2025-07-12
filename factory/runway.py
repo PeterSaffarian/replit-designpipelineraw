@@ -142,90 +142,94 @@ def image_to_video(image_path: str, prompt: str, model_name: str = "gen4_turbo",
             if attempt > 0:
                 print(f"RUNWAY: Retry attempt {attempt + 1}/{max_retries}")
                 time.sleep(2 ** attempt)  # Exponential backoff: 2s, 4s, 8s
-        print(f"RUNWAY: Starting image-to-video generation...")
-        print(f"   Image: {image_path}")
-        print(f"   Prompt: {prompt}")
-        print(f"   Model: {model_name}")
-        print(f"   Duration: {duration}s")
-        
-        client = _get_client()
-        
-        # Convert image to data URI
-        prompt_image = _image_to_data_uri(image_path)
-        if not prompt_image:
-            print("RUNWAY: Failed to convert image to data URI")
-            return None
-        
-        # Convert aspect ratio and validate
-        ratio = _convert_aspect_ratio(aspect_ratio)
-        print(f"   Ratio: {ratio}")
-        
-        # Validate model name
-        valid_models = ["gen4_turbo", "gen3a_turbo"]
-        if model_name not in valid_models:
-            print(f"RUNWAY: Invalid model {model_name}, using gen4_turbo")
-            model_name = "gen4_turbo"
-        
-        # Validate duration
-        valid_durations = [5, 10]
-        if duration not in valid_durations:
-            print(f"RUNWAY: Invalid duration {duration}, using 5 seconds")
-            duration = 5
-        
-        # Generate video with proper type casting
-        result = client.image_to_video.create(
-            model=cast(Literal["gen3a_turbo", "gen4_turbo"], model_name),
-            prompt_image=prompt_image,
-            prompt_text=prompt,
-            ratio=cast(Literal["1280:720", "720:1280", "1104:832", "832:1104", "960:960", "1584:672", "1280:768", "768:1280"], ratio),
-            duration=cast(Literal[5, 10], duration)
-        )
-        
-        # Wait for completion
-        print("RUNWAY: Waiting for video generation to complete...")
-        output = result.wait_for_task_output()
-        
-        # Extract URL from the output - handle different response formats
-        if output:
-            video_url = None
             
-            # Try different ways to access the URL based on Runway's response format
-            try:
-                # Method 1: Direct url attribute
-                if hasattr(output, 'url'):
-                    video_url = getattr(output, 'url')  # type: ignore
-                # Method 2: Output list with URL
-                elif hasattr(output, 'output') and output.output:  # type: ignore
-                    if isinstance(output.output, list) and len(output.output) > 0:  # type: ignore
-                        video_url = output.output[0] if isinstance(output.output[0], str) else None  # type: ignore
-                    elif isinstance(output.output, str):  # type: ignore
-                        video_url = output.output  # type: ignore
-                # Method 3: Try as dictionary
-                elif isinstance(output, dict):
-                    video_url = output.get('url') or output.get('output')
-                # Method 4: String conversion
-                else:
-                    output_str = str(output)
-                    if output_str.startswith('http'):
-                        video_url = output_str
-            except Exception as attr_error:
-                print(f"RUNWAY: Error accessing output attributes: {attr_error}")
+            print(f"RUNWAY: Starting image-to-video generation...")
+            print(f"   Image: {image_path}")
+            print(f"   Prompt: {prompt}")
+            print(f"   Model: {model_name}")
+            print(f"   Duration: {duration}s")
             
-            if video_url and isinstance(video_url, str) and video_url.startswith('http'):
-                print(f"RUNWAY: Video generated successfully: {video_url}")
-                return {
-                    'id': result.id,
-                    'url': video_url,
-                    'status': 'completed'
-                }
-        
-            print("RUNWAY: Video generation completed but no URL found in response")
-            print(f"RUNWAY: Output type: {type(output)}")
-            print(f"RUNWAY: Output content: {output}")
-            if attempt < max_retries - 1:
-                print(f"RUNWAY: Will retry in {2 ** (attempt + 1)} seconds...")
-                continue
-            return None
+            client = _get_client()
+            
+            # Convert image to data URI
+            prompt_image = _image_to_data_uri(image_path)
+            if not prompt_image:
+                print("RUNWAY: Failed to convert image to data URI")
+                if attempt < max_retries - 1:
+                    print(f"RUNWAY: Will retry in {2 ** (attempt + 1)} seconds...")
+                    continue
+                return None
+            
+            # Convert aspect ratio and validate
+            ratio = _convert_aspect_ratio(aspect_ratio)
+            print(f"   Ratio: {ratio}")
+            
+            # Validate model name
+            valid_models = ["gen4_turbo", "gen3a_turbo"]
+            if model_name not in valid_models:
+                print(f"RUNWAY: Invalid model {model_name}, using gen4_turbo")
+                model_name = "gen4_turbo"
+            
+            # Validate duration
+            valid_durations = [5, 10]
+            if duration not in valid_durations:
+                print(f"RUNWAY: Invalid duration {duration}, using 5 seconds")
+                duration = 5
+            
+            # Generate video with proper type casting
+            result = client.image_to_video.create(
+                model=cast(Literal["gen3a_turbo", "gen4_turbo"], model_name),
+                prompt_image=prompt_image,
+                prompt_text=prompt,
+                ratio=cast(Literal["1280:720", "720:1280", "1104:832", "832:1104", "960:960", "1584:672", "1280:768", "768:1280"], ratio),
+                duration=cast(Literal[5, 10], duration)
+            )
+            
+            # Wait for completion
+            print("RUNWAY: Waiting for video generation to complete...")
+            output = result.wait_for_task_output()
+            
+            # Extract URL from the output - handle different response formats
+            if output:
+                video_url = None
+                
+                # Try different ways to access the URL based on Runway's response format
+                try:
+                    # Method 1: Direct url attribute
+                    if hasattr(output, 'url'):
+                        video_url = getattr(output, 'url')  # type: ignore
+                    # Method 2: Output list with URL
+                    elif hasattr(output, 'output') and output.output:  # type: ignore
+                        if isinstance(output.output, list) and len(output.output) > 0:  # type: ignore
+                            video_url = output.output[0] if isinstance(output.output[0], str) else None  # type: ignore
+                        elif isinstance(output.output, str):  # type: ignore
+                            video_url = output.output  # type: ignore
+                    # Method 3: Try as dictionary
+                    elif isinstance(output, dict):
+                        video_url = output.get('url') or output.get('output')
+                    # Method 4: String conversion
+                    else:
+                        output_str = str(output)
+                        if output_str.startswith('http'):
+                            video_url = output_str
+                except Exception as attr_error:
+                    print(f"RUNWAY: Error accessing output attributes: {attr_error}")
+                
+                if video_url and isinstance(video_url, str) and video_url.startswith('http'):
+                    print(f"RUNWAY: Video generated successfully: {video_url}")
+                    return {
+                        'id': result.id,
+                        'url': video_url,
+                        'status': 'completed'
+                    }
+            
+                print("RUNWAY: Video generation completed but no URL found in response")
+                print(f"RUNWAY: Output type: {type(output)}")
+                print(f"RUNWAY: Output content: {output}")
+                if attempt < max_retries - 1:
+                    print(f"RUNWAY: Will retry in {2 ** (attempt + 1)} seconds...")
+                    continue
+                return None
                 
         except Exception as e:
             print(f"RUNWAY: Error in image_to_video (attempt {attempt + 1}): {e}")
