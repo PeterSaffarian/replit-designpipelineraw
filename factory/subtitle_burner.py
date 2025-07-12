@@ -15,7 +15,7 @@ def burn_subtitles_to_video(
     srt_path: str,
     output_path: str,
     font_name: str = "Arial",
-    font_size: int = 20,
+    font_size: int = 12,
     font_color: str = "&H00FFFFFF",  # White
     outline_color: str = "&H00000000",  # Black
     outline_width: int = 2,

@@ -203,4 +203,5 @@ Preferred communication style: Simple, everyday language.
 ✓ Fixed Runway video concatenation bug: Corrected KeyError 'video_path' by using proper 'path' key in segments structure
 ✓ Fixed video duration calculation: Empty extensions array in template ensures correct number of segments match audio length
 ✓ Fixed Runway video concatenation: Changed to video-only concat filter since Runway segments have no audio streams
+✓ Restored logo watermarking step: Added logo overlay to main video content at Step 10 before intro/outro branding
 ✓ Production-ready branding workflow: Seamless intro → main → outro with proper scaling, positioning, and timing

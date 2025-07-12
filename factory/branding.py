@@ -500,6 +500,69 @@ def add_title_overlay(intro_video_path: str, title: str, output_path: str) -> Op
         return None
 
 
+def add_logo_watermark(video_path: str, logo_path: str, output_path: str, 
+                      position: str = "bottom-right", opacity: float = 0.7, 
+                      scale: float = 0.08) -> Optional[str]:
+    """
+    Add a logo watermark to a video using FFmpeg.
+    
+    Args:
+        video_path (str): Path to the input video
+        logo_path (str): Path to the logo image
+        output_path (str): Path for the output video
+        position (str): Logo position ("top-left", "top-right", "bottom-left", "bottom-right", "center")
+        opacity (float): Logo opacity (0.0 to 1.0)
+        scale (float): Logo scale relative to video width (0.05 = 5% of video width)
+    
+    Returns:
+        str: Path to watermarked video or None on failure
+    """
+    if not os.path.exists(video_path) or not os.path.exists(logo_path):
+        print(f"WATERMARK: Input files not found - Video: {video_path}, Logo: {logo_path}")
+        return None
+    
+    try:
+        # Get video dimensions for positioning
+        width, height = get_video_dimensions(video_path)
+        logo_size = int(width * scale)
+        
+        # Calculate position coordinates
+        margin = 20  # 20px margin from edges
+        positions = {
+            "top-left": f"{margin}:{margin}",
+            "top-right": f"main_w-overlay_w-{margin}:{margin}",
+            "bottom-left": f"{margin}:main_h-overlay_h-{margin}",
+            "bottom-right": f"main_w-overlay_w-{margin}:main_h-overlay_h-{margin}",
+            "center": "(main_w-overlay_w)/2:(main_h-overlay_h)/2"
+        }
+        
+        overlay_position = positions.get(position, positions["bottom-right"])
+        
+        # FFmpeg command with logo overlay
+        ffmpeg_cmd = [
+            "ffmpeg", "-i", video_path, "-i", logo_path,
+            "-filter_complex",
+            f"[1:v]scale={logo_size}:{logo_size}[logo];"
+            f"[0:v][logo]overlay={overlay_position}:format=auto,format=yuv420p[v]",
+            "-map", "[v]", "-map", "0:a?", "-c:v", "libx264", "-c:a", "copy",
+            "-y", output_path
+        ]
+        
+        print(f"WATERMARK: Adding logo at {position} with {opacity} opacity...")
+        result = subprocess.run(ffmpeg_cmd, capture_output=True, text=True, timeout=120)
+        
+        if result.returncode != 0:
+            print(f"WATERMARK: FFmpeg error: {result.stderr}")
+            return None
+            
+        print(f"WATERMARK: Successfully added logo watermark: {output_path}")
+        return output_path
+        
+    except Exception as e:
+        print(f"WATERMARK: Error adding logo watermark: {e}")
+        return None
+
+
 def add_branding(main_video_path: str, idea: str, script: str, intro_video_path: str, outro_video_path: str, output_dir: str) -> Optional[str]:
     """
     Main branding workflow with pre-made videos:
