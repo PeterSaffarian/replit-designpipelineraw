@@ -361,15 +361,15 @@ def concatenate_videos(video_list: list, output_path: str) -> Optional[str]:
                 return None
                 
         else:
-            # Fallback for other cases - direct concatenation
+            # Fallback for other cases - video-only concatenation (Runway segments have no audio)
             ffmpeg_cmd = ["ffmpeg"]
             for video in video_list:
                 ffmpeg_cmd.extend(["-i", video])
             
+            # Use video-only concat filter since Runway videos don't have audio
             ffmpeg_cmd.extend([
-                "-filter_complex", f"concat=n={len(video_list)}:v=1:a=1[v][a]",
-                "-map", "[v]", "-map", "[a]", "-c:v", "libx264", "-c:a", "aac",
-                "-pix_fmt", "yuv420p", "-y", output_path
+                "-filter_complex", f"concat=n={len(video_list)}:v=1:a=0[v]",
+                "-map", "[v]", "-c:v", "libx264", "-pix_fmt", "yuv420p", "-y", output_path
             ])
             
             result = subprocess.run(ffmpeg_cmd, capture_output=True, text=True, timeout=120)

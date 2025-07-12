@@ -202,4 +202,5 @@ Preferred communication style: Simple, everyday language.
 ✓ Complete vision integration: Both script writer and producer use GPT-4o vision to analyze artwork for consistent output
 ✓ Fixed Runway video concatenation bug: Corrected KeyError 'video_path' by using proper 'path' key in segments structure
 ✓ Fixed video duration calculation: Empty extensions array in template ensures correct number of segments match audio length
+✓ Fixed Runway video concatenation: Changed to video-only concat filter since Runway segments have no audio streams
 ✓ Production-ready branding workflow: Seamless intro → main → outro with proper scaling, positioning, and timing
