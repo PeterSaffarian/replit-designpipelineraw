@@ -135,7 +135,7 @@ def create_subtitled_video(
     style_presets = {
         "netflix": {
             "font_name": "Arial",
-            "font_size": 20,
+            "font_size": 12,
             "font_color": "&H00FFFFFF",    # White
             "outline_color": "&H00000000", # Black
             "outline_width": 2,

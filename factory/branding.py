@@ -110,7 +110,7 @@ Idea: {idea}
 Script: {script[:200]}...
 
 Requirements:
-- Maximum 4 words (to fit on slide)
+- Maximum 20 characters (to fit on slide)
 - Educational tone
 - Clear and engaging
 - No quotes or punctuation
@@ -334,16 +334,39 @@ def concatenate_videos(video_list: list, output_path: str) -> Optional[str]:
             # Now concatenate the scaled videos with fade transitions
             print(f"Video durations - Intro: {intro_duration:.1f}s, Main: {main_duration:.1f}s, Outro: {outro_duration:.1f}s")
             print("Concatenating scaled videos with fade transitions...")
-            concat_result = subprocess.run([
-                "ffmpeg", "-i", intro_scaled, "-i", video_list[1], "-i", outro_scaled,
-                "-filter_complex", 
-                f"[0:v]fade=out:st={intro_duration-fade_duration}:d={fade_duration}[v0];"
-                f"[1:v]fade=in:st=0:d={fade_duration},fade=out:st={main_duration-fade_duration}:d={fade_duration}[v1];"
-                f"[2:v]fade=in:st=0:d={fade_duration}[v2];"
-                f"[v0][0:a][v1][1:a][v2][2:a]concat=n=3:v=1:a=1[v][a]",
-                "-map", "[v]", "-map", "[a]", "-c:v", "libx264", "-c:a", "aac",
-                "-pix_fmt", "yuv420p", "-y", output_path
-            ], capture_output=True, text=True, timeout=120)
+            
+            # Check if main video has audio stream
+            probe_cmd = ["ffprobe", "-v", "quiet", "-select_streams", "a", "-show_entries", "stream=codec_name", "-of", "csv=p=0", video_list[1]]
+            probe_result = subprocess.run(probe_cmd, capture_output=True, text=True)
+            main_has_audio = bool(probe_result.stdout.strip())
+            
+            if main_has_audio:
+                # Standard concatenation with audio from all three videos
+                concat_result = subprocess.run([
+                    "ffmpeg", "-i", intro_scaled, "-i", video_list[1], "-i", outro_scaled,
+                    "-filter_complex", 
+                    f"[0:v]fade=out:st={intro_duration-fade_duration}:d={fade_duration}[v0];"
+                    f"[1:v]fade=in:st=0:d={fade_duration},fade=out:st={main_duration-fade_duration}:d={fade_duration}[v1];"
+                    f"[2:v]fade=in:st=0:d={fade_duration}[v2];"
+                    f"[v0][0:a][v1][1:a][v2][2:a]concat=n=3:v=1:a=1[v][a]",
+                    "-map", "[v]", "-map", "[a]", "-c:v", "libx264", "-c:a", "aac",
+                    "-pix_fmt", "yuv420p", "-y", output_path
+                ], capture_output=True, text=True, timeout=120)
+            else:
+                # Main video has no audio - use video-only concat with silent audio
+                print("Main video has no audio stream - using video-only concatenation with silent audio")
+                concat_result = subprocess.run([
+                    "ffmpeg", "-i", intro_scaled, "-i", video_list[1], "-i", outro_scaled,
+                    "-f", "lavfi", "-i", "anullsrc=channel_layout=stereo:sample_rate=44100",
+                    "-filter_complex", 
+                    f"[0:v]fade=out:st={intro_duration-fade_duration}:d={fade_duration}[v0];"
+                    f"[1:v]fade=in:st=0:d={fade_duration},fade=out:st={main_duration-fade_duration}:d={fade_duration}[v1];"
+                    f"[2:v]fade=in:st=0:d={fade_duration}[v2];"
+                    f"[v0][v1][v2]concat=n=3:v=1:a=0[v];"
+                    f"[0:a][3:a][2:a]concat=n=3:v=0:a=1[a]",
+                    "-map", "[v]", "-map", "[a]", "-c:v", "libx264", "-c:a", "aac",
+                    "-pix_fmt", "yuv420p", "-y", output_path
+                ], capture_output=True, text=True, timeout=120)
             
             # Cleanup temp files
             try:
@@ -427,7 +450,7 @@ def add_title_overlay(intro_video_path: str, title: str, output_path: str) -> Op
             use_multiline = False
         
         # Even larger font size to fill the dotted box better
-        title_font = min(height // 13, width // 16)  # Increased size to use available space
+        title_font = min(height // 12, width // 16)  # Increased size to use available space
         
         # Position title to center within the dotted box area
         # Based on your screenshot, the box center is around 30% from top
@@ -501,8 +524,8 @@ def add_title_overlay(intro_video_path: str, title: str, output_path: str) -> Op
 
 
 def add_logo_watermark(video_path: str, logo_path: str, output_path: str, 
-                      position: str = "bottom-right", opacity: float = 0.7, 
-                      scale: float = 0.08) -> Optional[str]:
+                      position: str = "top-left", opacity: float = 0.7, 
+                      scale: float = 0.1) -> Optional[str]:
     """
     Add a logo watermark to a video using FFmpeg.
     
@@ -536,7 +559,7 @@ def add_logo_watermark(video_path: str, logo_path: str, output_path: str,
             "center": "(main_w-overlay_w)/2:(main_h-overlay_h)/2"
         }
         
-        overlay_position = positions.get(position, positions["bottom-right"])
+        overlay_position = positions.get(position, positions["top-left"])
         
         # FFmpeg command with logo overlay
         ffmpeg_cmd = [

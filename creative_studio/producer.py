@@ -90,6 +90,7 @@ def produce_scenario(script: str, audio_path: str, artwork_path: str, template_p
         "will be used to animate this specific character and scene. It is important to be aware of the video-generation "
         "machine's limitations. In order to avoid distorted animation, we must avoid sudden huge movements and manage "
         "the animation via precise, gentle prompt instructions that work with the character's pose and environment shown in the image."
+        "This video will later be lipsynced with audio so in order to make the video look natural, the character should look at the camera at times, have natural speaking movement for the mout ehough for the lipsync model to be able to work with."
     )
 
     # 5. Define the specific 'task' for our AI model

@@ -303,7 +303,7 @@ def run_pipeline_for_idea(idea_text, idea_number, idea_name):
             watermarked_video_path = os.path.join(project_path, "watermarked_video.mp4")
             result = branding.add_logo_watermark(
                 working_video_path, logo_path, watermarked_video_path, 
-                position="bottom-right", opacity=0.7, scale=0.08
+                position="top-left", opacity=0.7, scale=0.12  # Customize as needed
             )
             
             if result:
