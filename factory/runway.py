@@ -120,7 +120,7 @@ def _convert_aspect_ratio(aspect_ratio: str) -> str:
     return aspect_mapping.get(aspect_ratio, "1280:720")
 
 def image_to_video(image_path: str, prompt: str, model_name: str = "gen4_turbo", 
-                  duration: int = 5, aspect_ratio: str = "16:9") -> Optional[Dict]:
+                  duration: int = 5, aspect_ratio: str = "16:9", max_retries: int = 3) -> Optional[Dict]:
     """
     Generates a single video segment from an image using Runway.
     
@@ -130,11 +130,18 @@ def image_to_video(image_path: str, prompt: str, model_name: str = "gen4_turbo",
         model_name (str): Runway model to use (gen4_turbo, gen3a_turbo)
         duration (int): Duration in seconds (5 or 10)
         aspect_ratio (str): Aspect ratio or resolution
+        max_retries (int): Maximum number of retry attempts (default: 3)
     
     Returns:
         Dict with video information or None on failure
     """
-    try:
+    import time
+    
+    for attempt in range(max_retries):
+        try:
+            if attempt > 0:
+                print(f"RUNWAY: Retry attempt {attempt + 1}/{max_retries}")
+                time.sleep(2 ** attempt)  # Exponential backoff: 2s, 4s, 8s
         print(f"RUNWAY: Starting image-to-video generation...")
         print(f"   Image: {image_path}")
         print(f"   Prompt: {prompt}")
@@ -212,16 +219,25 @@ def image_to_video(image_path: str, prompt: str, model_name: str = "gen4_turbo",
                     'status': 'completed'
                 }
         
-        print("RUNWAY: Video generation completed but no URL found in response")
-        print(f"RUNWAY: Output type: {type(output)}")
-        print(f"RUNWAY: Output content: {output}")
-        return None
-            
-    except Exception as e:
-        print(f"RUNWAY: Error in image_to_video: {e}")
-        import traceback
-        print(f"RUNWAY: Traceback: {traceback.format_exc()}")
-        return None
+            print("RUNWAY: Video generation completed but no URL found in response")
+            print(f"RUNWAY: Output type: {type(output)}")
+            print(f"RUNWAY: Output content: {output}")
+            if attempt < max_retries - 1:
+                print(f"RUNWAY: Will retry in {2 ** (attempt + 1)} seconds...")
+                continue
+            return None
+                
+        except Exception as e:
+            print(f"RUNWAY: Error in image_to_video (attempt {attempt + 1}): {e}")
+            if attempt < max_retries - 1:
+                print(f"RUNWAY: Will retry in {2 ** (attempt + 1)} seconds...")
+                continue
+            else:
+                import traceback
+                print(f"RUNWAY: Final attempt failed. Traceback: {traceback.format_exc()}")
+                return None
+    
+    return None  # All retries exhausted
 
 def generate_extended_video(image_path: str, prompts: List[str], model_name: str = "gen4_turbo",
                           segment_durations: Optional[List[int]] = None, segment_duration: int = 5, 
@@ -258,13 +274,14 @@ def generate_extended_video(image_path: str, prompts: List[str], model_name: str
         for i, prompt in enumerate(prompts):
             print(f"\n--- RUNWAY: Generating segment {i+1}/{len(prompts)} ---")
             
-            # Generate current segment
+            # Generate current segment with retry support
             segment_result = image_to_video(
                 image_path=current_reference,
                 prompt=prompt,
                 model_name=model_name,
                 duration=segment_duration,
-                aspect_ratio=aspect_ratio
+                aspect_ratio=aspect_ratio,
+                max_retries=3  # Add retry support for each segment
             )
             
             if not segment_result:

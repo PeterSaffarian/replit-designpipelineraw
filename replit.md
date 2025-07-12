@@ -204,4 +204,5 @@ Preferred communication style: Simple, everyday language.
 ✓ Fixed video duration calculation: Empty extensions array in template ensures correct number of segments match audio length
 ✓ Fixed Runway video concatenation: Changed to video-only concat filter since Runway segments have no audio streams
 ✓ Restored logo watermarking step: Added logo overlay to main video content at Step 10 before intro/outro branding
+✓ Added Runway retry logic: 3 automatic retries with exponential backoff for failed video generation segments
 ✓ Production-ready branding workflow: Seamless intro → main → outro with proper scaling, positioning, and timing
