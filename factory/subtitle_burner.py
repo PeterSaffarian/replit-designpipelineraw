@@ -143,7 +143,7 @@ def create_subtitled_video(
         },
         "youtube": {
             "font_name": "Arial",
-            "font_size": 18,
+            "font_size": 12,
             "font_color": "&H00FFFFFF",    # White
             "outline_color": "&H00000000", # Black
             "outline_width": 1,
@@ -162,7 +162,7 @@ def create_subtitled_video(
     # Get style settings
     if style not in style_presets:
         print(f"SUBTITLE_BURN: Unknown style '{style}', using 'netflix' default")
-        style = "netflix"
+        style = "youtube"
     
     settings = style_presets[style]
     

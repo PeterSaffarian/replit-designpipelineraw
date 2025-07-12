@@ -275,24 +275,22 @@ def concatenate_videos(video_list: list, output_path: str) -> Optional[str]:
             intro_scaled = output_path.replace('.mp4', '_intro_scaled.mp4')
             outro_scaled = output_path.replace('.mp4', '_outro_scaled.mp4')
             
-            print("Scaling and adding audio to intro...")
+            print("Scaling intro while preserving original audio...")
             intro_result = subprocess.run([
                 "ffmpeg", "-i", video_list[0], 
-                "-f", "lavfi", "-i", "anullsrc=channel_layout=stereo:sample_rate=44100",
                 "-filter_complex", f"[0:v]scale={main_width}:{main_height}:force_original_aspect_ratio=decrease,pad={main_width}:{main_height}:(ow-iw)/2:(oh-ih)/2[v]",
-                "-map", "[v]", "-map", "1:a", "-c:v", "libx264", "-c:a", "aac", "-shortest", "-y", intro_scaled
+                "-map", "[v]", "-map", "0:a", "-c:v", "libx264", "-c:a", "aac", "-y", intro_scaled
             ], capture_output=True, text=True, timeout=60)
             
             if intro_result.returncode != 0:
                 print(f"Failed to scale intro: {intro_result.stderr}")
                 return None
             
-            print("Scaling and adding audio to outro...")
+            print("Scaling outro while preserving original audio...")
             outro_result = subprocess.run([
                 "ffmpeg", "-i", video_list[2],
-                "-f", "lavfi", "-i", "anullsrc=channel_layout=stereo:sample_rate=44100", 
                 "-filter_complex", f"[0:v]scale={main_width}:{main_height}:force_original_aspect_ratio=decrease,pad={main_width}:{main_height}:(ow-iw)/2:(oh-ih)/2[v]",
-                "-map", "[v]", "-map", "1:a", "-c:v", "libx264", "-c:a", "aac", "-shortest", "-y", outro_scaled
+                "-map", "[v]", "-map", "0:a", "-c:v", "libx264", "-c:a", "aac", "-y", outro_scaled
             ], capture_output=True, text=True, timeout=60)
             
             if outro_result.returncode != 0:
