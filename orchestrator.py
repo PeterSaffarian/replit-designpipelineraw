@@ -276,7 +276,7 @@ def run_pipeline_for_idea(idea_text, idea_number, idea_name):
             print(f"   📝 Burning subtitles into video...")
             print(time.ctime())
             subtitled_video_path = subtitle_burner.create_subtitled_video(
-                final_video_path, generated_srt_path, project_path, style="netflix"
+                final_video_path, generated_srt_path, project_path, style="youtube"
             )
             
             if subtitled_video_path:
@@ -303,7 +303,7 @@ def run_pipeline_for_idea(idea_text, idea_number, idea_name):
             watermarked_video_path = os.path.join(project_path, "watermarked_video.mp4")
             result = branding.add_logo_watermark(
                 working_video_path, logo_path, watermarked_video_path, 
-                position="top-left", opacity=0.7, scale=0.12  # Customize as needed
+                position="top-left", opacity=0.6, scale=0.2  # Customize as needed
             )
             
             if result:
