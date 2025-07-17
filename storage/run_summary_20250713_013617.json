@@ -1,0 +1,323 @@
+[
+    {
+        "idea_name": "Don't Click That Link",
+        "idea_text": "A video showing why you should never click suspicious links from emails or texts.",
+        "project_folder": "storage/4_Dont Click That Link_20250713",
+        "status": "SUCCESS",
+        "failed_at_step": null,
+        "final_video_path": null,
+        "assets": {
+            "artwork_prompt": "Create a scene with the character in a cozy, modern living room, seated at a sleek desk with a laptop open in front of her. The screen displays an email with a suspicious link highlighted. Her expression is one of curiosity mixed with caution, eyebrows slightly raised and lips pressed together. Warm ambient lighting from a nearby lamp casts soft shadows, enhancing the atmosphere of contemplation. The room is decorated with minimalistic furniture, and a window shows a peaceful evening sky outside. Papers and a coffee cup are scattered on the desk, adding a realistic touch. The scene captures the moment of decision, highlighting the importance of thinking twice before clicking unknown links.",
+            "artwork_path": "storage/4_Dont Click That Link_20250713/artwork.png",
+            "artwork_retry_count": 0,
+            "script": "\"Before you click that link, think twice. Suspicious emails could lead to scams or malware, putting your personal information at risk. Stay safe by verifying the source first. Remember, it's better to be cautious than compromised.\"",
+            "audio_path": "storage/4_Dont Click That Link_20250713/audio.mp3",
+            "srt_path": "storage/4_Dont Click That Link_20250713/subtitles.srt",
+            "subtitle_stats": {
+                "subtitle_count": 3,
+                "total_characters": 330,
+                "duration_seconds": 15.28,
+                "valid_format": true
+            },
+            "scenario_path": "storage/4_Dont Click That Link_20250713/scenario.json",
+            "raw_video_url": "file://storage/4_Dont Click That Link_20250713/final_runway_video_1752366907.mp4",
+            "video_provider": "runway",
+            "raw_video_local_path": "storage/4_Dont Click That Link_20250713/final_runway_video_1752366907.mp4",
+            "final_video_url": "https://api.sync.so/v2/generations/ba2da51d-0ff4-4bcd-8d47-b321d620c1bb/result?token=f2acbffd-ea47-4d75-bbd1-abf448cf2fed",
+            "final_video_path": "storage/4_Dont Click That Link_20250713/final_video.mp4",
+            "subtitled_video_path": "storage/4_Dont Click That Link_20250713/final_video_subtitled.mp4",
+            "watermarked_video_path": "storage/4_Dont Click That Link_20250713/watermarked_video.mp4",
+            "branded_video_path": "storage/4_Dont Click That Link_20250713/branded_video.mp4"
+        }
+    },
+    {
+        "idea_name": "Password Safety Tips",
+        "idea_text": "A video where Laura gets a suspicious call \u2014 should she give her password?",
+        "project_folder": "storage/5_Password Safety Tips_20250713",
+        "status": "FAILED",
+        "failed_at_step": "Failed to generate artwork after all retry attempts.",
+        "final_video_path": null,
+        "assets": {
+            "artwork_prompt": "Create an image in an animation style featuring Laura, a young woman with shoulder-length dark hair, standing in her cozy, softly lit living room. She appears concerned, holding her smartphone to her ear. Her eyebrows are slightly furrowed, and her eyes show a mix of skepticism and curiosity. Laura is dressed in a casual orange t-shirt and dark pants, matching the reference style. Around her, the room is warm and inviting, with a comfortable sofa, a coffee table with a laptop open, and soft ambient lighting from a nearby lamp. The camera angle is slightly over-the-shoulder, capturing the tense atmosphere as she listens intently to the call. The scene conveys the theme of caution and uncertainty about sharing personal information."
+        }
+    },
+    {
+        "idea_name": "How to Spot a Fake Bank Text",
+        "idea_text": "A video where your friend gets a scam text from a bank they don\u2019t even use.",
+        "project_folder": "storage/7_How to Spot a Fake Bank Text_20250713",
+        "status": "SUCCESS",
+        "failed_at_step": null,
+        "final_video_path": null,
+        "assets": {
+            "artwork_prompt": "Create an animated scene featuring the character in a cozy living room, sitting on a modern couch with a smartphone in hand. The room is softly lit by a warm lamp on a nearby side table, casting a gentle glow across the space. The character\u2019s expression is one of mild confusion, eyebrows slightly furrowed, as they glance at their phone screen showing a notification. The background displays a tastefully decorated room with a few plants and framed art on the walls, creating a relaxed atmosphere. The camera angle is slightly over-the-shoulder, offering a clear view of the character's face and capturing the moment of surprise. The scene conveys the unexpected nature of receiving a scam text from an unfamiliar bank, emphasizing the character's curiosity and alertness.",
+            "artwork_path": "storage/7_How to Spot a Fake Bank Text_20250713/artwork.png",
+            "artwork_retry_count": 0,
+            "script": "\"Hey, I just got a text from a bank I don\u2019t even use, saying there\u2019s an urgent issue with my account. It\u2019s definitely a scam! Remember, never click links or give out personal info if something feels off.\"",
+            "audio_path": "storage/7_How to Spot a Fake Bank Text_20250713/audio.mp3",
+            "srt_path": "storage/7_How to Spot a Fake Bank Text_20250713/subtitles.srt",
+            "subtitle_stats": {
+                "subtitle_count": 3,
+                "total_characters": 302,
+                "duration_seconds": 13.0,
+                "valid_format": true
+            },
+            "scenario_path": "storage/7_How to Spot a Fake Bank Text_20250713/scenario.json",
+            "raw_video_url": "file://storage/7_How to Spot a Fake Bank Text_20250713/final_runway_video_1752367336.mp4",
+            "video_provider": "runway",
+            "raw_video_local_path": "storage/7_How to Spot a Fake Bank Text_20250713/final_runway_video_1752367336.mp4",
+            "final_video_url": "https://api.sync.so/v2/generations/db3c3ea4-5fc5-43d3-8610-243be79cdfcf/result?token=86da6d45-3445-4990-8ec0-5defb094e563",
+            "final_video_path": "storage/7_How to Spot a Fake Bank Text_20250713/final_video.mp4",
+            "subtitled_video_path": "storage/7_How to Spot a Fake Bank Text_20250713/final_video_subtitled.mp4",
+            "watermarked_video_path": "storage/7_How to Spot a Fake Bank Text_20250713/watermarked_video.mp4",
+            "branded_video_path": "storage/7_How to Spot a Fake Bank Text_20250713/branded_video.mp4"
+        }
+    },
+    {
+        "idea_name": "What is a Money Mule",
+        "idea_text": "A video explaining what a money mule is and how people get tricked into it.",
+        "project_folder": "storage/8_What is a Money Mule_20250713",
+        "status": "SUCCESS",
+        "failed_at_step": null,
+        "final_video_path": null,
+        "assets": {
+            "artwork_prompt": "Create an image of the character standing in a cozy, dimly lit living room, with the warm glow of a lamp casting soft shadows. She is seated at a wooden desk, looking intently at a laptop screen with a concerned expression. Around her are subtle hints of online communication, such as chat icons and email notifications, floating in the air. The scene conveys an atmosphere of caution and intrigue, highlighting the concept of being tricked online. The camera angle is slightly from above, capturing the character\u2019s thoughtful demeanor as she navigates the digital world. The overall mood is informative and engaging, suitable for an Instagram story format.",
+            "artwork_path": "storage/8_What is a Money Mule_20250713/artwork.png",
+            "artwork_retry_count": 0,
+            "script": "\"Ever heard of a money mule? It\u2019s when someone unknowingly transfers stolen funds for scammers. They often get tricked by promises of easy cash or fake job offers. Always be cautious with online opportunities, and never share your bank details with strangers.\"",
+            "audio_path": "storage/8_What is a Money Mule_20250713/audio.mp3",
+            "srt_path": "storage/8_What is a Money Mule_20250713/subtitles.srt",
+            "subtitle_stats": {
+                "subtitle_count": 3,
+                "total_characters": 358,
+                "duration_seconds": 16.559,
+                "valid_format": true
+            },
+            "scenario_path": "storage/8_What is a Money Mule_20250713/scenario.json",
+            "raw_video_url": "file://storage/8_What is a Money Mule_20250713/final_runway_video_1752367759.mp4",
+            "video_provider": "runway",
+            "raw_video_local_path": "storage/8_What is a Money Mule_20250713/final_runway_video_1752367759.mp4",
+            "final_video_url": "https://api.sync.so/v2/generations/b9865714-0526-49bc-89a7-484dc08edcdd/result?token=f8d66e46-0010-4a15-b599-349d02dacb5f",
+            "final_video_path": "storage/8_What is a Money Mule_20250713/final_video.mp4",
+            "subtitled_video_path": "storage/8_What is a Money Mule_20250713/final_video_subtitled.mp4",
+            "watermarked_video_path": "storage/8_What is a Money Mule_20250713/watermarked_video.mp4",
+            "branded_video_path": "storage/8_What is a Money Mule_20250713/branded_video.mp4"
+        }
+    },
+    {
+        "idea_name": "What is a Money Mule #2",
+        "idea_text": "A video showing the 3 types of money mules (tricked, ignoring red flags, and criminals).",
+        "project_folder": "storage/9_What is a Money Mule 2_20250713",
+        "status": "SUCCESS",
+        "failed_at_step": null,
+        "final_video_path": null,
+        "assets": {
+            "artwork_prompt": "Create an animated scene featuring the character in three distinct scenarios, each representing a type of money mule, set against a softly lit urban backdrop. In the first scenario, the character looks confused and anxious, standing beside a laptop with a visible email open, symbolizing someone who is tricked. In the second, she appears hesitant yet dismissive, glancing away from an alert notification on her phone, representing someone ignoring red flags. Finally, she adopts a sly smile, standing near a pile of cash in a dimly lit alleyway, conveying the criminal aspect. The overall mood is tense and thought-provoking, with a muted color palette and dynamic camera angles to emphasize each scenario. The scene is designed for an Instagram story format, ensuring a clear narrative flow without text reliance.",
+            "artwork_path": "storage/9_What is a Money Mule 2_20250713/artwork.png",
+            "artwork_retry_count": 1,
+            "script": "\"Money mules come in three types: those who are tricked into it, those who ignore the warning signs, and those who willingly commit the crime. Understanding these differences helps us prevent becoming part of illegal schemes.\"",
+            "audio_path": "storage/9_What is a Money Mule 2_20250713/audio.mp3",
+            "srt_path": "storage/9_What is a Money Mule 2_20250713/subtitles.srt",
+            "subtitle_stats": {
+                "subtitle_count": 3,
+                "total_characters": 325,
+                "duration_seconds": 13.12,
+                "valid_format": true
+            },
+            "scenario_path": "storage/9_What is a Money Mule 2_20250713/scenario.json",
+            "raw_video_url": "file://storage/9_What is a Money Mule 2_20250713/final_runway_video_1752368226.mp4",
+            "video_provider": "runway",
+            "raw_video_local_path": "storage/9_What is a Money Mule 2_20250713/final_runway_video_1752368226.mp4",
+            "final_video_url": "https://api.sync.so/v2/generations/470c8988-4d08-4793-a464-bba6e8fa00ca/result?token=35a78cc1-6f88-4667-adf8-8d9c7de7808a",
+            "final_video_path": "storage/9_What is a Money Mule 2_20250713/final_video.mp4",
+            "subtitled_video_path": "storage/9_What is a Money Mule 2_20250713/final_video_subtitled.mp4",
+            "watermarked_video_path": "storage/9_What is a Money Mule 2_20250713/watermarked_video.mp4",
+            "branded_video_path": "storage/9_What is a Money Mule 2_20250713/branded_video.mp4"
+        }
+    },
+    {
+        "idea_name": "Digital Safety Tip",
+        "idea_text": "A video about how scammers target young people and those in financial hardship.",
+        "project_folder": "storage/10_Digital Safety Tip_20250713",
+        "status": "SUCCESS",
+        "failed_at_step": null,
+        "final_video_path": null,
+        "assets": {
+            "artwork_prompt": "Create a scene showcasing the character standing in a dimly lit, cluttered room filled with financial papers and a laptop open on a table. The character appears worried, with furrowed brows and a tense posture, as they gaze at the screen displaying a suspicious message. The environment is filled with muted colors, emphasizing a somber mood. In the background, a window reveals a rainy evening, casting a soft, reflective light on the character\u2019s face, highlighting their concern. The setting conveys the vulnerability of young people and those in financial hardship being targeted by scammers. The character is dressed in casual attire, mirroring the reference image, with the scene capturing an intimate moment of realization and caution.",
+            "artwork_path": "storage/10_Digital Safety Tip_20250713/artwork.png",
+            "artwork_retry_count": 0,
+            "script": "\"Scammers often target young people and those struggling financially, promising easy money or relief from debt. It\u2019s crucial to stay alert and skeptical of offers that seem too good to be true. Protect yourself by verifying sources and reaching out for trusted advice.\"",
+            "audio_path": "storage/10_Digital Safety Tip_20250713/audio.mp3",
+            "srt_path": "storage/10_Digital Safety Tip_20250713/subtitles.srt",
+            "subtitle_stats": {
+                "subtitle_count": 4,
+                "total_characters": 401,
+                "duration_seconds": 17.44,
+                "valid_format": true
+            },
+            "scenario_path": "storage/10_Digital Safety Tip_20250713/scenario.json",
+            "raw_video_url": "file://storage/10_Digital Safety Tip_20250713/final_runway_video_1752368645.mp4",
+            "video_provider": "runway",
+            "raw_video_local_path": "storage/10_Digital Safety Tip_20250713/final_runway_video_1752368645.mp4",
+            "final_video_url": "https://api.sync.so/v2/generations/25fffeab-0ba5-4c3d-8964-447c45f8bd27/result?token=ee4991cd-1e21-4722-a509-887b3ab7a116",
+            "final_video_path": "storage/10_Digital Safety Tip_20250713/final_video.mp4",
+            "subtitled_video_path": "storage/10_Digital Safety Tip_20250713/final_video_subtitled.mp4",
+            "watermarked_video_path": "storage/10_Digital Safety Tip_20250713/watermarked_video.mp4",
+            "branded_video_path": "storage/10_Digital Safety Tip_20250713/branded_video.mp4"
+        }
+    },
+    {
+        "idea_name": "What is a Money Mule #3",
+        "idea_text": "A video explaining how romance scams or fake jobs are used to recruit money mules.",
+        "project_folder": "storage/11_What is a Money Mule 3_20250713",
+        "status": "SUCCESS",
+        "failed_at_step": null,
+        "final_video_path": null,
+        "assets": {
+            "artwork_prompt": "Create an animation scene featuring the character from the reference image standing in a dimly lit, modern apartment, illuminated by the soft glow of a laptop screen. The character appears thoughtful and slightly concerned, with eyes focused on the screen that shows a series of suspicious messages and emails. The room is stylishly decorated with minimalistic furniture, a cozy couch, and a small coffee table. In the background, a window reveals a cityscape at dusk, adding a sense of isolation. The character is wearing a casual outfit similar to the reference, with subtle emphasis on their expression to convey the gravity of becoming a potential target for scams. The camera angle is slightly over-the-shoulder, providing a clear view of the screen content without text, enhancing the narrative of awareness and caution against romance scams and fake job offers. The overall mood is contemplative and cautionary, aimed at educating viewers about the risks.",
+            "artwork_path": "storage/11_What is a Money Mule 3_20250713/artwork.png",
+            "artwork_retry_count": 0,
+            "script": "\"Did you know scammers use fake romances or job offers to trick people into becoming money mules? They lure you in with promises and then use your account to transfer illegal funds. Always verify before you trust.\"",
+            "audio_path": "storage/11_What is a Money Mule 3_20250713/audio.mp3",
+            "srt_path": "storage/11_What is a Money Mule 3_20250713/subtitles.srt",
+            "subtitle_stats": {
+                "subtitle_count": 3,
+                "total_characters": 313,
+                "duration_seconds": 13.44,
+                "valid_format": true
+            },
+            "scenario_path": "storage/11_What is a Money Mule 3_20250713/scenario.json",
+            "raw_video_url": "file://storage/11_What is a Money Mule 3_20250713/final_runway_video_1752368972.mp4",
+            "video_provider": "runway",
+            "raw_video_local_path": "storage/11_What is a Money Mule 3_20250713/final_runway_video_1752368972.mp4",
+            "final_video_url": "https://api.sync.so/v2/generations/56385282-a777-45ae-ad87-74304c879b7f/result?token=7e6c8b64-a956-4bbe-bbeb-7da08a5b5096",
+            "final_video_path": "storage/11_What is a Money Mule 3_20250713/final_video.mp4",
+            "subtitled_video_path": "storage/11_What is a Money Mule 3_20250713/final_video_subtitled.mp4",
+            "watermarked_video_path": "storage/11_What is a Money Mule 3_20250713/watermarked_video.mp4",
+            "branded_video_path": "storage/11_What is a Money Mule 3_20250713/branded_video.mp4"
+        }
+    },
+    {
+        "idea_name": "What is a Money Mule #4",
+        "idea_text": "A video showing how someone might unknowingly become a money mule.",
+        "project_folder": "storage/12_What is a Money Mule 4_20250713",
+        "status": "SUCCESS",
+        "failed_at_step": null,
+        "final_video_path": null,
+        "assets": {
+            "artwork_prompt": "Create an image in the animation style of the reference character, featuring her in a cozy, modern living room during the daytime. She sits at a laptop on a wooden table, her expression a mix of curiosity and slight confusion. The room is softly lit by natural light streaming through large windows, casting gentle shadows. Around her are subtle hints of the digital world: notifications on a smartphone, a tablet with transaction alerts, and a stack of envelopes marked with question marks, symbolizing mystery and ambiguity. The scene conveys a sense of innocence and unawareness, capturing the moment she unknowingly steps into becoming a money mule, emphasizing the blend of everyday life and hidden risks.",
+            "artwork_path": "storage/12_What is a Money Mule 4_20250713/artwork.png",
+            "artwork_retry_count": 0,
+            "script": "\"I thought I was just helping someone transfer money, but I didn't realize I was being used as a money mule. It seemed like easy cash, but now I\u2019m caught in something much bigger. Always double-check before you agree to move money for others.\"",
+            "audio_path": "storage/12_What is a Money Mule 4_20250713/audio.mp3",
+            "srt_path": "storage/12_What is a Money Mule 4_20250713/subtitles.srt",
+            "subtitle_stats": {
+                "subtitle_count": 3,
+                "total_characters": 342,
+                "duration_seconds": 15.0,
+                "valid_format": true
+            },
+            "scenario_path": "storage/12_What is a Money Mule 4_20250713/scenario.json",
+            "raw_video_url": "file://storage/12_What is a Money Mule 4_20250713/final_runway_video_1752369296.mp4",
+            "video_provider": "runway",
+            "raw_video_local_path": "storage/12_What is a Money Mule 4_20250713/final_runway_video_1752369296.mp4",
+            "final_video_url": "https://api.sync.so/v2/generations/b5a23996-0f10-4005-8281-66e6b39a8177/result?token=a544d03a-49a7-4763-ba76-703fdf2f3e49",
+            "final_video_path": "storage/12_What is a Money Mule 4_20250713/final_video.mp4",
+            "subtitled_video_path": "storage/12_What is a Money Mule 4_20250713/final_video_subtitled.mp4",
+            "watermarked_video_path": "storage/12_What is a Money Mule 4_20250713/watermarked_video.mp4",
+            "branded_video_path": "storage/12_What is a Money Mule 4_20250713/branded_video.mp4"
+        }
+    },
+    {
+        "idea_name": "Signs of Financial Abuse",
+        "idea_text": "A video showing warning signs of financial abuse in everyday life.",
+        "project_folder": "storage/13_Signs of Financial Abuse_20250713",
+        "status": "SUCCESS",
+        "failed_at_step": null,
+        "final_video_path": null,
+        "assets": {
+            "artwork_prompt": "In a cozy living room bathed in warm, soft lighting, the character stands near a table cluttered with bills and a calculator, her expression a mix of concern and contemplation. She is dressed in a casual outfit, similar to the reference image, with a subtle shadow cast across her face, hinting at the emotional weight she carries. The setting includes a comfortable couch and a softly glowing lamp, creating a contrast between the inviting environment and the tension in her eyes. The scene subtly illustrates the warning signs of financial abuse, with her gaze fixed on the bills, conveying a sense of entrapment and the need for awareness. The camera angle is slightly elevated, capturing her from a three-quarter view to emphasize her thoughtful demeanor and the quiet urgency of the moment, suitable for an Instagram story format.",
+            "artwork_path": "storage/13_Signs of Financial Abuse_20250713/artwork.png",
+            "artwork_retry_count": 1,
+            "script": "\"Sometimes, financial abuse hides in plain sight\u2014like when you're kept in the dark about family finances or pressured into secret debts. Recognizing these signs can be the first step to reclaiming control and finding support.\"",
+            "audio_path": "storage/13_Signs of Financial Abuse_20250713/audio.mp3",
+            "srt_path": "storage/13_Signs of Financial Abuse_20250713/subtitles.srt",
+            "subtitle_stats": {
+                "subtitle_count": 3,
+                "total_characters": 325,
+                "duration_seconds": 14.56,
+                "valid_format": true
+            },
+            "scenario_path": "storage/13_Signs of Financial Abuse_20250713/scenario.json",
+            "raw_video_url": "file://storage/13_Signs of Financial Abuse_20250713/final_runway_video_1752369674.mp4",
+            "video_provider": "runway",
+            "raw_video_local_path": "storage/13_Signs of Financial Abuse_20250713/final_runway_video_1752369674.mp4",
+            "final_video_url": "https://api.sync.so/v2/generations/77af128d-653e-41cd-8ae4-fc5254cc6405/result?token=26cd2b93-db1d-460e-a348-3bf8a8345950",
+            "final_video_path": "storage/13_Signs of Financial Abuse_20250713/final_video.mp4",
+            "subtitled_video_path": "storage/13_Signs of Financial Abuse_20250713/final_video_subtitled.mp4",
+            "watermarked_video_path": "storage/13_Signs of Financial Abuse_20250713/watermarked_video.mp4",
+            "branded_video_path": "storage/13_Signs of Financial Abuse_20250713/branded_video.mp4"
+        }
+    },
+    {
+        "idea_name": "Digital Safety Tip #2",
+        "idea_text": "A video explaining what to do if someone is misusing your personal financial information.",
+        "project_folder": "storage/14_Digital Safety Tip 2_20250713",
+        "status": "SUCCESS",
+        "failed_at_step": null,
+        "final_video_path": null,
+        "assets": {
+            "artwork_prompt": "In a cozy, well-lit home office, the character stands confidently beside a desk with a laptop open, displaying generic financial graphs. Her expression is focused and determined, conveying a sense of empowerment and readiness. She wears a smart-casual outfit, similar to the reference, suitable for a professional setting. Sunlight streams through a window, casting a warm glow on her and the room, enhancing a sense of clarity and optimism. The background features a bookshelf with plants and a soft, neutral-colored wall, creating a calm and organized environment. This scene visually represents the proactive steps to take when dealing with misuse of personal financial information, highlighting a blend of vigilance and assurance.",
+            "artwork_path": "storage/14_Digital Safety Tip 2_20250713/artwork.png",
+            "artwork_retry_count": 0,
+            "script": "\"If you suspect someone is misusing your financial information, act quickly. Contact your bank to freeze your accounts, report the misuse to the authorities, and monitor your credit report for any unusual activity. Staying proactive is key to protecting your identity.\"",
+            "audio_path": "storage/14_Digital Safety Tip 2_20250713/audio.mp3",
+            "srt_path": "storage/14_Digital Safety Tip 2_20250713/subtitles.srt",
+            "subtitle_stats": {
+                "subtitle_count": 4,
+                "total_characters": 401,
+                "duration_seconds": 18.0,
+                "valid_format": true
+            },
+            "scenario_path": "storage/14_Digital Safety Tip 2_20250713/scenario.json",
+            "raw_video_url": "file://storage/14_Digital Safety Tip 2_20250713/final_runway_video_1752370067.mp4",
+            "video_provider": "runway",
+            "raw_video_local_path": "storage/14_Digital Safety Tip 2_20250713/final_runway_video_1752370067.mp4",
+            "final_video_url": "https://api.sync.so/v2/generations/044a3cff-5dc2-454b-866c-d1b8319fa74d/result?token=272a88ae-19b4-4a3e-b92d-78722c1b0f74",
+            "final_video_path": "storage/14_Digital Safety Tip 2_20250713/final_video.mp4",
+            "subtitled_video_path": "storage/14_Digital Safety Tip 2_20250713/final_video_subtitled.mp4",
+            "watermarked_video_path": "storage/14_Digital Safety Tip 2_20250713/watermarked_video.mp4",
+            "branded_video_path": "storage/14_Digital Safety Tip 2_20250713/branded_video.mp4"
+        }
+    },
+    {
+        "idea_name": "Digital Safety Tip #3",
+        "idea_text": "A video listing the top tactics scammers use to trick people.",
+        "project_folder": "storage/15_Digital Safety Tip 3_20250713",
+        "status": "SUCCESS",
+        "failed_at_step": null,
+        "final_video_path": null,
+        "assets": {
+            "artwork_prompt": "Create an image of a young woman in a modern home office setting, styled in the same animation style as the reference character. She stands confidently in front of a computer, her expression alert and focused, conveying awareness and caution. The room is softly lit with warm lighting, enhancing a sense of comfort and vigilance. On the desk, the computer screen discreetly displays icons representing social media, email, and chat apps\u2014symbolizing digital communication without using text. The background includes subtle hints of a bookshelf and a potted plant, creating a balanced, everyday environment. The composition emphasizes the theme of digital awareness, with the character as the central figure, poised to educate viewers on the tactics scammers use to trick people. The aspect ratio is suitable for Instagram stories, ensuring visual engagement.",
+            "artwork_path": "storage/15_Digital Safety Tip 3_20250713/artwork.png",
+            "artwork_retry_count": 0,
+            "script": "\"Scammers are getting smarter every day, using tactics like phishing emails, fake profiles, and urgent messages to trick us. Let's dive into their top strategies so you can stay one step ahead and protect yourself online.\"",
+            "audio_path": "storage/15_Digital Safety Tip 3_20250713/audio.mp3",
+            "srt_path": "storage/15_Digital Safety Tip 3_20250713/subtitles.srt",
+            "subtitle_stats": {
+                "subtitle_count": 2,
+                "total_characters": 286,
+                "duration_seconds": 15.0,
+                "valid_format": true
+            },
+            "scenario_path": "storage/15_Digital Safety Tip 3_20250713/scenario.json",
+            "raw_video_url": "file://storage/15_Digital Safety Tip 3_20250713/final_runway_video_1752370394.mp4",
+            "video_provider": "runway",
+            "raw_video_local_path": "storage/15_Digital Safety Tip 3_20250713/final_runway_video_1752370394.mp4",
+            "final_video_url": "https://api.sync.so/v2/generations/d04e04d9-795e-4b39-a519-da466c3f5405/result?token=9c673d85-66eb-4ead-bd84-27d27279fedc",
+            "final_video_path": "storage/15_Digital Safety Tip 3_20250713/final_video.mp4",
+            "subtitled_video_path": "storage/15_Digital Safety Tip 3_20250713/final_video_subtitled.mp4",
+            "watermarked_video_path": "storage/15_Digital Safety Tip 3_20250713/watermarked_video.mp4",
+            "branded_video_path": "storage/15_Digital Safety Tip 3_20250713/branded_video.mp4"
+        }
+    }
+]

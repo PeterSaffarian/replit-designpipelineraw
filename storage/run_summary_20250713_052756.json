@@ -1,0 +1,106 @@
+[
+    {
+        "idea_name": "Digital Safety Tip #6",
+        "idea_text": "A video showing how fake online shops trick people with no reviews or dodgy policies.",
+        "project_folder": "storage/25_Digital Safety Tip 6_20250713",
+        "status": "SUCCESS",
+        "failed_at_step": null,
+        "final_video_path": null,
+        "assets": {
+            "artwork_prompt": "Create an animated scene portraying the character in a cozy, dimly lit room, sitting at a desk with a laptop open in front of her. The screen glows softly, casting a gentle light on her face, revealing a mix of curiosity and caution in her expression. Surrounding her are subtle hints of online shopping\u2014boxes and packages, some opened. The laptop screen shows a cluttered, suspicious-looking online store interface with no visible reviews. The background features a bulletin board with pinned notes and a sticky note that reads \"research first\" in an animated style. The camera angle is slightly above and to the side, capturing the character\u2019s thoughtful gaze and the digital world she navigates, emphasizing the theme of online deception. The overall mood is one of awareness and skepticism, encouraging viewers to be mindful of online scams.",
+            "artwork_path": "storage/25_Digital Safety Tip 6_20250713/artwork.png",
+            "artwork_retry_count": 0,
+            "script": "\"Be careful when shopping online. Fake stores lure you in with big sales and flashy deals, but they often have no reviews and sketchy policies. Always do your research first to avoid getting scammed.\"",
+            "audio_path": "storage/25_Digital Safety Tip 6_20250713/audio.mp3",
+            "srt_path": "storage/25_Digital Safety Tip 6_20250713/subtitles.srt",
+            "subtitle_stats": {
+                "subtitle_count": 3,
+                "total_characters": 299,
+                "duration_seconds": 12.0,
+                "valid_format": true
+            },
+            "scenario_path": "storage/25_Digital Safety Tip 6_20250713/scenario.json",
+            "raw_video_url": "file://storage/25_Digital Safety Tip 6_20250713/final_runway_video_1752383299.mp4",
+            "video_provider": "runway",
+            "raw_video_local_path": "storage/25_Digital Safety Tip 6_20250713/final_runway_video_1752383299.mp4",
+            "final_video_url": "https://api.sync.so/v2/generations/96678e2f-8319-4cba-82d9-168e399b09bf/result?token=d4a528c8-12f5-4f74-bc56-1c3f2429aa2d",
+            "final_video_path": "storage/25_Digital Safety Tip 6_20250713/final_video.mp4",
+            "subtitled_video_path": "storage/25_Digital Safety Tip 6_20250713/final_video_subtitled.mp4",
+            "watermarked_video_path": "storage/25_Digital Safety Tip 6_20250713/watermarked_video.mp4",
+            "branded_video_path": "storage/25_Digital Safety Tip 6_20250713/branded_video.mp4"
+        }
+    },
+    {
+        "idea_name": "Emotional Manipulation Tactics",
+        "idea_text": "A video warning about how scammers quickly build emotional trust to ask for money.",
+        "project_folder": "storage/26_Emotional Manipulation Tactics_20250713",
+        "status": "SUCCESS",
+        "failed_at_step": null,
+        "final_video_path": null,
+        "assets": {
+            "artwork_prompt": "Create a scene featuring the reference character sitting at a cozy coffee shop table. They are looking at their smartphone with a slightly concerned expression, eyebrows furrowed and lips pursed, capturing the moment of realizing something is amiss. The warm ambient lighting of the caf\u00e9 contrasts with the cold light from the phone, highlighting the character's face. In the background, blurred figures of other patrons create a sense of normalcy, while the focus remains on the character. On the table, there's a coffee cup and an open notebook. The scene conveys a subtle tension, emphasizing the theme of emotional manipulation and the importance of awareness. The composition is framed vertically, suitable for an Instagram story.",
+            "artwork_path": "storage/26_Emotional Manipulation Tactics_20250713/artwork.png",
+            "artwork_retry_count": 0,
+            "script": "\"Scammers can seem genuine, quickly building emotional connections to gain your trust. But remember, if someone you\u2019ve just met asks for money, it\u2019s a red flag. Always protect yourself by verifying their story before making any decisions.\"",
+            "audio_path": "storage/26_Emotional Manipulation Tactics_20250713/audio.mp3",
+            "srt_path": "storage/26_Emotional Manipulation Tactics_20250713/subtitles.srt",
+            "subtitle_stats": {
+                "subtitle_count": 3,
+                "total_characters": 338,
+                "duration_seconds": 14.56,
+                "valid_format": true
+            },
+            "scenario_path": "storage/26_Emotional Manipulation Tactics_20250713/scenario.json",
+            "raw_video_url": "file://storage/26_Emotional Manipulation Tactics_20250713/final_runway_video_1752383781.mp4",
+            "video_provider": "runway",
+            "raw_video_local_path": "storage/26_Emotional Manipulation Tactics_20250713/final_runway_video_1752383781.mp4",
+            "final_video_url": "https://api.sync.so/v2/generations/553b87a0-4716-42aa-91ee-32af8b3bb11f/result?token=ddc9e644-9b3c-477b-90de-ba1eebaccf96",
+            "final_video_path": "storage/26_Emotional Manipulation Tactics_20250713/final_video.mp4",
+            "subtitled_video_path": "storage/26_Emotional Manipulation Tactics_20250713/final_video_subtitled.mp4",
+            "watermarked_video_path": "storage/26_Emotional Manipulation Tactics_20250713/watermarked_video.mp4",
+            "branded_video_path": "storage/26_Emotional Manipulation Tactics_20250713/branded_video.mp4"
+        }
+    },
+    {
+        "idea_name": "Tech Support Scam",
+        "idea_text": "A video where someone gets a call about a fake virus \u2014 what should they do?",
+        "project_folder": "storage/27_Tech Support Scam_20250713",
+        "status": "FAILED",
+        "failed_at_step": "Failed to generate artwork after all retry attempts.",
+        "final_video_path": null,
+        "assets": {
+            "artwork_prompt": "Create a scene with the character standing in a cozy living room, warmly lit by a table lamp. She is holding a smartphone to her ear, her expression a mix of surprise and skepticism, eyebrows slightly raised and mouth slightly open. A soft couch and a small coffee table with a mug and an open laptop are visible in the background, suggesting a relaxed atmosphere. The scene captures the moment she receives a call about a fake virus. Her casual outfit of a rust-colored t-shirt and dark pants aligns with the evening setting. The environment feels safe yet slightly tense, with the focus on her reaction and the subtle glow of the phone screen illuminating her face."
+        }
+    },
+    {
+        "idea_name": "Social Media Scam Warning",
+        "idea_text": "A video showing common scams on social media, like prize messages and hacked friends.",
+        "project_folder": "storage/28_Social Media Scam Warning_20250713",
+        "status": "SUCCESS",
+        "failed_at_step": null,
+        "final_video_path": null,
+        "assets": {
+            "artwork_prompt": "A young woman, styled in the same animation as the reference character, sits at a cozy desk in a softly lit room, her face illuminated by the glow of a laptop screen. Her expression is one of concern and curiosity, eyebrows slightly furrowed and eyes focused on the screen. The room is modern and tidy, with a potted plant and a few books on a nearby shelf. On the laptop screen, vivid icons and notifications pop up, depicting a fake prize message with a flashy trophy icon and a chat window with a friend's profile picture and a suspicious message. The scene captures the essence of social media scams, with the character's attentive posture and the digital elements on the screen highlighting the deceptive nature of online interactions. The overall lighting is warm, casting a gentle shadow, creating a mood that is both inviting and cautionary. The scene is set in a vertical format, perfect for an Instagram story.",
+            "artwork_path": "storage/28_Social Media Scam Warning_20250713/artwork.png",
+            "artwork_retry_count": 0,
+            "script": "\"Ever get a message saying you've won a prize or a suspicious link from a friend? These are common scams on social media. Stay alert\u2014never click on links or share personal info without verifying the source first!\"",
+            "audio_path": "storage/28_Social Media Scam Warning_20250713/audio.mp3",
+            "srt_path": "storage/28_Social Media Scam Warning_20250713/subtitles.srt",
+            "subtitle_stats": {
+                "subtitle_count": 3,
+                "total_characters": 313,
+                "duration_seconds": 13.0,
+                "valid_format": true
+            },
+            "scenario_path": "storage/28_Social Media Scam Warning_20250713/scenario.json",
+            "raw_video_url": "file://storage/28_Social Media Scam Warning_20250713/final_runway_video_1752384215.mp4",
+            "video_provider": "runway",
+            "raw_video_local_path": "storage/28_Social Media Scam Warning_20250713/final_runway_video_1752384215.mp4",
+            "final_video_url": "https://api.sync.so/v2/generations/1a71b21d-f4fd-43f4-a9b1-ebeb970b9999/result?token=75fe681a-70ef-41a7-ba0d-401293c19494",
+            "final_video_path": "storage/28_Social Media Scam Warning_20250713/final_video.mp4",
+            "subtitled_video_path": "storage/28_Social Media Scam Warning_20250713/final_video_subtitled.mp4",
+            "watermarked_video_path": "storage/28_Social Media Scam Warning_20250713/watermarked_video.mp4",
+            "branded_video_path": "storage/28_Social Media Scam Warning_20250713/branded_video.mp4"
+        }
+    }
+]

@@ -1,0 +1,33 @@
+[
+    {
+        "idea_name": "Tech Support Scam",
+        "idea_text": "A video where someone gets a call about a fake virus \u2014 what should they do?",
+        "project_folder": "storage/27_Tech Support Scam_20250713",
+        "status": "SUCCESS",
+        "failed_at_step": null,
+        "final_video_path": null,
+        "assets": {
+            "artwork_prompt": "Create a scene where the character is sitting at a cozy kitchen table, bathed in warm morning light streaming through a nearby window. She has her phone to her ear, her eyes wide and her eyebrows slightly raised, conveying a mix of surprise and concern. The setting is a modern kitchen with subtle details like a steaming cup of coffee and a laptop open on the table, displaying a colorful, animated desktop background. The atmosphere is tense but curious, as the character processes the unexpected news of a fake virus. The background is softly blurred to keep focus on her expression, capturing the moment of realization and decision-making. The overall mood combines elements of suspense and contemplation, encapsulating the theme of dealing with unexpected situations.",
+            "artwork_path": "storage/27_Tech Support Scam_20250713/artwork.png",
+            "artwork_retry_count": 1,
+            "script": "\"Hey, I just got a call about a virus on my computer, but it sounds suspicious. Remember, never give out personal info over the phone. Always verify the source and hang up if you feel unsure. Better safe than sorry!\"",
+            "audio_path": "storage/27_Tech Support Scam_20250713/audio.mp3",
+            "srt_path": "storage/27_Tech Support Scam_20250713/subtitles.srt",
+            "subtitle_stats": {
+                "subtitle_count": 4,
+                "total_characters": 348,
+                "duration_seconds": 14.0,
+                "valid_format": true
+            },
+            "scenario_path": "storage/27_Tech Support Scam_20250713/scenario.json",
+            "raw_video_url": "file://storage/27_Tech Support Scam_20250713/final_runway_video_1752384836.mp4",
+            "video_provider": "runway",
+            "raw_video_local_path": "storage/27_Tech Support Scam_20250713/final_runway_video_1752384836.mp4",
+            "final_video_url": "https://api.sync.so/v2/generations/f9b9fe8d-6e2a-42d9-a9ab-ee340238a662/result?token=c320d884-b6fb-4cd1-be63-427212df24ea",
+            "final_video_path": "storage/27_Tech Support Scam_20250713/final_video.mp4",
+            "subtitled_video_path": "storage/27_Tech Support Scam_20250713/final_video_subtitled.mp4",
+            "watermarked_video_path": "storage/27_Tech Support Scam_20250713/watermarked_video.mp4",
+            "branded_video_path": "storage/27_Tech Support Scam_20250713/branded_video.mp4"
+        }
+    }
+]

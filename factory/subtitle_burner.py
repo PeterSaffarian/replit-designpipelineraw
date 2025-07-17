@@ -142,7 +142,7 @@ def create_subtitled_video(
             "alignment": 2  # Bottom center
         },
         "youtube": {
-            "font_name": "Arial",
+            "font_name": "Liberation Sans",
             "font_size": 12,
             "font_color": "&H00FFFFFF",    # White
             "outline_color": "&H00000000", # Black

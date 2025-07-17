@@ -1,0 +1,303 @@
+[
+    {
+        "idea_name": "Password Safety Tips",
+        "idea_text": "A video where Laura gets a suspicious call \u2014 should she give her password?",
+        "project_folder": "storage/5_Password Safety Tips_20250713",
+        "status": "SUCCESS",
+        "failed_at_step": null,
+        "final_video_path": null,
+        "assets": {
+            "artwork_prompt": "Create an animated scene featuring Laura in a cozy, warmly lit living room, seated on a plush couch with a smartphone in hand. The room is softly illuminated by a lamp casting a gentle glow, creating a serene yet slightly tense atmosphere. Laura, dressed in a casual rust-colored t-shirt and dark pants, has a concerned expression as she looks intently at the screen, her eyebrows slightly furrowed. The camera angle is a close-up, focusing on her face and the phone, capturing the moment of hesitation. In the background, a window shows a tranquil evening sky, enhancing the setting's calmness contrasted with Laura's inner conflict. The scene visually conveys the theme of suspicion and decision-making without using text, making it perfect for an Instagram story format.",
+            "artwork_path": "storage/5_Password Safety Tips_20250713/artwork.png",
+            "artwork_retry_count": 0,
+            "script": "\"Got a call asking for my password. Hmm, feels off. Never share passwords over the phone, even if they sound legit. It\u2019s always better to hang up and verify directly with the company first.\"",
+            "audio_path": "storage/5_Password Safety Tips_20250713/audio.mp3",
+            "srt_path": "storage/5_Password Safety Tips_20250713/subtitles.srt",
+            "subtitle_stats": {
+                "subtitle_count": 3,
+                "total_characters": 289,
+                "duration_seconds": 10.0,
+                "valid_format": true
+            },
+            "scenario_path": "storage/5_Password Safety Tips_20250713/scenario.json",
+            "raw_video_url": "file://storage/5_Password Safety Tips_20250713/final_runway_video_1752375152.mp4",
+            "video_provider": "runway",
+            "raw_video_local_path": "storage/5_Password Safety Tips_20250713/final_runway_video_1752375152.mp4",
+            "final_video_url": "https://api.sync.so/v2/generations/b9a8cbd1-e9e4-4c09-b68f-c029d8e81c81/result?token=6b8a6e6f-5ecc-42d2-bdee-8e53aae86428",
+            "final_video_path": "storage/5_Password Safety Tips_20250713/final_video.mp4",
+            "subtitled_video_path": "storage/5_Password Safety Tips_20250713/final_video_subtitled.mp4",
+            "watermarked_video_path": "storage/5_Password Safety Tips_20250713/watermarked_video.mp4",
+            "branded_video_path": "storage/5_Password Safety Tips_20250713/branded_video.mp4"
+        }
+    },
+    {
+        "idea_name": "What is a Money Mule #2",
+        "idea_text": "A video showing the 3 types of money mules (tricked, ignoring red flags, and criminals).",
+        "project_folder": "storage/9_What is a Money Mule 2_20250713",
+        "status": "SUCCESS",
+        "failed_at_step": null,
+        "final_video_path": null,
+        "assets": {
+            "artwork_prompt": "Create an animated scene featuring the character in three distinct settings, each representing a type of money mule. In the first setting, depict her sitting at a cluttered desk with a surprised expression, surrounded by confusing paperwork and a blinking computer screen, symbolizing someone tricked into becoming a mule. For the second setting, place her in a bustling caf\u00e9, looking concerned as she receives a suspicious message on her phone, representing ignoring red flags. In the third setting, show her in a dimly lit room with a confident and mischievous expression, counting stacks of money on a table, representing the criminal type. Use warm, ambient lighting for the caf\u00e9, bright, harsh light for the cluttered desk, and shadowy, moody lighting for the dimly lit room. Capture the scene from a medium angle to emphasize her expressions and the surrounding environments, creating a cohesive narrative suitable for an Instagram story.",
+            "artwork_path": "storage/9_What is a Money Mule 2_20250713/artwork.png",
+            "artwork_retry_count": 0,
+            "script": "\"Money mules come in three forms: those tricked into transferring money, those who ignore red flags, and those who knowingly commit crimes. Understanding these roles can help you spot the signs and protect yourself from becoming involved in illegal activities.\"",
+            "audio_path": "storage/9_What is a Money Mule 2_20250713/audio.mp3",
+            "srt_path": "storage/9_What is a Money Mule 2_20250713/subtitles.srt",
+            "subtitle_stats": {
+                "subtitle_count": 6,
+                "total_characters": 459,
+                "duration_seconds": 16.0,
+                "valid_format": true
+            },
+            "scenario_path": "storage/9_What is a Money Mule 2_20250713/scenario.json",
+            "raw_video_url": "file://storage/9_What is a Money Mule 2_20250713/final_runway_video_1752375542.mp4",
+            "video_provider": "runway",
+            "raw_video_local_path": "storage/9_What is a Money Mule 2_20250713/final_runway_video_1752375542.mp4",
+            "final_video_url": "https://api.sync.so/v2/generations/3d0b8ea4-0069-4828-bdfe-885a5eecbc22/result?token=397fb630-e544-41e2-a876-d9764f50f871",
+            "final_video_path": "storage/9_What is a Money Mule 2_20250713/final_video.mp4",
+            "subtitled_video_path": "storage/9_What is a Money Mule 2_20250713/final_video_subtitled.mp4",
+            "watermarked_video_path": "storage/9_What is a Money Mule 2_20250713/watermarked_video.mp4",
+            "branded_video_path": "storage/9_What is a Money Mule 2_20250713/branded_video.mp4"
+        }
+    },
+    {
+        "idea_name": "How to Spot a Phishing Email",
+        "idea_text": "A video teaching how to spot a phishing email by its red flags.",
+        "project_folder": "storage/16_How to Spot a Phishing Email_20250713",
+        "status": "FAILED",
+        "failed_at_step": "Failed to generate artwork after all retry attempts.",
+        "final_video_path": null,
+        "assets": {
+            "artwork_prompt": "Create a scene set in a modern home office with soft, natural lighting streaming through a nearby window. The character stands confidently at a desk, examining a laptop screen with a focused expression. Surrounding the screen are animated icons symbolizing common phishing red flags: a flashing envelope, a suspicious link icon, and a warning triangle. The character wears a casual orange top and dark pants, reflecting a professional yet approachable demeanor. The background features a bookshelf with plants, adding a touch of warmth. The camera angle is eye-level, capturing the character's attentive gaze and the vivid details of the digital elements, emphasizing the educational theme of identifying phishing email red flags. The scene is composed to fit an Instagram story aspect ratio."
+        }
+    },
+    {
+        "idea_name": "Password Safety Tips #2",
+        "idea_text": "A video with tips on creating strong, unique passwords.",
+        "project_folder": "storage/17_Password Safety Tips 2_20250713",
+        "status": "SUCCESS",
+        "failed_at_step": null,
+        "final_video_path": null,
+        "assets": {
+            "artwork_prompt": "In a cozy, modern home office filled with warm lighting, the character stands confidently behind a sleek desk, her expression focused and engaging. Her outfit is casual yet professional, reflecting a sense of approachability and expertise. The room is adorned with subtle tech elements, like a laptop displaying a padlock icon to symbolize security. On the desk, colorful cubes and symbols representing various password components are scattered, hinting at creativity and uniqueness. The background features soft, abstract patterns, enhancing the theme of digital security. The camera angle is slightly elevated, giving a clear view of the character's animated gestures as she explains password tips, creating an inviting and informative atmosphere suitable for an Instagram story.",
+            "artwork_path": "storage/17_Password Safety Tips 2_20250713/artwork.png",
+            "artwork_retry_count": 0,
+            "script": "\"Creating a strong password is key to keeping your information safe. Mix upper and lower case letters, numbers, and special symbols. Avoid common words; try a phrase only you would know. Remember, unique passwords are your first line of defense!\"",
+            "audio_path": "storage/17_Password Safety Tips 2_20250713/audio.mp3",
+            "srt_path": "storage/17_Password Safety Tips 2_20250713/subtitles.srt",
+            "subtitle_stats": {
+                "subtitle_count": 4,
+                "total_characters": 378,
+                "duration_seconds": 17.0,
+                "valid_format": true
+            },
+            "scenario_path": "storage/17_Password Safety Tips 2_20250713/scenario.json",
+            "raw_video_url": "file://storage/17_Password Safety Tips 2_20250713/final_runway_video_1752376032.mp4",
+            "video_provider": "runway",
+            "raw_video_local_path": "storage/17_Password Safety Tips 2_20250713/final_runway_video_1752376032.mp4",
+            "final_video_url": "https://api.sync.so/v2/generations/3e60ec83-8949-44ea-a4a2-b60421dc256b/result?token=9c2af3e6-a4af-4510-86e2-49ae0ef79661",
+            "final_video_path": "storage/17_Password Safety Tips 2_20250713/final_video.mp4",
+            "subtitled_video_path": "storage/17_Password Safety Tips 2_20250713/final_video_subtitled.mp4",
+            "watermarked_video_path": "storage/17_Password Safety Tips 2_20250713/watermarked_video.mp4",
+            "branded_video_path": "storage/17_Password Safety Tips 2_20250713/branded_video.mp4"
+        }
+    },
+    {
+        "idea_name": "Digital Safety Tip #4",
+        "idea_text": "A video about why enabling two-factor authentication (2FA) is important.",
+        "project_folder": "storage/18_Digital Safety Tip 4_20250713",
+        "status": "SUCCESS",
+        "failed_at_step": null,
+        "final_video_path": null,
+        "assets": {
+            "artwork_prompt": "In a warmly lit, modern home office, the character stands confidently beside a sleek laptop displaying a digital lock icon on the screen, conveying the theme of security. She is animated in the same style as the reference image, with a focused yet calm expression, emphasizing assurance and safety. Her casual yet professional attire complements the contemporary setting, which includes a small desk plant and a window showing a serene cityscape in the background. The character is pointing to the lock icon, illustrating the importance of enabling two-factor authentication (2FA). The scene is captured from a slightly elevated angle, creating an engaging and informative perspective suitable for an Instagram story.",
+            "artwork_path": "storage/18_Digital Safety Tip 4_20250713/artwork.png",
+            "artwork_retry_count": 0,
+            "script": "\"Want to keep your accounts safe? Enable two-factor authentication! It adds an extra layer of security by requiring a second step to verify your identity, making it much harder for hackers to access your information. Protect yourself today!\"",
+            "audio_path": "storage/18_Digital Safety Tip 4_20250713/audio.mp3",
+            "srt_path": "storage/18_Digital Safety Tip 4_20250713/subtitles.srt",
+            "subtitle_stats": {
+                "subtitle_count": 5,
+                "total_characters": 405,
+                "duration_seconds": 16.799,
+                "valid_format": true
+            },
+            "scenario_path": "storage/18_Digital Safety Tip 4_20250713/scenario.json",
+            "raw_video_url": "file://storage/18_Digital Safety Tip 4_20250713/final_runway_video_1752376469.mp4",
+            "video_provider": "runway",
+            "raw_video_local_path": "storage/18_Digital Safety Tip 4_20250713/final_runway_video_1752376469.mp4",
+            "final_video_url": "https://api.sync.so/v2/generations/9f50265e-b690-49a6-8faa-44d55e7a752c/result?token=867e39a0-5350-4b97-9103-f9b2466619d8",
+            "final_video_path": "storage/18_Digital Safety Tip 4_20250713/final_video.mp4",
+            "subtitled_video_path": "storage/18_Digital Safety Tip 4_20250713/final_video_subtitled.mp4",
+            "watermarked_video_path": "storage/18_Digital Safety Tip 4_20250713/watermarked_video.mp4",
+            "branded_video_path": "storage/18_Digital Safety Tip 4_20250713/branded_video.mp4"
+        }
+    },
+    {
+        "idea_name": "Fake Job Offer Warning",
+        "idea_text": "A video showing the warning signs of a fake job offer.",
+        "project_folder": "storage/19_Fake Job Offer Warning_20250713",
+        "status": "SUCCESS",
+        "failed_at_step": null,
+        "final_video_path": null,
+        "assets": {
+            "artwork_prompt": "Create an image featuring the reference character in a modern home office setting, sitting at a desk with a laptop open. The room is softly lit, creating a warm and inviting atmosphere. The character has a concerned expression, eyebrows slightly furrowed, as they examine the laptop screen. The screen displays a job offer email with exaggerated, bold text and flashy graphics, hinting at its dubious nature. The character is wearing a casual outfit similar to the reference, with their hair styled naturally. Around the desk, subtle visual cues like a cup of coffee, a notepad with scribbles, and a potted plant add to the cozy yet professional environment. The camera angle is slightly above eye level, focusing on the character's contemplative face and the laptop screen, capturing the essence of evaluating a suspicious job offer.",
+            "artwork_path": "storage/19_Fake Job Offer Warning_20250713/artwork.png",
+            "artwork_retry_count": 0,
+            "script": "\"Before you get excited about that job offer, watch out for red flags like requests for personal information or upfront payments. Always verify the company's legitimacy to avoid falling for scams. Stay informed and protect yourself from fake opportunities.\"",
+            "audio_path": "storage/19_Fake Job Offer Warning_20250713/audio.mp3",
+            "srt_path": "storage/19_Fake Job Offer Warning_20250713/subtitles.srt",
+            "subtitle_stats": {
+                "subtitle_count": 3,
+                "total_characters": 356,
+                "duration_seconds": 16.0,
+                "valid_format": true
+            },
+            "scenario_path": "storage/19_Fake Job Offer Warning_20250713/scenario.json",
+            "raw_video_url": "file://storage/19_Fake Job Offer Warning_20250713/final_runway_video_1752376863.mp4",
+            "video_provider": "runway",
+            "raw_video_local_path": "storage/19_Fake Job Offer Warning_20250713/final_runway_video_1752376863.mp4",
+            "final_video_url": "https://api.sync.so/v2/generations/9b18bf8c-6313-4021-99c9-a109a1551406/result?token=d67e1072-e3ab-445a-ad48-85217be287c1",
+            "final_video_path": "storage/19_Fake Job Offer Warning_20250713/final_video.mp4",
+            "subtitled_video_path": "storage/19_Fake Job Offer Warning_20250713/final_video_subtitled.mp4",
+            "watermarked_video_path": "storage/19_Fake Job Offer Warning_20250713/watermarked_video.mp4",
+            "branded_video_path": "storage/19_Fake Job Offer Warning_20250713/branded_video.mp4"
+        }
+    },
+    {
+        "idea_name": "Digital Safety Tip #5",
+        "idea_text": "A video explaining why companies using free email domains can be suspicious.",
+        "project_folder": "storage/20_Digital Safety Tip 5_20250713",
+        "status": "SUCCESS",
+        "failed_at_step": null,
+        "final_video_path": null,
+        "assets": {
+            "artwork_prompt": "Create an image featuring the character in a modern, sleek office setting. She is seated at a desk with a laptop open, displaying a generic email interface. Her expression is focused and slightly concerned, as she points to a large, visible warning icon on the screen. The room is well-lit with natural light streaming through a window, casting soft shadows. Behind her, a whiteboard is filled with diagrams and question marks, symbolizing the analysis of email domains. The scene conveys a sense of professionalism and caution, highlighting the potential risks of using free email domains in a corporate context. The overall mood is informative and slightly cautionary, suitable for an educational Instagram story.",
+            "artwork_path": "storage/20_Digital Safety Tip 5_20250713/artwork.png",
+            "artwork_retry_count": 0,
+            "script": "Using free email domains can be a red flag for companies. It may suggest a lack of professionalism or even hint at potential scams. Always check for a custom domain to ensure you're dealing with a legitimate business.",
+            "audio_path": "storage/20_Digital Safety Tip 5_20250713/audio.mp3",
+            "srt_path": "storage/20_Digital Safety Tip 5_20250713/subtitles.srt",
+            "subtitle_stats": {
+                "subtitle_count": 3,
+                "total_characters": 318,
+                "duration_seconds": 14.0,
+                "valid_format": true
+            },
+            "scenario_path": "storage/20_Digital Safety Tip 5_20250713/scenario.json",
+            "raw_video_url": "file://storage/20_Digital Safety Tip 5_20250713/final_runway_video_1752377270.mp4",
+            "video_provider": "runway",
+            "raw_video_local_path": "storage/20_Digital Safety Tip 5_20250713/final_runway_video_1752377270.mp4",
+            "final_video_url": "https://api.sync.so/v2/generations/37123970-5320-4843-b9bb-a45e727a7d04/result?token=e5d6794e-9510-4ea8-b799-ec96e0b2700b",
+            "final_video_path": "storage/20_Digital Safety Tip 5_20250713/final_video.mp4",
+            "subtitled_video_path": "storage/20_Digital Safety Tip 5_20250713/final_video_subtitled.mp4",
+            "watermarked_video_path": "storage/20_Digital Safety Tip 5_20250713/watermarked_video.mp4",
+            "branded_video_path": "storage/20_Digital Safety Tip 5_20250713/branded_video.mp4"
+        }
+    },
+    {
+        "idea_name": "Don't Click That Link #2",
+        "idea_text": "A video reminding people to use the official banking app or site, not links.",
+        "project_folder": "storage/21_Dont Click That Link 2_20250713",
+        "status": "SUCCESS",
+        "failed_at_step": null,
+        "final_video_path": null,
+        "assets": {
+            "artwork_prompt": "Create an image featuring the character standing confidently in a cozy, modern living room. The character, dressed in a casual, rust-colored top and dark pants, is holding a smartphone displaying a vibrant banking app interface. Her expression is focused and reassuring, conveying a sense of trust and security. The room is softly lit, with warm tones emanating from a nearby lamp, creating a safe and inviting atmosphere. In the background, a sleek laptop sits closed on a stylish wooden table, emphasizing the choice of using official digital platforms. The scene subtly highlights the importance of using the official banking app or website, avoiding suspicious links, in an engaging and visually appealing manner suitable for an Instagram story.",
+            "artwork_path": "storage/21_Dont Click That Link 2_20250713/artwork.png",
+            "artwork_retry_count": 1,
+            "script": "\"Hey there! To keep your banking secure, always use your bank's official app or website. Avoid clicking on links in emails or messages\u2014stay safe and keep your money protected!\"",
+            "audio_path": "storage/21_Dont Click That Link 2_20250713/audio.mp3",
+            "srt_path": "storage/21_Dont Click That Link 2_20250713/subtitles.srt",
+            "subtitle_stats": {
+                "subtitle_count": 2,
+                "total_characters": 243,
+                "duration_seconds": 10.0,
+                "valid_format": true
+            },
+            "scenario_path": "storage/21_Dont Click That Link 2_20250713/scenario.json",
+            "raw_video_url": "file://storage/21_Dont Click That Link 2_20250713/final_runway_video_1752377681.mp4",
+            "video_provider": "runway",
+            "raw_video_local_path": "storage/21_Dont Click That Link 2_20250713/final_runway_video_1752377681.mp4",
+            "final_video_url": "https://api.sync.so/v2/generations/79f26727-d99b-49ce-b073-bbdad40b3dce/result?token=03bfacda-4b21-40bc-bc4f-3e0f76f642f4",
+            "final_video_path": "storage/21_Dont Click That Link 2_20250713/final_video.mp4",
+            "subtitled_video_path": "storage/21_Dont Click That Link 2_20250713/final_video_subtitled.mp4",
+            "watermarked_video_path": "storage/21_Dont Click That Link 2_20250713/watermarked_video.mp4",
+            "branded_video_path": "storage/21_Dont Click That Link 2_20250713/branded_video.mp4"
+        }
+    },
+    {
+        "idea_name": "Safe Online Banking",
+        "idea_text": "A video explaining why public Wi-Fi is unsafe for online banking.",
+        "project_folder": "storage/22_Safe Online Banking_20250713",
+        "status": "SUCCESS",
+        "failed_at_step": null,
+        "final_video_path": null,
+        "assets": {
+            "artwork_prompt": "Create an animated scene featuring the character in a cozy coffee shop setting, seated at a small table with a laptop open in front of her. The character, dressed in a casual orange shirt and dark pants, has a concerned expression as she looks at the screen. Around her, subtle visual indicators of unsecured Wi-Fi, like a translucent, ghostly figure with a mischievous grin, are hovering near the laptop. The lighting is warm, with soft, ambient light from hanging lamps casting gentle shadows. The background shows other patrons engaged in various activities, emphasizing a typical public setting. The camera angle is slightly elevated, capturing both the character\u2019s focused face and the laptop screen. The scene visually highlights the theme of public Wi-Fi risks in online banking, set against a relatable and modern backdrop.",
+            "artwork_path": "storage/22_Safe Online Banking_20250713/artwork.png",
+            "artwork_retry_count": 0,
+            "script": "\"Using public Wi-Fi for online banking might seem convenient, but it\u2019s risky. Hackers can easily intercept your data, putting your personal information at risk. Always use a secure connection or a VPN to keep your financial details safe.\"",
+            "audio_path": "storage/22_Safe Online Banking_20250713/audio.mp3",
+            "srt_path": "storage/22_Safe Online Banking_20250713/subtitles.srt",
+            "subtitle_stats": {
+                "subtitle_count": 3,
+                "total_characters": 337,
+                "duration_seconds": 15.0,
+                "valid_format": true
+            },
+            "scenario_path": "storage/22_Safe Online Banking_20250713/scenario.json",
+            "raw_video_url": "file://storage/22_Safe Online Banking_20250713/final_runway_video_1752378049.mp4",
+            "video_provider": "runway",
+            "raw_video_local_path": "storage/22_Safe Online Banking_20250713/final_runway_video_1752378049.mp4",
+            "final_video_url": "https://api.sync.so/v2/generations/1ebeafc9-1029-4263-aa87-bae9d58bf03c/result?token=2b923a2d-c0f7-4c7c-919e-89cab8ee3ae2",
+            "final_video_path": "storage/22_Safe Online Banking_20250713/final_video.mp4",
+            "subtitled_video_path": "storage/22_Safe Online Banking_20250713/final_video_subtitled.mp4",
+            "watermarked_video_path": "storage/22_Safe Online Banking_20250713/watermarked_video.mp4",
+            "branded_video_path": "storage/22_Safe Online Banking_20250713/branded_video.mp4"
+        }
+    },
+    {
+        "idea_name": "Scammers Imitating Companies",
+        "idea_text": "A video showing how scammers impersonate legitimate companies.",
+        "project_folder": "storage/23_Scammers Imitating Companies_20250713",
+        "status": "SUCCESS",
+        "failed_at_step": null,
+        "final_video_path": null,
+        "assets": {
+            "artwork_prompt": "Create a vibrant scene featuring the character from the reference image, styled with the same casual outfit in a modern office setting. She is seated at a sleek desk, facing a computer screen filled with various company logos. Her expression is one of concern and focus as she examines the screen, highlighting her awareness of the potential scam. The room is softly lit with a warm glow, reflecting a sense of urgency and caution. In the background, blurred outlines of a cityscape can be seen through large windows, emphasizing the modern and digital world. The camera angle is slightly elevated, capturing both her concentration and the digital environment, conveying the idea of vigilance in a world where scammers impersonate legitimate companies. The scene is designed for an Instagram story, with a vertical aspect ratio.",
+            "artwork_path": "storage/23_Scammers Imitating Companies_20250713/artwork.png",
+            "artwork_retry_count": 0,
+            "script": "\"Scammers are getting clever, pretending to be trusted companies to trick us. They send fake emails or websites that look real, hoping we'll click or share personal details. Always double-check the source before you respond or click on any links.\"",
+            "audio_path": "storage/23_Scammers Imitating Companies_20250713/audio.mp3",
+            "srt_path": "storage/23_Scammers Imitating Companies_20250713/subtitles.srt",
+            "subtitle_stats": {
+                "subtitle_count": 3,
+                "total_characters": 346,
+                "duration_seconds": 14.0,
+                "valid_format": true
+            },
+            "scenario_path": "storage/23_Scammers Imitating Companies_20250713/scenario.json",
+            "raw_video_url": "file://storage/23_Scammers Imitating Companies_20250713/final_runway_video_1752378518.mp4",
+            "video_provider": "runway",
+            "raw_video_local_path": "storage/23_Scammers Imitating Companies_20250713/final_runway_video_1752378518.mp4",
+            "final_video_url": "https://api.sync.so/v2/generations/d585c4a1-f6c9-43ee-affb-b2eca5fb9b04/result?token=5e9b1359-c448-4128-b524-60ecca95bd63",
+            "final_video_path": "storage/23_Scammers Imitating Companies_20250713/final_video.mp4",
+            "subtitled_video_path": "storage/23_Scammers Imitating Companies_20250713/final_video_subtitled.mp4",
+            "watermarked_video_path": "storage/23_Scammers Imitating Companies_20250713/watermarked_video.mp4",
+            "branded_video_path": "storage/23_Scammers Imitating Companies_20250713/branded_video.mp4"
+        }
+    },
+    {
+        "idea_name": "How to Spot a Fake Bank Text #2",
+        "idea_text": "A video explaining how to spot fake bank texts \u2014 like receiving one from a bank you don\u2019t use.",
+        "project_folder": "storage/24_How to Spot a Fake Bank Text 2_20250713",
+        "status": "FAILED",
+        "failed_at_step": "Failed to generate artwork after all retry attempts.",
+        "final_video_path": null,
+        "assets": {
+            "artwork_prompt": "Create an image of a young woman standing in a modern, cozy living room, holding a smartphone with a puzzled yet cautious expression. She has shoulder-length, wavy dark hair, wearing a casual rust-colored t-shirt and navy blue pants. The room is softly lit with warm tones, enhancing a sense of comfort and homeliness. In the background, there's a couch with a few cushions and a small potted plant on a side table. On the phone screen, a suspicious text message notification is subtly visible, hinting at a bank message from an unfamiliar source. The camera angle is slightly over the shoulder, focusing on her reaction and the phone, capturing the moment of realization. The scene conveys the theme of awareness and caution in identifying fake bank texts."
+        }
+    }
+]

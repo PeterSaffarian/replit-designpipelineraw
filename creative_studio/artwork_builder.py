@@ -34,10 +34,11 @@ def build_artwork(prompt: str, ref_image_path: str, output_path: str) -> str:
         print("ARTWORK BUILDER: Could not proceed without reference image.")
         return ""
 
+    system_prompt = f"Generate an image with the following prompt: {prompt}"
     # Call our central image model function which now uses the Responses API
     image_bytes = call_image_model(
         model_name='gpt-4o',  # Use a powerful vision model like gpt-4o
-        prompt=prompt,
+        prompt=system_prompt,
         ref_image_bytes=ref_image_bytes
     )
 
